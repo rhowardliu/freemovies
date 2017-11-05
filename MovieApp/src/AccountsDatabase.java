@@ -5,23 +5,26 @@ import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
+import jxl.write.WritableWorkbook;
 
 public class AccountsDatabase {
 
-	private File excelData = new File("data.xlsx");
-	private Workbook w;
-	private int userIndex;
-	private Sheet accountsData;
+	protected File excelData = new File("accounts.xlsx");
+	protected Workbook w;
+	protected int userIndex;
+	protected Sheet accountsData;
 	
 	public AccountsDatabase(String enteredID) throws IOException {
 		
 	try {
+
 		w = Workbook.getWorkbook(excelData);
 		accountsData = w.getSheet("Accounts");
 		Cell usercell = accountsData.findCell(enteredID);
 		userIndex = usercell.getRow();
-	} catch (BiffException e) {
+	} catch (IOException e) {
 		e.printStackTrace();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -35,12 +38,12 @@ public class AccountsDatabase {
 	}
 	
 	public String getStatus() {
-		Cell statuscell = accountsData.getCell(userIndex, 1);
+		Cell statuscell = accountsData.getCell(1, userIndex);
 		return statuscell.getContents();
 	}
 	
 	public String getPassword() {
-		Cell statuscell = accountsData.getCell(userIndex, 2);
+		Cell statuscell = accountsData.getCell(2, userIndex);
 		return statuscell.getContents();
 	}
 	
