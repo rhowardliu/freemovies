@@ -1,4 +1,12 @@
 
+
 public class Account {
-	public String userID;
+	private String userID;
+	public Account(String userID) {
+		this.userID = userID;
+	}
+	
+	
+	 
+	
 }
