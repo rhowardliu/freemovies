@@ -1,3 +1,5 @@
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 enum MovieTypeEnum {
@@ -8,16 +10,15 @@ enum StatusEnum {
 	ComingSoon, Preview, NowShowing, EndOfShow
 }
 
-public class Movie {
-	private int MovieID;
+public class Movie implements Serializable, dataStorage {
+	private static final long serialVersionUID = -7025004981841146212L;
+	private int movieID;
 	private String title;
 	private StatusEnum status;
 	private String directedBy;
 	private String[] cast;
 	private String synopsis;
-	private ReviewArray allMovieReviews;
-	private double totalRating;
-	private int ratingCount;
+	private ArrayList<MovieReviews> reviews;
 	private double totalSales;
 	private ShowTime[] movieShowTime;
 	private MovieTypeEnum movietype;
@@ -36,10 +37,31 @@ public class Movie {
 		for (int i = 0; i < castnumber; i++){
 			this.cast[i] = sc.next();
 		}
+		//adding all the relevant reviews into reviews array
+		for (MovieReviews x : MovieReviews.reviewslist) {
+			if (x.getmovieID()==movieID)
+				reviews.add(x);
+		}
+		
+	}
+	
+	public void addMovieReview(double rating, String review) {
+		new MovieReviews(movieID, rating, review);
 	}
 	
 	public double getAverageRating() {
-		return totalRating /ratingCount;
+		double avgrating;
+		double sum = 0;
+		int ratingcount =  reviews.size();
+		for(MovieReviews x : reviews)
+			sum+=x.getRating();
+		
+		try {
+		avgrating = sum/ratingcount;
+		}catch (ArithmeticException e) {
+			return 0;
+		}
+		return avgrating;
 	}
 	
 	public void getMovieInfo() {
@@ -63,8 +85,12 @@ public class Movie {
 		this.movietype = movietypeenum;
 	}
 	
+	
 	public void addShowTime() {
 		
+	}
+	public void addReview(Double rating, String review) {
+		new MovieReviews(movieID, rating, review);
 	}
 	
 	public double getSales() {
