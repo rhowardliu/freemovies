@@ -8,10 +8,20 @@ public Timetable () {
 }
 
 public void addShowTime (int movieID, int start, int end) {
-	int i;
-	for (i=start;i<end;i++) {
-		timetable[i]=movieID;
+	int i, boolean count=false;
+	for (i=start;i<end;i++) { 
+		if (timetable[i] != null) {
+			count = true;
 	}
+	}
+	
+		if (count = true) {
+			System.out.println("Timing clash, please enter a different timing");
+		}
+		else
+			for (i=start;i<end;i++) { 
+				timetable[i]=movieID;
+				}
 	
 }
 public void displayShowTime() {
