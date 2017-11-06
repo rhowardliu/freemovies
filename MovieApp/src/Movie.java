@@ -46,7 +46,7 @@ public class Movie implements Serializable, dataStorage {
 	}
 	
 	public void addMovieReview(double rating, String review) {
-		new MovieReviews(movieID, rating, review);
+		MovieReviews mr = new MovieReviews(movieID, rating, review);
 	}
 	
 	public double getAverageRating() {
