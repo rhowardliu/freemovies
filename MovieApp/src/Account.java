@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account implements Serializable {
+public class Account implements Serializable, dataStorage {
 
 	private static final long serialVersionUID = -6912793731024847631L;
 	private String userID;

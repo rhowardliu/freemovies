@@ -8,7 +8,8 @@ public Timetable () {
 }
 
 public void addShowTime (int movieID, int start, int end) {
-	int i, boolean count=false;
+	int i;
+	boolean count=false;
 	for (i=start;i<end;i++) { 
 		if (timetable[i] != null) {
 			count = true;
@@ -28,11 +29,18 @@ public void addShowTime (int movieID, int start, int end) {
 }
 public void displayShowTime() {
 	int i;
-	for (i=0;i<24;i++) {
+	for (i=0;i<10;i++) {
 		if (timetable[i]!=null)
-			System.out.println(i + " : " + timetable[i]);
+			System.out.println("0"+ i + ":00 : " + timetable[i]);
 		else 
-			System.out.println(i + " : " + "-");
+			System.out.println("0" + i + ":00 : " + "-");
+	}
+	
+	for (i=10;i<24;i++) {
+		if (timetable[i]!=null)
+			System.out.println(i + ":00 : " + timetable[i]);
+		else 
+			System.out.println(i + ":00 : " + "-");
 	}
 }
 }

@@ -9,7 +9,7 @@ enum StatusEnum {
 }
 
 public class Movie {
-	
+	private int MovieID;
 	private String title;
 	private StatusEnum status;
 	private String directedBy;

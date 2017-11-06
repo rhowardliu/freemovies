@@ -10,7 +10,7 @@ public class Cinema {
 	
 	public Cinema(CinemaTypeEnum  cinematypeenum){
 		this.calender = new Timetable[31];
-		this.cinematype = cinematypeenum; break;
+		this.cinematype = cinematypeenum;
 	}
 	
 	public addShowTime(){
