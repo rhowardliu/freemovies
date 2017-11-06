@@ -4,10 +4,14 @@ enum MovieTypeEnum {
 	_3D, BB, digital
 }
 
+enum StatusEnum {
+	ComingSoon, Preview, NowShowing, EndOfShow
+}
+
 public class Movie {
 	
 	private String title;
-	private String status;
+	private StatusEnum status;
 	private String directedBy;
 	private String[] cast;
 	private String synopsis;
@@ -18,11 +22,11 @@ public class Movie {
 	private ShowTime[] movieShowTime;
 	private MovieTypeEnum movietype;
 	
-	public Movie(String title, String status, String directedBy, String[] cast) {
+	public Movie(String title, StatusEnum status, String directedBy, String[] cast) {
 		System.out.print("Movie title: ");
 		Scanner sc = new Scanner(System.in);
 		this.title = sc.next();
-		this.status = "Preview";
+		this.status = status;
 		System.out.print("Directed by: ");
 		this.directedBy = sc.next();
 		this.cast = new String[10];
@@ -32,7 +36,6 @@ public class Movie {
 		for (int i = 0; i < castnumber; i++){
 			this.cast[i] = sc.next();
 		}
-		this.updateMovieType();
 	}
 	
 	public double getAverageRating() {
@@ -51,26 +54,13 @@ public class Movie {
 		System.out.println("\n");
 	}
 	
-	public void updateMovieStatus(String status){
+	public void updateMovieStatus(StatusEnum status){
 		this.status = status;
 		System.out.println("Movie Status Updated!");
 	}
 	
-	public void updateMovieType() {
-		System.out.println("Select movie type:\n(1)3D\n(2)Blockbuster\n(3)Digital");
-		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
-		switch (choice){
-			case 1: this.movietype = MovieTypeEnum._3D;break;
-			case 2: this.movietype = MovieTypeEnum.BB; break;
-			case 3: this.movietype = MovieTypeEnum.digital; break;
-			case 4: {
-				System.out.println("Invalid choice! Movie type set to digital by default!");
-				this.movietype = MovieTypeEnum.digital;
-				break;
-			}
-		}
-		
+	public void updateMovieType(MovieTypeEnum movietypeenum) {
+		this.movietype = movietypeenum;
 	}
 	
 	public void addShowTime() {
