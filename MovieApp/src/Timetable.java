@@ -18,10 +18,12 @@ public void addShowTime (int movieID, int start, int end) {
 		if (count = true) {
 			System.out.println("Timing clash, please enter a different timing");
 		}
-		else
+		else {
 			for (i=start;i<end;i++) { 
 				timetable[i]=movieID;
 				}
+		System.out.println("Show time has been successfully added");
+		}
 	
 }
 public void displayShowTime() {
