@@ -22,6 +22,7 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEn
 		for (j=0; j<17; j++) {
 			seatLayout [i][j] = new Ticket(i,j, Showtime);
 		}
+	}
 	
 }
 public void switchDayType (DayTypeEnum type) {
