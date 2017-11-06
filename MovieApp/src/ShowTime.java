@@ -20,7 +20,7 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEn
 	int i,j;
 	for (i=0; i<9; i++) {
 		for (j=0; j<17; j++) {
-			seatLayout [i][j] = new Ticket(i,j, Showtime);
+			seatLayout [i][j] = new Ticket(i,j);
 		}
 	}
 	
@@ -57,7 +57,8 @@ public void showSeatLayout() {
 		
 	}
 }
-public Ticket bookTicket(int row, int col) { //user should input seat they want to book
+//need to change uml diagram. void, not Ticket.
+public void bookTicket(int row, int col) { //user should input seat they want to book, 
 	Ticket tix = new Ticket(row, col);//not too sure if we gonna create array for this or what
 	System.out.println("Ticket Seat is " +tix.getSeatRow() +tix.getSeatCol());
 	System.out.println("Ticket Price is " +tix.getPrice());

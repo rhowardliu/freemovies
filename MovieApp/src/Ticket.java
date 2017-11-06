@@ -10,17 +10,16 @@ public class Ticket {
 	private AgeCatEnum agecat;
 	private boolean isBooked;
 	private double price;
-	private Showtime show;
+	private ShowTime show;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol, Showtime show){
+	public Ticket(int seatrow, int seatcol){
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
 		this.isBooked = false;
 		this.price = 0;
-		this.show = show;
 	}
 	
 	public void setPrice(double price){
@@ -30,6 +29,9 @@ public class Ticket {
 	public void bookTicket(){
 		this.isBooked = true;
 	}
+	public boolean bookedStatus() {
+		return isBooked;
+	}
 	
 	public int getSeatRow(){
 		return this.seatrow;
@@ -37,6 +39,10 @@ public class Ticket {
 	
 	public int getSeatCol(){
 		return this.seatcol;
+	}
+	
+	public AgeCatEnum getageCat() {
+		return agecat;
 	}
 	
 	public String getTransactionID(){
@@ -48,7 +54,7 @@ public class Ticket {
 	}
 	
 	//will need to change code for this
-	public String getShowtime(){
+	/*public String getShowtime(){
 		return this.show;
-	}
+	}*/
 }
