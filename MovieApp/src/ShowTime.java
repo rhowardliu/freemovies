@@ -6,15 +6,22 @@ private LocalDateTime dateTime;
 private Movie movie;
 private String location;
 private DayTypeEnum dayType;
+private Ticket [][] seatLayout;
 
 enum DayTypeEnum {
 	Weekdays, Weekends, PH
 }
+
 public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEnum daytype) {
 	dateTime = timeDate;
 	movie = movieName;
 	location = place;
 	dayType = daytype;
+	int i,j;
+	for (i=0; i<9; i++) {
+		for (j=0; j<17; j++) {
+			seatLayout [i][j] = new Ticket(i,j, Showtime);
+		}
 	
 }
 public void switchDayType (DayTypeEnum type) {
@@ -28,8 +35,8 @@ public void showSeatLayout() {
 	int i, j;
 	for (i=0; i<9; i++) {
 		for (j=0;j<8;j++) {
-			Ticket tic = new Ticket(i,j); 
-			if (tic.isBooked() == false) {//not booked
+			 //need a function in Ticket to check if booked already, sth like bookedStatus()
+			if (seatLayout[i][j].bookedStatus() == false) {//not booked
 				System.out.print(" O ");
 			}
 			else 
@@ -39,7 +46,7 @@ public void showSeatLayout() {
 		j++;
 		for (j=9;j<17;j++) {
 			Ticket tic = new Ticket(i,j); 
-			if (tic.isBooked() == false) {//not booked
+			if (seatLayout[i][j].bookedStatus() == false) {//not booked
 				System.out.print(" O ");
 			}
 			else 
@@ -50,11 +57,12 @@ public void showSeatLayout() {
 	}
 }
 public Ticket bookTicket(int row, int col) { //user should input seat they want to book
-	Ticket tix = new Ticket(row, col);//should have a function like setBooked() or sth
-	System.out.println("Ticket Seat is " +tix.seatRow().seatColumn());
-	System.out.println("Ticket Price is " +tix.price());
-	tix.setBooked(true);
+	Ticket tix = new Ticket(row, col);//not too sure if we gonna create array for this or what
+	System.out.println("Ticket Seat is " +tix.getSeatRow() +tix.getSeatCol());
+	System.out.println("Ticket Price is " +tix.getPrice());
+	tix.bookTicket();;
 	System.out.println("Ticket has been booked!");
+	System.out.println("Transaction ID is " +tix.getTransactionID());
 	
 }
 public DayTypeEnum displayDayType () {
