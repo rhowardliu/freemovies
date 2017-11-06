@@ -30,4 +30,25 @@ public class Ticket {
 	public void bookTicket(){
 		this.isBooked = true;
 	}
+	
+	public int getSeatRow(){
+		return this.seatrow;
+	}
+	
+	public int getSeatCol(){
+		return this.seatcol;
+	}
+	
+	public String getTransactionID(){
+		return this.transactionID;
+	}
+	
+	public double getPrice(){
+		return this.price;
+	}
+	
+	//will need to change code for this
+	public String getShowtime(){
+		return this.show;
+	}
 }
