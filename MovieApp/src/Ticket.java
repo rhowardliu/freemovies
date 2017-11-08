@@ -111,6 +111,10 @@ public class Ticket implements Serializable, dataStorage {
 		dayType = type;
 	}
 	
+	public ShowTime getShowTime() {
+		return show;
+	}
+	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(ticketsDatabase);
 		ticketlist = or.initialiseDataList(ticketlist);
