@@ -1,12 +1,13 @@
 public class PriceSetting {
 	
 
-	private double ticketPriceAdult = 8.5;
-	private double ticketPriceChild = 6.0;
-	private double ticketPriceSenior = 4.0;
-	private double ticketPremium3D = 3.0;
-	private double ticketPremiumBB = 2.0;
-	private double ticketPremiumHol = 4.0;
+	private static double ticketPriceAdult = 8.5;
+	private static double ticketPriceChild = 6.0;
+	private static double ticketPriceStudent = 7.0;
+	private static double ticketPriceSenior = 4.0;
+	private static double ticketPremium3D = 3.0;
+	private static double ticketPremiumBB = 2.0;
+	private static double ticketPremiumHol = 4.0;
 	
 	//Constructor
 	public PriceSetting() {	
@@ -14,42 +15,48 @@ public class PriceSetting {
 	
 
 	//public methods here is stackable, e.g. p.getPremium3D(p.getAdultPrice());
-	public double getAdultPrice() {
+	public static double getAdultPrice() {
 		return ticketPriceAdult;
 	}
-	public double getChildPrice() {
+	public static double getChildPrice() {
 		return ticketPriceChild;
 	}
-	public double getSeniorPrice() {
+	public static double getSeniorPrice() {
 		return ticketPriceSenior;
 	}
-	public double getPremium3D(double price) {
+	public static double getStudentPrice() {
+		return ticketPriceStudent;
+	}
+	public static double getPremium3D(double price) {
 		return price + ticketPremium3D;
 	}
-	public double getPremiumBB(double price) {
+	public static double getPremiumBB(double price) {
 		return price + ticketPremiumBB;
 	}
-	public double getPremiumHol(double price) {
+	public static double getPremiumHol(double price) {
 		return price + ticketPremiumHol;
 	}
 	
 	// below is update methods for admin
-	public void setTPAdult(double newprice) {
+	public static void setTPAdult(double newprice) {
 		ticketPriceAdult = newprice;
 	}
-	public void setTPChild(double newprice) {
+	public static void setTPChild(double newprice) {
 		ticketPriceChild = newprice;
 	}
-	public void setTPSenior(double newprice) {
+	public static void setTPSenior(double newprice) {
 		ticketPriceSenior = newprice;
 	}
-	public void setTP3D(double newprice) {
+	public static void setTPStudent(double newprice) {
+		ticketPriceStudent = newprice;
+	}
+	public static void setTP3D(double newprice) {
 		ticketPremium3D = newprice;
 	}
-	public void setTPBB(double newprice) {
+	public static void setTPBB(double newprice) {
 		ticketPremiumBB = newprice;
 	}
-	public void setTPHol(double newprice) {
+	public static void setTPHol(double newprice) {
 		ticketPremiumHol = newprice;
 	}
 }

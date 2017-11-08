@@ -6,15 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-
 enum AgeCatEnum{
 	student, adult, child, senior
 }
-
-enum DayTypeEnum {
-	Weekday, PH
-}
-
 
 public class Ticket implements Serializable, dataStorage {
 
@@ -33,7 +27,7 @@ public class Ticket implements Serializable, dataStorage {
 	private ShowTime showtime;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol){
+	public Ticket(int seatrow, int seatcol, ShowTime show){
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
@@ -68,6 +62,7 @@ public class Ticket implements Serializable, dataStorage {
 			price = PriceSetting.getPremiumBB(price);
 		}
 		
+
 	}
 	
 	public void setAge(AgeCatEnum age){
@@ -76,6 +71,7 @@ public class Ticket implements Serializable, dataStorage {
 	
 	public void setTransactionID(String transid){
 		this.transactionID = transid;
+
 	}
 	
 	public void bookTicket(){

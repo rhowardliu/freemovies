@@ -1,6 +1,6 @@
 import java.util.Calendar;
 
-enum DayTypeEnum {
+enum DayTypeEnum{
 	Weekday, PH
 }
 
@@ -35,24 +35,25 @@ public void addShowTime (int movieID, int start, int end) {
 	
 	if (isScheduled = true) 
 		System.out.println("Timing clash, please enter a different timing");
+	
 	else {
-			for (i=start;i<end;i++) { 
-				timetable[i]=movieID;
+		for (int i = start; i < end; i++) 
+			timetable[i] = movieID;
+	System.out.println("Show time has been successfully added");
+	
 	}
-		System.out.println("Show time has been successfully added");
-		}
 	
 }
+
 public void displayShowTime() {
-	int i;
-	for (i=0;i<10;i++) {
+	for (int i = 0 ; i<10; i++) {
 		if (timetable[i]!=null)
 			System.out.println("0"+ i + ":00 : " + timetable[i]);
 		else 
 			System.out.println("0" + i + ":00 : " + "-");
 	}
 	
-	for (i=10;i<24;i++) {
+	for (int i = 10; i<24; i++) {
 		if (timetable[i]!=null)
 			System.out.println(i + ":00 : " + timetable[i]);
 		else 
