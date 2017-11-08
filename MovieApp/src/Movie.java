@@ -2,7 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -139,24 +142,42 @@ public class Movie implements Serializable, dataStorage {
 	}
 
 	public void displayShowTimes(){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		List<ShowTime> temp_list = movieShowTime;
+		int i= temp_list.size()-1;
+		List<String> temp_date = new ArrayList<String>();
 		if (movieShowTime.isEmpty()){
 			System.out.println("No Showtime available");
 		}
-		else 
-			System.out.println("Show Timings are: ");
-		
-		
-			for (j=0;j<24;j++){
-				if (timetable[j] == movieID){
-					System.out.println(j + ":00 : Showing" );
-					
-				}
-				else 
-					System.out.println(j + ":00 : -");
-				}
-				
+		else {
+			System.out.println(" -ShowTime- ");
+			temp_date.add(dateFormat.format(temp_list.get(i--).getDate().getTime()));
 			
+			while(i>=0) {
+		    	String date = dateFormat.format(temp_list.get(i).getDate().getTime());
+				if (!temp_date.contains(date))
+					temp_date.add(date);
+				i--;
+				}
+	  		Collections.sort(temp_date);
+	  		for(int j = 0; j < temp_date.size();j++) {
+	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
+	  			String theDate = temp_date.get(j);
+	  			for(ShowTime x : temp_list) {
+	  				if (theDate.equals(dateFormat.format(x.getDate().getTime())))
+	  					dailyshowtime.add(x);
+	  			}
+	  			Collections.sort(dailyshowtime);
+	  			System.out.println(theDate);
+	  			System.out.println("----------");
+	  			for(ShowTime x: dailyshowtime) {
+	  				int start_time = x.getShowDateTime();
+	  				int end_time = start_time + x.getMovie().duration;
+	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
+	  			}
+	  		}
 		}
 		
 	
+	}
 }

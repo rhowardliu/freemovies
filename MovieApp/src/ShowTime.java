@@ -2,18 +2,18 @@ import java.util.Calendar;
 
 //import java.time.LocalDateTime;
 
-public class ShowTime {
+public class ShowTime implements Comparable<ShowTime>{
 //private LocalDateTime dateTime;
-private int time;
+private Integer time;
 private Movie movie;
 private String location;
 private Ticket [][] seatLayout;
 private Calendar date;
 
 
-public ShowTime(Calendar date, int Time, String location, Movie movie) {
+public ShowTime(Calendar date, int time, String location, Movie movie) {
 	this.date = date;
-	time = Time;
+	this.time = time;
 	this.movie = movie;
 	this.location = location;
 	int i,j;
@@ -26,13 +26,12 @@ public ShowTime(Calendar date, int Time, String location, Movie movie) {
 }
 
 
-
 public Calendar getDate() {
 	return date;
 }
 
 
-public int getShowDateTime() {
+public Integer getShowDateTime() {
 	return time;
 }
 
@@ -102,6 +101,14 @@ public void printTicketShowTimeDetails(int row, int col){
 	System.out.println("Location: " + getLocation());
 	System.out.println("Price: " + seatLayout[row][col].getPrice());
 	}
+
+@Override
+public int compareTo(ShowTime other) {
+	int compared = this.getShowDateTime().compareTo(other.getShowDateTime());
+	return compared;
+}
+
+
 
 
 	

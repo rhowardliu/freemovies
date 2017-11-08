@@ -134,7 +134,6 @@ public Ticket(int seatrow, int seatcol, Movie movie) {
 	public static void updateDatabase() throws FileNotFoundException, IOException {
 		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
 		ow.updateDataList(ticketlist);
-
 	}
 	
 	
