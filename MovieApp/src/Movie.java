@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -117,6 +118,7 @@ public class Movie implements Serializable {
 
 	public void addReview(Double rating, String review) {
 		new MovieReviews(movieID, rating, review);
+		averageRating=this.getAverageRating();
 	}
 	
 	public double getSales() {
@@ -179,7 +181,29 @@ public class Movie implements Serializable {
 	  			}
 	  		}
 		}
-		
+	}
 	
+	static Comparator<Movie> getTitleComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return o1.getTitle().compareTo(o2.getTitle());
+			}
+		};	
+	}
+			
+	static Comparator<Movie> getRatingComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return Double.compare(o2.averageRating, o1.averageRating);
+			}
+		};
+	}
+		
+	static Comparator<Movie> getSalesComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return Double.compare(o2.getSales(), o1.getSales());
+			}
+		};
 	}
 }
