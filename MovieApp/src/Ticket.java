@@ -4,29 +4,56 @@ enum AgeCatEnum{
 	student, adult, child, senior
 }
 
+enum DayTypeEnum {
+	Weekday, PH
+}
+
 public class Ticket {
 	
 	//class attributes
 	private int seatrow, seatcol;
 	private String transactionID;
 	private AgeCatEnum agecat;
+	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
 	private ShowTime showtime;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol, ShowTime showtime){
-		this.showtime = showtime;
+	public Ticket(int seatrow, int seatcol){
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
 		this.isBooked = false;
 		this.price = 0;
+		
 	}
 	
-	public void setPrice(double price){
-		this.price = price;
+	public void calPrice(){
+		double price = 0;
+		if (agecat == AgeCatEnum.student) {
+			price = PriceSetting.getStudentPrice();
+		}
+		else if (agecat == AgeCatEnum.adult) {
+			price = PriceSetting.getAdultPrice();
+		}
+		else if (agecat == AgeCatEnum.child) {
+			price = PriceSetting.getChildPrice();
+		}
+		else if (agecat == AgeCatEnum.student) {
+			price = PriceSetting.getSeniorPrice();
+		}
+		if (dayType == DayTypeEnum.PH) {
+			price = PriceSetting.getPremiumHol(price);
+		}
+		if (Movie.getMovieType() == MovieTypeEnum._3D) {
+			price = PriceSetting.getPremium3D(price);
+		}
+		else if (Movie.getMovieType() == MovieTypeEnum.BB) {
+			price = PriceSetting.getPremiumBB(price);
+		}
+		
 	}
 	
 	public void bookTicket(){
@@ -56,10 +83,19 @@ public class Ticket {
 		return this.price;
 	}
 	
+	public DayTypeEnum getDayType() {
+		return dayType;
+	}
+	
+	public void switchDayType (DayTypeEnum type) {
+		dayType = type;
+	}
+	
 	public void printTicketShowTimeDetails(){
-		System.out.println("Date: " + showtime.getShowDateTime() + "(" + showtime.getDayType() + ")");
+		System.out.println("Date & Time: " + showtime.getShowDateTime() + "(" + getDayType() + ")");
 		System.out.println("Movie: " + showtime.getMovie());
 		System.out.println("Location: " + showtime.getLocation());
+		System.out.println("Price: " + getPrice());
 	}
 	
 }
