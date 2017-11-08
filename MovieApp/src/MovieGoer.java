@@ -52,7 +52,7 @@ public class MovieGoer extends Account {
 		System.out.println("***");
 		while(i>=0) {
 			Ticket temp = transactionhistory.get(i);
-			System.out.print(temp.getShowTime().getShowDateTime() + " " + temp.getTransactionID());
+			System.out.print(temp.getShowDateTime() + " " + temp.getTransactionID());
 			System.out.printf(": $%6.2f", temp.getPrice());
 
 		}

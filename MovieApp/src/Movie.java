@@ -17,6 +17,7 @@ enum StatusEnum {
 public class Movie implements Serializable, dataStorage {
 	private static final long serialVersionUID = -7025004981841146212L;
 	private int movieID;
+	private int duration;
 	private String title;
 	private StatusEnum status;
 	private String director;
@@ -25,13 +26,14 @@ public class Movie implements Serializable, dataStorage {
 	private ArrayList<MovieReviews> reviews;
 	private double averageRating;
 	private double totalSales;
-	private ShowTime[] movieShowTime;
+	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
 	private static MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
-	public Movie(int movieID, String title, StatusEnum status, String director, List<String> cast) {
+	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast) {
 		this.movieID = movieID;
+		this.duration = duration;
 		this.title = title;
 		this.status = status;
 		System.out.print("Directed by: ");
@@ -45,6 +47,10 @@ public class Movie implements Serializable, dataStorage {
 				reviews.add(x);
 		}
 		
+	}
+	
+	public int getDuration() {
+		return duration;
 	}
 	
 	public int getMovieID() {
@@ -104,10 +110,7 @@ public class Movie implements Serializable, dataStorage {
 	public static MovieTypeEnum getMovieType() {
 		return movietype;
 	}
-	
-	public void addShowTime() {
 
-	}
 	public void addReview(Double rating, String review) {
 		new MovieReviews(movieID, rating, review);
 	}
@@ -121,6 +124,9 @@ public class Movie implements Serializable, dataStorage {
 	}
 	
 
+	public void addShowTime(ShowTime st) {
+		movieShowTime.add(st);
+	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(movieDatabase);
@@ -131,5 +137,26 @@ public class Movie implements Serializable, dataStorage {
 		ObjectWriter ow = new ObjectWriter(movieDatabase);
 		ow.updateDataList(movielist);
 	}
+
+	public void displayShowTimes(){
+		if (movieShowTime.isEmpty()){
+			System.out.println("No Showtime available");
+		}
+		else 
+			System.out.println("Show Timings are: ");
+		
+		
+			for (j=0;j<24;j++){
+				if (timetable[j] == movieID){
+					System.out.println(j + ":00 : Showing" );
+					
+				}
+				else 
+					System.out.println(j + ":00 : -");
+				}
+				
+			
+		}
+		
 	
 }
