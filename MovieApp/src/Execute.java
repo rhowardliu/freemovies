@@ -8,6 +8,10 @@ public class Execute {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		Account.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
+		
+	
+		
+		
 	}
 	
 	

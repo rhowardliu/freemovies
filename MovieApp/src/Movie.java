@@ -19,6 +19,7 @@ public class Movie implements Serializable, dataStorage {
 	private String[] cast;
 	private String synopsis;
 	private ArrayList<MovieReviews> reviews;
+	private double averageRating;
 	private double totalSales;
 	private ShowTime[] movieShowTime;
 	private MovieTypeEnum movietype;
@@ -37,6 +38,8 @@ public class Movie implements Serializable, dataStorage {
 		for (int i = 0; i < castnumber; i++){
 			this.cast[i] = sc.next();
 		}
+		//average rating
+		averageRating = this.getAverageRating();
 		//adding all the relevant reviews into reviews array
 		for (MovieReviews x : MovieReviews.reviewslist) {
 			if (x.getmovieID()==movieID)
@@ -47,6 +50,7 @@ public class Movie implements Serializable, dataStorage {
 	
 	public void addMovieReview(double rating, String review) {
 		MovieReviews mr = new MovieReviews(movieID, rating, review);
+		reviews.add(mr);
 	}
 	
 	public double getAverageRating() {
@@ -95,6 +99,10 @@ public class Movie implements Serializable, dataStorage {
 	
 	public double getSales() {
 		return totalSales;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 	
 }
