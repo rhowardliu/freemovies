@@ -24,12 +24,6 @@ public class MovieGoer extends Account {
 		this.mobilenumber = mobilenumber;
 		this.email = email;
 		
-		//adding all the relevant tickets into transactionhistory
-				for (Ticket x : Ticket.ticketlist) {
-					if (x.getuserID()==this.getUserID())
-						transactionhistory.add(x);
-				}
-		
 		
 		
 		moviegoerlist.add(this);

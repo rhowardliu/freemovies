@@ -19,7 +19,7 @@ public class PriceSetting {
 			price += ticketPremiumHol;
 		
 		//calculate price base on movie type
-		if (Movie.getMovieType() == MovieTypeEnum._3D)
+		if (movietype == MovieTypeEnum._3D)
 			price += ticketPremium3D;
 		else
 			price += ticketPremiumBB;
@@ -38,28 +38,7 @@ public class PriceSetting {
 	}
 		
 	//public methods here is stackable, e.g. p.getPremium3D(p.getAdultPrice());
-	public static double getAdultPrice() {
-		return ticketPriceAdult;
-	}
-	public static double getChildPrice() {
-		return ticketPriceChild;
-	}
-	public static double getSeniorPrice() {
-		return ticketPriceSenior;
-	}
-	public static double getStudentPrice() {
-		return ticketPriceStudent;
-	}
-	public static double getPremium3D(double price) {
-		return price + ticketPremium3D;
-	}
-	public static double getPremiumBB(double price) {
-		return price + ticketPremiumBB;
-	}
-	public static double getPremiumHol(double price) {
-		return price + ticketPremiumHol;
-	}
-	
+		
 	// below is update methods for admin
 	public static void setTPAdult(double newprice) {
 		ticketPriceAdult = newprice;

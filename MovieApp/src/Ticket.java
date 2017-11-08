@@ -104,7 +104,6 @@ public class Ticket implements Serializable, dataStorage {
 	public static void updateDatabase() throws FileNotFoundException, IOException {
 		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
 		ow.updateDataList(ticketlist);
-
 	}
 	
 	

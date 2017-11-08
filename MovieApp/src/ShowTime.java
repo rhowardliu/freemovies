@@ -1,8 +1,8 @@
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class ShowTime {
-	private int time;
+public class ShowTime implements Comparable <ShowTime>{
+	private Integer time;
 	private Movie movie;
 	private String location;
 	private Ticket [][] seatLayout;
@@ -21,28 +21,29 @@ public class ShowTime {
 		}
 	}
 	
-	public Calendar getDate() {
-		return timetable.getDate();
-	}
-	
-	public int getShowDateTime() {
-		return time;
-	}
-	
-	public String getLocation(){
-		return this.location;
-	}
-	
-	public void showSeatLayout() {
-		//assume 9 rows, 8x2 columns with an aisle in between 
-		int i, j, k, l=0, count=1, al=65;
-		//prints no. in increasing order horizontally 
-		while (l<2) {
-			System.out.print(" ");
-			for (k=0;k<8;k++) {
-				System.out.print(count);
-				count++;
-			}
+
+public Calendar getDate() {
+	return timetable.getDate();
+}
+
+
+public Integer getShowDateTime() {
+	return time;
+}
+
+
+public String getLocation(){
+	return this.location;
+}
+
+public void showSeatLayout() {
+	//assume 9 rows, 8x2 columns with an aisle in between 
+	int i, j, k, l=0, count=1, al=65;
+	//prints no. in increasing order horizontally 
+	while (l<2) {
+		System.out.print(" ");
+		for (k=0;k<8;k++) {
+			System.out.print(count);
 			count++;
 		}
 		
@@ -67,6 +68,7 @@ public class ShowTime {
 			}
 			System.out.print("\n");
 			
+		}
 		}
 	}
 	
@@ -112,6 +114,14 @@ public class ShowTime {
 		System.out.println("Price: " + seatLayout[row][col].getPrice());
 		System.out.println("==========");
 	}
+
+@Override
+public int compareTo(ShowTime other) {
+	int compared = this.getShowDateTime().compareTo(other.getShowDateTime());
+	return compared;
+}
+
+
 	
 }
 
