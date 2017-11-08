@@ -4,18 +4,20 @@ public class ShowTime {
 //private LocalDateTime dateTime;
 private int time;
 private int movieID;
+private Movie movie;
 private String location;
 private Ticket [][] seatLayout;
 
 
-public ShowTime(int Time, int movieid, String place) {
+public ShowTime(int Time, int movieid, String place, Movie movie) {
 	time = Time;
 	movieID = movieid;
+	this.movie = movie;
 	location = place;
 	int i,j;
 	for (i=1; i<10; i++) {
 		for (j=1; j<18; j++) {
-			seatLayout [i][j] = new Ticket(i,j);
+			seatLayout [i][j] = new Ticket(i,j, this.movie);
 		}
 	}
 	
@@ -92,26 +94,7 @@ public void printTicketShowTimeDetails(int row, int col){
 	System.out.println("Price: " + seatLayout[row][col].getPrice());
 }
 
-public void displayShowTimes(Timetable t){
-	int j;
-	Integer[] timetable = t.getTimetable();
-	if (timetable == null){
-		System.out.println("No Showtime available");
-	}
-	else 
-		System.out.println("Show Timings are: ");
-		for (j=0;j<24;j++){
-			if (timetable[j] == movieID){
-				System.out.println(j + ":00 : " +getMovie());
-				
-			}
-			else 
-				System.out.println(j + ":00 : -");
-			}
-			
-		
-	}
-	
+
 	
 }
 

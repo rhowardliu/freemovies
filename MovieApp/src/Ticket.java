@@ -21,16 +21,18 @@ public class Ticket implements Serializable, dataStorage {
 	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
+	private Movie movie;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
 	
 	//class methods
-public Ticket(int seatrow, int seatcol) {
+public Ticket(int seatrow, int seatcol, Movie movie) {
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
 		this.isBooked = false;
+		this.movie = movie;
 		this.price = 0;
 		ticketlist.add(this);
 

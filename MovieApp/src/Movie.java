@@ -107,4 +107,25 @@ public class Movie implements Serializable, dataStorage {
 		return title;
 	}
 	
+	public void displayShowTimes(Timetable t){
+		int j;
+		Integer[] timetable = t.getTimetable();
+		if (timetable == null){
+			System.out.println("No Showtime available");
+		}
+		else 
+			System.out.println("Show Timings are: ");
+			for (j=0;j<24;j++){
+				if (timetable[j] == movieID){
+					System.out.println(j + ":00 : Showing" );
+					
+				}
+				else 
+					System.out.println(j + ":00 : -");
+				}
+				
+			
+		}
+		
+	
 }
