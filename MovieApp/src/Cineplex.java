@@ -4,15 +4,18 @@ public class Cineplex {
 	private String name; //name to contain location
 	
 	public Cineplex(String name){
-		this.cinemas = new Cinema[3];
-		for (int i = 0; i <= 3; i++){
-			this.cinemas[i] = new Cinema();
-		}
 		this.name = name;
+		this.cinemas = new Cinema[3];
+		//for every cineplex created, 1 vip cinema and 2 standard cinemas are created
+		//each cinema will have a timetable of 31 slots, each slot represents one day of the month
+		//each timetable slot is weekday by default
+		//
+		cinemas[0] = new Cinema(CinemaTypeEnum.VIP);
+		cinemas[1] = new Cinema(CinemaTypeEnum.standard);
+		cinemas[2] = new Cinema(CinemaTypeEnum.standard);
 	}
 	
 	public String getCineplexName(){
 		return this.name;
 	}
-	
 }

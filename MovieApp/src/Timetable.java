@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 enum DayTypeEnum {
 	Weekday, PH
 }
@@ -5,11 +7,20 @@ enum DayTypeEnum {
 public class Timetable {
 
 private DayTypeEnum daytype;
+private Calendar date;
 private Integer[] timetable = new Integer[24];
 
 
-public Timetable () {
-	
+public Timetable (Calendar date) {
+	this.date = date;
+	this.daytype = DayTypeEnum.Weekday;
+	int dayoftheweek = date.get(Calendar.DAY_OF_WEEK);
+	if (dayoftheweek == 6 || dayoftheweek == 7)
+		this.daytype = DayTypeEnum.PH;
+}
+
+public void switchDayType (DayTypeEnum type) {
+	daytype = type;
 }
 
 public void addShowTime (int movieID, int start, int end) {

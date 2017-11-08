@@ -4,14 +4,12 @@ public class ShowTime {
 private LocalDateTime dateTime;
 private Movie movie;
 private String location;
-private DayTypeEnum dayType;
 private Ticket [][] seatLayout;
 
-public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEnum daytype) {
+public ShowTime(LocalDateTime timeDate, Movie movieName, String place) {
 	dateTime = timeDate;
 	movie = movieName;
 	location = place;
-	dayType = daytype;
 	int i,j;
 	for (i=0; i<9; i++) {
 		for (j=0; j<17; j++) {
@@ -19,9 +17,6 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEn
 		}
 	}
 	
-}
-public void switchDayType (DayTypeEnum type) {
-	dayType = type;
 }
 
 public LocalDateTime getShowDateTime() {
@@ -37,7 +32,7 @@ public String getLocation(){
 }
 
 public DayTypeEnum getDayType(){
-	return this.dayType;
+	return this.daytype;
 }
 
 public void showSeatLayout() {

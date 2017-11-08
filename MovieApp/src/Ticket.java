@@ -29,9 +29,18 @@ public class Ticket {
 		this.price = price;
 	}
 	
+	public void setAge(AgeCatEnum age){
+		this.agecat = age;
+	}
+	
+	public void setTransactionID(String transid){
+		this.transactionID = transid;
+	}
+	
 	public void bookTicket(){
 		this.isBooked = true;
 	}
+	
 	public boolean bookedStatus() {
 		return isBooked;
 	}
