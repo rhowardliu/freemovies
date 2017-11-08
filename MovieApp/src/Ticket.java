@@ -21,13 +21,11 @@ public class Ticket implements Serializable, dataStorage {
 	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
-	private ShowTime show;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
-	private ShowTime showtime;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol, ShowTime show){
+public Ticket(int seatrow, int seatcol) {
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
@@ -122,12 +120,7 @@ public class Ticket implements Serializable, dataStorage {
 
 	}
 	
-	public void printTicketShowTimeDetails(){
-		System.out.println("Date & Time: " + showtime.getShowDateTime() + "(" + getDayType() + ")");
-		System.out.println("Movie: " + showtime.getMovie());
-		System.out.println("Location: " + showtime.getLocation());
-		System.out.println("Price: " + getPrice());
-	}
+	
 
 	
 }

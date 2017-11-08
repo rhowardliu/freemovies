@@ -11,9 +11,9 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place) {
 	movie = movieName;
 	location = place;
 	int i,j;
-	for (i=0; i<9; i++) {
-		for (j=0; j<17; j++) {
-			seatLayout [i][j] = new Ticket(i,j, this);
+	for (i=1; i<10; i++) {
+		for (j=1; j<18; j++) {
+			seatLayout [i][j] = new Ticket(i,j);
 		}
 	}
 	
@@ -24,7 +24,7 @@ public LocalDateTime getShowDateTime() {
 }
 
 public Movie getMovie(){
-	return this.movie;
+	return this.movie;//need to change to movieID when howard is done
 }
 
 public String getLocation(){
@@ -59,7 +59,6 @@ public void showSeatLayout() {
 		System.out.print("   ");
 		j++;
 		for (j=9;j<17;j++) {
-			Ticket tic = new Ticket(i,j, this); 
 			if (seatLayout[i][j].bookedStatus() == false) {//not booked
 				System.out.print(" O ");
 			}
@@ -73,19 +72,26 @@ public void showSeatLayout() {
 
 //need to change uml diagram. void, not Ticket.
 public void bookTicket(int row, int col) { //user should input seat they want to book, 
-	Ticket tix = new Ticket(row, col, this);//not too sure if we gonna create array for this or what
-	System.out.println("Ticket Seat is " +tix.getSeatRow() +tix.getSeatCol());
-	System.out.println("Ticket Price is " +tix.getPrice());
-	tix.bookTicket();;
+//not too sure if we gonna create array for this or what
+	
+	
+	seatLayout[row][col].bookTicket();
+	printTicketShowTimeDetails(row, col);
 	System.out.println("Ticket has been booked!");
-	System.out.println("Transaction ID is " +tix.getTransactionID());
+	System.out.println("Transaction ID is " +seatLayout[row][col].getTransactionID());
 	
 }
 
 public String displayLocation() {
 	return location;
 }
-
+public void printTicketShowTimeDetails(int row, int col){
+	System.out.println("Movie: " + getMovie());
+	System.out.println("Date & Time: " + getShowDateTime() + "(" + seatLayout[row][col].getDayType() + ")");
+	System.out.println("Ticket Seat is " +seatLayout[row][col].getSeatRow() +" , " +seatLayout[row][col].getSeatRow());
+	System.out.println("Location: " + getLocation());
+	System.out.println("Price: " + seatLayout[row][col].getPrice());
+}
 
 }
 
