@@ -1,12 +1,21 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
-public class ShowTime implements Comparable <ShowTime>{
+public class ShowTime implements Serializable, Comparable <ShowTime>{
+	private static final long serialVersionUID = 4963733738112261278L;
 	private Integer time;
 	private Movie movie;
 	private String location;
 	private Ticket [][] seatLayout;
 	private Timetable timetable;
+	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
+	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
 	
 	public ShowTime(Timetable timetable, int Time, String location, Movie movie) {
@@ -19,6 +28,7 @@ public class ShowTime implements Comparable <ShowTime>{
 			for (j=1; j<18; j++) 
 				seatLayout [i][j] = new Ticket(i,j, this);
 		}
+		showtimelist.add(this);
 	}
 	
 
@@ -83,7 +93,11 @@ public void showSeatLayout() {
 		System.out.print("Row: "); int row = sc.nextInt();
 		System.out.print("Column: "); int col = sc.nextInt();
 		//check if the requested seat is already taken
-		if (seatLayout[row][col].isBooked() == false){
+		if (seatLayout[row][col].isBooked() == true) {
+			System.out.println("Seat is already taken!");
+			return;
+		}
+		else {
 			//if the requested seat is free, ask for age category for the ticket
 			System.out.println("Age Category: (1) Adult (2) Child (3) Student (4) Senior");
 			AgeCatEnum ticketage = AgeCatEnum.adult;
@@ -101,7 +115,9 @@ public void showSeatLayout() {
 			System.out.println("Ticket booked successfully!");
 			printTicketShowTimeDetails(row, col);
 			System.out.println("Transaction ID is " +seatLayout[row][col].getTransactionID());
+			Ticket.ticketlist.add(seatLayout[row][col]);
 		}
+		
 	}
 	
 	public void printTicketShowTimeDetails(int row, int col){
@@ -119,6 +135,17 @@ public void showSeatLayout() {
 public int compareTo(ShowTime other) {
 	int compared = this.getShowDateTime().compareTo(other.getShowDateTime());
 	return compared;
+}
+
+
+public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+	ObjectReader or = new ObjectReader(showtimeDatabase);
+	showtimelist = or.initialiseDataList(showtimelist);
+}
+
+public static void updateDatabase() throws FileNotFoundException, IOException {
+	ObjectWriter ow = new ObjectWriter(showtimeDatabase);
+	ow.updateDataList(showtimelist);
 }
 
 

@@ -17,7 +17,7 @@ enum StatusEnum {
 	ComingSoon, Preview, NowShowing, EndOfShow
 }
 
-public class Movie implements Serializable, dataStorage {
+public class Movie implements Serializable {
 	private static final long serialVersionUID = -7025004981841146212L;
 	private int movieID;
 	private int duration;
@@ -49,6 +49,7 @@ public class Movie implements Serializable, dataStorage {
 			if (x.getmovieID()==movieID)
 				reviews.add(x);
 		}
+		movielist.add(this);
 		
 	}
 	

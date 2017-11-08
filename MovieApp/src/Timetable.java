@@ -1,16 +1,24 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 enum DayTypeEnum{
 	Weekday, PH
 }
 
-public class Timetable {
+public class Timetable implements Serializable{
 
+	private static final long serialVersionUID = -31706793024846802L;
 	private DayTypeEnum daytype;
 	private Calendar date;
 	private Movie[] timetable = new Movie[24];
 	private Cinema cinema;
-
+	public static List<Timetable> timetablelist = new ArrayList<Timetable>();
+	public static final File timetableDatabase = new File ("Timetable.txt");
 
 	public Timetable (Calendar date, Cinema cinema) {
 		this.cinema = cinema;
@@ -19,6 +27,7 @@ public class Timetable {
 		int dayoftheweek = date.get(Calendar.DAY_OF_WEEK);
 		if (dayoftheweek == 6 || dayoftheweek == 7)
 			this.daytype = DayTypeEnum.PH;
+		timetablelist.add(this);
 	}
 
 	public DayTypeEnum getDayType(){
@@ -74,6 +83,17 @@ public class Timetable {
 	
 	public Movie[] getTimetable(){
 		return timetable;
+	}
+	
+
+	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectReader or = new ObjectReader(timetableDatabase);
+		timetablelist = or.initialiseDataList(timetablelist);
+	}
+	
+	public static void updateDatabase() throws FileNotFoundException, IOException {
+		ObjectWriter ow = new ObjectWriter(timetableDatabase);
+		ow.updateDataList(timetablelist);
 	}
 
 }

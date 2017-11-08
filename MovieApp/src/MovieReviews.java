@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieReviews implements Serializable, dataStorage{
+public class MovieReviews implements Serializable{
 
 	private static final long serialVersionUID = 5368997632500891145L;
 	private int movieID;

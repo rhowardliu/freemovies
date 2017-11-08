@@ -11,7 +11,7 @@ enum AgeCatEnum{
 	student, adult, child, senior
 }
 
-public class Ticket implements Serializable, dataStorage {
+public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 9031951939120214545L;
 
@@ -36,8 +36,7 @@ public class Ticket implements Serializable, dataStorage {
 		this.isBooked = false;
 		this.showtime = showtime;
 		this.price = 0;
-		ticketlist.add(this);
-
+	
 	}
 	
 	public String getuserID() {
@@ -105,8 +104,5 @@ public class Ticket implements Serializable, dataStorage {
 		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
 		ow.updateDataList(ticketlist);
 	}
-	
-	
-
-	
+		
 }

@@ -33,7 +33,7 @@ public class Execute {
 	}
 	
 	public static Account searchUser(String inputUser, String inputPW) throws InvalidLogin {
-		if (inputUser.equals("user") && inputPW.equals("pass")) {
+		if (inputUser.equals("admin") && inputPW.equals("pass")) {
 			return Admin.getInstance();
 		}
 		
