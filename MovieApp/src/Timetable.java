@@ -11,6 +11,7 @@ private Calendar date;
 private Integer[] timetable = new Integer[24];
 
 
+
 public Timetable (Calendar date) {
 	this.date = date;
 	this.daytype = DayTypeEnum.Weekday;
@@ -40,12 +41,12 @@ public void addShowTime (int movieID, int start, int end) {
 		for (int i = start; i < end; i++) 
 			timetable[i] = movieID;
 	System.out.println("Show time has been successfully added");
-	
+
 	}
 	
 }
 
-public void displayShowTime() {
+public void displayadminShowTime() {
 	for (int i = 0 ; i<10; i++) {
 		if (timetable[i]!=null)
 			System.out.println("0"+ i + ":00 : " + timetable[i]);
@@ -60,4 +61,10 @@ public void displayShowTime() {
 			System.out.println(i + ":00 : " + "-");
 	}
 }
+public Integer[] getTimetable(){
+	return timetable;
+}
+
+
+
 }

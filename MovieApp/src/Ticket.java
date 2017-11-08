@@ -72,8 +72,16 @@ public Ticket(int seatrow, int seatcol) {
 
 	}
 	
-	public void bookTicket(){
-		this.isBooked = true;
+	public boolean bookTicket(){
+		boolean book;
+		if (this.isBooked = true){
+			System.out.println("Sorry, ticket has already been booked");
+		}
+		else 
+			this.isBooked = true;
+			System.out.println("Ticket has been booked!");
+			book = true;
+		return book;
 	}
 	
 	public boolean bookedStatus() {

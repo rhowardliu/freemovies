@@ -1,13 +1,15 @@
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
 public class ShowTime {
-private LocalDateTime dateTime;
+//private LocalDateTime dateTime;
+private int time;
 private Movie movie;
 private String location;
 private Ticket [][] seatLayout;
+private Integer[] customerTimetable = new Integer[12];
 
-public ShowTime(LocalDateTime timeDate, Movie movieName, String place) {
-	dateTime = timeDate;
+public ShowTime(int Time, Movie movieName, String place) {
+	time = Time;
 	movie = movieName;
 	location = place;
 	int i,j;
@@ -19,8 +21,8 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place) {
 	
 }
 
-public LocalDateTime getShowDateTime() {
-	return dateTime;
+public int getShowDateTime() {
+	return time;
 }
 
 public Movie getMovie(){
@@ -74,23 +76,45 @@ public void showSeatLayout() {
 public void bookTicket(int row, int col) { //user should input seat they want to book, 
 //not too sure if we gonna create array for this or what
 	
-	
 	seatLayout[row][col].bookTicket();
+	if (seatLayout[row][col].bookTicket() == true){
 	printTicketShowTimeDetails(row, col);
-	System.out.println("Ticket has been booked!");
 	System.out.println("Transaction ID is " +seatLayout[row][col].getTransactionID());
-	
+	}
 }
 
-public String displayLocation() {
-	return location;
-}
 public void printTicketShowTimeDetails(int row, int col){
 	System.out.println("Movie: " + getMovie());
 	System.out.println("Date & Time: " + getShowDateTime() + "(" + seatLayout[row][col].getDayType() + ")");
 	System.out.println("Ticket Seat is " +seatLayout[row][col].getSeatRow() +" , " +seatLayout[row][col].getSeatRow());
 	System.out.println("Location: " + getLocation());
 	System.out.println("Price: " + seatLayout[row][col].getPrice());
+}
+
+public void displayShowTimes(Timetable t){
+	int i=0, j, k;
+	Integer[] timetable = t.getTimetable();
+	if (timetable == null){
+		System.out.println("No Showtime available");
+	}
+	else 
+		for (j=0;j<24;j++){
+			if (timetable[j] != null && timetable[j] == null){
+				customerTimetable[i] = timetable[j];
+				i++;
+			}
+			else if (timetable[j] != null && timetable[j] != customerTimetable[i-1]){
+				customerTimetable[i] = timetable[j];
+				i++;
+			}
+			System.out.println("Show Timings are: ");
+		for (k=0;k<i;k++){
+			System.out.println((k+1) +". " + timetable[k]);
+			
+		}
+	}
+	
+	
 }
 
 }
