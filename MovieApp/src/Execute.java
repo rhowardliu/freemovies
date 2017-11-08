@@ -5,45 +5,52 @@ import java.util.Scanner;
 
 public class Execute {
 
-	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		Account.initialiseDatabase();
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, InvalidLogin {
+		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
 		
-	
-		
+		Account user = login();	
+		if (user.getUserID().equals("admin"))
+			user = (Admin) user;
+		else user = (MovieGoer) user;
 		
 	}
 	
 	
-	public boolean login() throws InvalidLogin {
+	public static Account login() throws InvalidLogin {
 		Account user;
-		String input_username;
-		String input_password;
+		String inputUser;
+		String inputPw;
 		Scanner scan = new Scanner (System.in);
 		System.out.println("Enter username:");
-		input_username = scan.nextLine();
+		inputUser = scan.nextLine();
 		System.out.println("Enter password:");
-		input_password = scan.nextLine();
-		user = searchUser(input_username,input_password);
-		if (user==null)
-			throw new InvalidLogin();
-		return false;
+		inputPw = scan.nextLine();
+		
+		return user = searchUser(inputUser, inputPw);
+			
 	}
 	
-	public Account searchUser(String inputUser, String inputPW) {
-		for (Account x : Account.accountlist) {
-			String username = x.getUserID();
-			String password = x.getPassword();
-			if (username.equals(inputUser)) {
-				if (password.equals(inputPW))
-					return x;
-				return null;
+	public static Account searchUser(String inputUser, String inputPW) throws InvalidLogin {
+		if (inputUser.equals("user") && inputPW.equals("pass")) {
+			return Admin.getInstance();
+		}
+		
+		else {
+			for (Account x : MovieGoer.moviegoerlist) {
+				String username = x.getUserID();
+				String password = x.getPassword();
+				if (username.equals(inputUser)) {
+					if (password.equals(inputPW))
+						return x;
+					throw new InvalidLogin();
+				}
 			}
 		}
-		return null;
+		throw new InvalidLogin();
 	}
 	
-	class InvalidLogin extends Exception{
+	static class InvalidLogin extends Exception{
 		public InvalidLogin () {
 		super ("Incorrect username/password.");
 		}
