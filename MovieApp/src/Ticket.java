@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.time.LocalDateTime;
 
@@ -22,18 +23,18 @@ public class Ticket implements Serializable, dataStorage {
 	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
-	private Movie movie;
+	private ShowTime showtime;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
 	
 	//class methods
-public Ticket(int seatrow, int seatcol, Movie movie) {
+	public Ticket(int seatrow, int seatcol, ShowTime showtime) {
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
 		this.isBooked = false;
-		this.movie = movie;
+		this.showtime = showtime;
 		this.price = 0;
 		ticketlist.add(this);
 
@@ -43,31 +44,8 @@ public Ticket(int seatrow, int seatcol, Movie movie) {
 		return userID;
 	}
 	
-	public void calPrice(){
-		double price = 0;
-		if (agecat == AgeCatEnum.student) {
-			price = PriceSetting.getStudentPrice();
-		}
-		else if (agecat == AgeCatEnum.adult) {
-			price = PriceSetting.getAdultPrice();
-		}
-		else if (agecat == AgeCatEnum.child) {
-			price = PriceSetting.getChildPrice();
-		}
-		else if (agecat == AgeCatEnum.student) {
-			price = PriceSetting.getSeniorPrice();
-		}
-		if (dayType == DayTypeEnum.PH) {
-			price = PriceSetting.getPremiumHol(price);
-		}
-		if (Movie.getMovieType() == MovieTypeEnum._3D) {
-			price = PriceSetting.getPremium3D(price);
-		}
-		else if (Movie.getMovieType() == MovieTypeEnum.BB) {
-			price = PriceSetting.getPremiumBB(price);
-		}
-		
-
+	public Calendar getDate(){
+		return this.showtime.getDate();
 	}
 	
 	public void setAge(AgeCatEnum age){
@@ -76,24 +54,14 @@ public Ticket(int seatrow, int seatcol, Movie movie) {
 	
 	public void setTransactionID(String transid){
 		this.transactionID = transid;
-
 	}
 			
-	public Movie getMovie() {
-		return movie;
-	}
-
-
 	public boolean isBooked() {
 		return isBooked;
 	}
 
 	public void setBooked(boolean isBooked) {
 		this.isBooked = isBooked;
-	}
-	
-	public boolean bookedStatus() {
-		return isBooked;
 	}
 	
 	public int getSeatRow(){
@@ -116,15 +84,17 @@ public Ticket(int seatrow, int seatcol, Movie movie) {
 		return this.price;
 	}
 	
-
+	public void setPrice(double price){
+		this.price = price;
+	}
+		
+	public String getMovieTitle(){
+		return this.showtime.getMovie().getTitle();
+	}
+	
 	public DayTypeEnum getDayType() {
 		return dayType;
 	}
-	
-	public void switchDayType (DayTypeEnum type) {
-		dayType = type;
-	}
-	
 
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(ticketsDatabase);

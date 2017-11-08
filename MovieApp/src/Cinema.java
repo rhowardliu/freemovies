@@ -9,7 +9,6 @@ public class Cinema {
 	private CinemaTypeEnum cinematype;
 	private Cineplex cineplex;
 	
-	
 	public Cinema(CinemaTypeEnum  cinematypeenum, Cineplex cineplex){
 		this.cineplex=cineplex;
 		this.cinematype = cinematypeenum;
@@ -19,7 +18,7 @@ public class Cinema {
 		firstdec2017.set(Calendar.MONTH, Calendar.DECEMBER);
 		firstdec2017.set(Calendar.YEAR, 2017);
 		firstdec2017.set(Calendar.DAY_OF_MONTH, 1);
-		
+		 System.out.println("Date is " + firstdec2017.getTime());
 		//sets first slot of the calendar as 1 Dec 2017
 		calendar[0] = new Timetable(firstdec2017, this);
 		
@@ -32,16 +31,8 @@ public class Cinema {
 		}
 	}
 
-
 	public Cineplex getCineplex() {
 		return cineplex;
 	}
 
-
-	
-	
-	//public addShowTime(){
-		
-//	}
-	
 }

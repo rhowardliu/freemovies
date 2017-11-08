@@ -1,10 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class MovieGoer extends Account {
 
@@ -52,14 +54,18 @@ public class MovieGoer extends Account {
 		System.out.println("***");
 		while(i>=0) {
 			Ticket temp = transactionhistory.get(i);
-			System.out.print(temp.getShowDateTime() + " " + temp.getTransactionID());
-			System.out.printf(":%s $%6.2f",temp.getMovie().getTitle(), temp.getPrice());
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+			System.out.print(dateFormatter.format(temp.getDate().getTime())+ " " + temp.getTransactionID());
+			System.out.printf(":%s $%6.2f",temp.getMovieTitle(), temp.getPrice());
 
 		}
 
 	}
 	
-
+	public void addTransaction(Ticket ticket) {
+		transactionhistory.add(ticket);
+	}
+	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(moviegoerDatabase);
 		moviegoerlist = or.initialiseDataList(moviegoerlist);

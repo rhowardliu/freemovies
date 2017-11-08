@@ -27,7 +27,7 @@ public class Movie implements Serializable, dataStorage {
 	private double averageRating;
 	private double totalSales;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
-	private static MovieTypeEnum movietype;
+	private MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
@@ -107,7 +107,7 @@ public class Movie implements Serializable, dataStorage {
 	public void updateMovieType(MovieTypeEnum movietypeenum) {
 		this.movietype = movietypeenum;
 	}
-	public static MovieTypeEnum getMovieType() {
+	public MovieTypeEnum getMovieType() {
 		return movietype;
 	}
 
@@ -139,24 +139,18 @@ public class Movie implements Serializable, dataStorage {
 	}
 
 	public void displayShowTimes(){
-		if (movieShowTime.isEmpty()){
+		if (movieShowTime.isEmpty())
 			System.out.println("No Showtime available");
-		}
-		else 
+		else {
 			System.out.println("Show Timings are: ");
-		
-		
-			for (j=0;j<24;j++){
-				if (timetable[j] == movieID){
-					System.out.println(j + ":00 : Showing" );
-					
-				}
-				else 
-					System.out.println(j + ":00 : -");
-				}
+			for (int j = 0; j < 24; j++){
 				
-			
+			//need check with howard how to print out the movie show timings
+				if (movieShowTime == movieID)
+					System.out.println(j + ":00 : Showing" );
+				else 
+					System.out.println(j + ":00 : -");	
+			}
 		}
 		
-	
 }
