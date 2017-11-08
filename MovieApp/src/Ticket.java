@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 enum AgeCatEnum{
 	student, adult, child, senior
 }
@@ -10,10 +12,11 @@ public class Ticket {
 	private AgeCatEnum agecat;
 	private boolean isBooked;
 	private double price;
-	private ShowTime show;
+	private ShowTime showtime;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol){
+	public Ticket(int seatrow, int seatcol, ShowTime showtime){
+		this.showtime = showtime;
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
@@ -53,8 +56,10 @@ public class Ticket {
 		return this.price;
 	}
 	
-	//will need to change code for this
-	/*public String getShowtime(){
-		return this.show;
-	}*/
+	public void printTicketShowTimeDetails(){
+		System.out.println("Date: " + showtime.getShowDateTime() + "(" + showtime.getDayType() + ")");
+		System.out.println("Movie: " + showtime.getMovie());
+		System.out.println("Location: " + showtime.getLocation());
+	}
+	
 }
