@@ -1,4 +1,11 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
+
 
 enum AgeCatEnum{
 	student, adult, child, senior
@@ -10,6 +17,11 @@ enum DayTypeEnum {
 
 public class Ticket {
 	
+
+public class Ticket implements Serializable, dataStorage {
+
+	private static final long serialVersionUID = 9031951939120214545L;
+
 	//class attributes
 	private int seatrow, seatcol;
 	private String transactionID;
@@ -17,6 +29,9 @@ public class Ticket {
 	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
+	private ShowTime show;
+	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
+	public static final File ticketsDatabase = new File ("Ticket.txt");
 	private ShowTime showtime;
 	
 	//class methods
@@ -27,7 +42,8 @@ public class Ticket {
 		this.agecat = null;
 		this.isBooked = false;
 		this.price = 0;
-		
+		ticketlist.add(this);
+
 	}
 	
 	public void calPrice(){
@@ -83,12 +99,24 @@ public class Ticket {
 		return this.price;
 	}
 	
+
 	public DayTypeEnum getDayType() {
 		return dayType;
 	}
 	
 	public void switchDayType (DayTypeEnum type) {
 		dayType = type;
+
+	
+	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectReader or = new ObjectReader(ticketsDatabase);
+		ticketlist = or.initialiseDataList(ticketlist);
+	}
+	
+	public static void updateDatabase() throws FileNotFoundException, IOException {
+		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
+		ow.updateDataList(ticketlist);
+
 	}
 	
 	public void printTicketShowTimeDetails(){
@@ -97,5 +125,6 @@ public class Ticket {
 		System.out.println("Location: " + showtime.getLocation());
 		System.out.println("Price: " + getPrice());
 	}
-	
+
+	}
 }
