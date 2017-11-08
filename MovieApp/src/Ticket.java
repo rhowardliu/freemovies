@@ -78,8 +78,12 @@ public Ticket(int seatrow, int seatcol, Movie movie) {
 		this.transactionID = transid;
 
 	}
-	
-		
+			
+	public Movie getMovie() {
+		return movie;
+	}
+
+
 	public boolean isBooked() {
 		return isBooked;
 	}
