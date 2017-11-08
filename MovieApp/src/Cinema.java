@@ -6,6 +6,9 @@ enum CinemaTypeEnum {
 
 public class Cinema {
 	private Timetable [] calendar;
+	
+
+
 	private CinemaTypeEnum cinematype;
 	private Cineplex cineplex;
 	
@@ -31,7 +34,10 @@ public class Cinema {
 			calendar[i] = new Timetable(calTemp, this);
 		}
 	}
-
+	
+	public Timetable[] getCalendar() {
+		return calendar;
+	}
 
 	public Cineplex getCineplex() {
 		return cineplex;

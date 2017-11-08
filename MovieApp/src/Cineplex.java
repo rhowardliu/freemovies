@@ -1,6 +1,7 @@
 
 public class Cineplex {
 	private final Cinema [] cinemas;
+	
 	private String name; //name to contain location
 	
 	public Cineplex(String name){
@@ -18,4 +19,9 @@ public class Cineplex {
 	public String getCineplexName(){
 		return this.name;
 	}
+	
+	public Cinema[] getCinemas() {
+		return cinemas;
+	}
+
 }

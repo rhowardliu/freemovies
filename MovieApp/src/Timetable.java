@@ -24,6 +24,11 @@ public Timetable (Calendar date, Cinema cinema) {
 
 public void switchDayType (DayTypeEnum type) {
 	daytype = type;
+	System.out.println("Day type has been successfully switched to " +getDayType());
+}
+
+public DayTypeEnum getDayType() {
+	return daytype;
 }
 
 public void addShowTime (Movie movie, int starttime) {

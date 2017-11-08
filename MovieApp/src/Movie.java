@@ -30,12 +30,13 @@ public class Movie implements Serializable, dataStorage {
 	private double averageRating;
 	private double totalSales;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
-	private static MovieTypeEnum movietype;
+	private MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
-	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast) {
+	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast) {
 		this.movieID = movieID;
+		movietype =movieType;
 		this.duration = duration;
 		this.title = title;
 		this.status = status;
@@ -54,6 +55,9 @@ public class Movie implements Serializable, dataStorage {
 	
 	public int getDuration() {
 		return duration;
+	}
+	public StatusEnum getStatus() {
+		return status;
 	}
 	
 	public int getMovieID() {
@@ -94,7 +98,7 @@ public class Movie implements Serializable, dataStorage {
 	
 	public void updateMovieStatus(StatusEnum status){
 		this.status = status;
-		System.out.println("Movie Status Updated!");
+		System.out.println("Movie Status Updated! Movie Status is now " +getStatus());
 	}
 	
 	public static Movie searchMovie(int ID) throws NullPointerException {
@@ -109,8 +113,9 @@ public class Movie implements Serializable, dataStorage {
 	
 	public void updateMovieType(MovieTypeEnum movietypeenum) {
 		this.movietype = movietypeenum;
+		System.out.println("Movie Type Updated! Movie Type is now " +getMovieType());
 	}
-	public static MovieTypeEnum getMovieType() {
+	public MovieTypeEnum getMovieType() {
 		return movietype;
 	}
 
