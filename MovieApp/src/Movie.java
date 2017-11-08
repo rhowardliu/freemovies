@@ -21,7 +21,7 @@ public class Movie implements Serializable, dataStorage {
 	private ArrayList<MovieReviews> reviews;
 	private double totalSales;
 	private ShowTime[] movieShowTime;
-	private MovieTypeEnum movietype;
+	private static MovieTypeEnum movietype;
 	
 	public Movie(String title, StatusEnum status, String directedBy, String[] cast) {
 		System.out.print("Movie title: ");
@@ -84,7 +84,9 @@ public class Movie implements Serializable, dataStorage {
 	public void updateMovieType(MovieTypeEnum movietypeenum) {
 		this.movietype = movietypeenum;
 	}
-	
+	public static MovieTypeEnum getMovieType() {
+		return movietype;
+	}
 	
 	public void addShowTime() {
 		
