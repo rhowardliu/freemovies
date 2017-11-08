@@ -21,6 +21,7 @@ public class Ticket implements Serializable, dataStorage {
 	private static final long serialVersionUID = 9031951939120214545L;
 
 	//class attributes
+	private String userID;
 	private int seatrow, seatcol;
 	private String transactionID;
 	private AgeCatEnum agecat;
@@ -42,6 +43,10 @@ public class Ticket implements Serializable, dataStorage {
 		this.price = 0;
 		ticketlist.add(this);
 
+	}
+	
+	public String getuserID() {
+		return userID;
 	}
 	
 	public void calPrice(){

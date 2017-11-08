@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MovieGoer extends Account {
@@ -19,6 +21,16 @@ public class MovieGoer extends Account {
 		this.name = name;
 		this.mobilenumber = mobilenumber;
 		this.email = email;
+		
+		//adding all the relevant tickets into transactionhistory
+				for (Ticket x : Ticket.ticketlist) {
+					if (x.getuserID()==this.getUserID())
+						transactionhistory.add(x);
+				}
+		
+		
+		
+		moviegoerlist.add(this);
 
 	}
 	
@@ -35,12 +47,16 @@ public class MovieGoer extends Account {
 	}
 	
 	public void printTransactionHistory(){
-		System.out.println("Printing Transaction History of " + this.name + ":\n");
-		for (int i = 0; i <= 50; i++){
-			if (transactionhistory[i] == null)
-				break;
-			System.out.println(transactionhistory[i].getTransactionID()+"\t"+transactionhistory[i].getPrice());
+		int i = transactionhistory.size()-1;
+		System.out.println("Transaction History of " + this.name + ":\n");
+		System.out.println("***");
+		while(i>=0) {
+			Ticket temp = transactionhistory.get(i);
+			System.out.print(temp.getShowTime().getShowDateTime() + " " + temp.getTransactionID());
+			System.out.printf(": $%6.2f", temp.getPrice());
+
 		}
+
 	}
 	
 
