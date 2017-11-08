@@ -8,6 +8,7 @@ public class Cinema {
 	private Timetable [] calendar;
 	private CinemaTypeEnum cinematype;
 	
+	
 	public Cinema(CinemaTypeEnum  cinematypeenum){
 		this.cinematype = cinematypeenum;
 		this.calendar = new Timetable[31];
