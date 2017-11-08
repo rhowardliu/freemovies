@@ -15,8 +15,6 @@ enum DayTypeEnum {
 	Weekday, PH
 }
 
-public class Ticket {
-	
 
 public class Ticket implements Serializable, dataStorage {
 
@@ -106,7 +104,7 @@ public class Ticket implements Serializable, dataStorage {
 	
 	public void switchDayType (DayTypeEnum type) {
 		dayType = type;
-
+	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(ticketsDatabase);
@@ -126,5 +124,5 @@ public class Ticket implements Serializable, dataStorage {
 		System.out.println("Price: " + getPrice());
 	}
 
-	}
+	
 }
