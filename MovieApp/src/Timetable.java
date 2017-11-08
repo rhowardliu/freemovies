@@ -24,22 +24,21 @@ public void switchDayType (DayTypeEnum type) {
 }
 
 public void addShowTime (int movieID, int start, int end) {
-	this.daytype = DayTypeEnum.Weekday;
-	int i;
-	boolean count = false;
-	for (i=start;i<end;i++) { 
-		if (timetable[i] != null) {
-			count = true;
-	}
+	//Assume the requested slot is available
+	boolean isScheduled = false;
+	
+	//Checking if the requested time slot is taken by other movies	
+	for (int i=start;i<end;i++) { 
+		if (timetable[i] != null) 
+			isScheduled = true;
 	}
 	
-		if (count = true) {
-			System.out.println("Timing clash, please enter a different timing");
-		}
-		else {
+	if (isScheduled = true) 
+		System.out.println("Timing clash, please enter a different timing");
+	else {
 			for (i=start;i<end;i++) { 
 				timetable[i]=movieID;
-				}
+	}
 		System.out.println("Show time has been successfully added");
 		}
 	
