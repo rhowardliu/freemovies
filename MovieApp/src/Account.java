@@ -14,9 +14,6 @@ public class Account implements Serializable, dataStorage {
 	private String userID;
 	private String password;
 	private enum Status {Admin, MovieGoer};
-	private String email;
-	private String phoneNo;
-	private Status status;
 	public static List<Account> accountlist = new ArrayList<Account>();
 	public static final File accountDatabase = new File ("account.txt");
 	public Account(String userID, String password) {
@@ -30,8 +27,6 @@ public class Account implements Serializable, dataStorage {
 		this.userID = userID;
 		this.password=password;
 		this.setStatus(Status.MovieGoer);
-		this.email=email;
-		this.phoneNo=phoneNo;
 		accountlist.add(this);
 	}
 	
@@ -58,19 +53,7 @@ public class Account implements Serializable, dataStorage {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	
+
 	public Status getStatus() {
 		return status;
 	}

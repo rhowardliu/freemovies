@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
+
 
 enum AgeCatEnum{
 	student, adult, child, senior
@@ -21,9 +23,11 @@ public class Ticket implements Serializable, dataStorage {
 	private ShowTime show;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
+	private ShowTime showtime;
 	
 	//class methods
-	public Ticket(int seatrow, int seatcol){
+	public Ticket(int seatrow, int seatcol, ShowTime showtime){
+		this.showtime = showtime;
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
@@ -79,5 +83,11 @@ public class Ticket implements Serializable, dataStorage {
 		ow.updateDataList(ticketlist);
 	}
 	
+	public void printTicketShowTimeDetails(){
+		System.out.println("Date: " + showtime.getShowDateTime() + "(" + showtime.getDayType() + ")");
+		System.out.println("Movie: " + showtime.getMovie());
+		System.out.println("Location: " + showtime.getLocation());
+	}
+
 	
 }

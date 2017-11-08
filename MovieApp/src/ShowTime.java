@@ -1,16 +1,11 @@
 import java.time.LocalDateTime;
 
-
 public class ShowTime {
 private LocalDateTime dateTime;
 private Movie movie;
 private String location;
 private DayTypeEnum dayType;
 private Ticket [][] seatLayout;
-
-enum DayTypeEnum {
-	Weekdays, Weekends, PH
-}
 
 public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEnum daytype) {
 	dateTime = timeDate;
@@ -20,7 +15,7 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEn
 	int i,j;
 	for (i=0; i<9; i++) {
 		for (j=0; j<17; j++) {
-			seatLayout [i][j] = new Ticket(i,j);
+			seatLayout [i][j] = new Ticket(i,j,this);
 		}
 	}
 	
@@ -28,9 +23,23 @@ public ShowTime(LocalDateTime timeDate, Movie movieName, String place, DayTypeEn
 public void switchDayType (DayTypeEnum type) {
 	dayType = type;
 }
+
 public LocalDateTime getShowDateTime() {
 	return dateTime;
 }
+
+public Movie getMovie(){
+	return this.movie;
+}
+
+public String getLocation(){
+	return this.location;
+}
+
+public DayTypeEnum getDayType(){
+	return this.dayType;
+}
+
 public void showSeatLayout() {
 	//assume 9 rows, 8x2 columns with an aisle in between 
 	int i, j;
@@ -73,5 +82,7 @@ public DayTypeEnum displayDayType () {
 public String displayLocation() {
 	return location;
 }
+
+public
 
 }
