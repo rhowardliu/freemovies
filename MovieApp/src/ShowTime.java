@@ -3,14 +3,14 @@
 public class ShowTime {
 //private LocalDateTime dateTime;
 private int time;
-private Movie movie;
+private int movieID;
 private String location;
 private Ticket [][] seatLayout;
-private Integer[] customerTimetable = new Integer[12];
 
-public ShowTime(int Time, Movie movieName, String place) {
+
+public ShowTime(int Time, int movieid, String place) {
 	time = Time;
-	movie = movieName;
+	movieID = movieid;
 	location = place;
 	int i,j;
 	for (i=1; i<10; i++) {
@@ -25,8 +25,9 @@ public int getShowDateTime() {
 	return time;
 }
 
-public Movie getMovie(){
-	return this.movie;//need to change to movieID when howard is done
+public int getMovie(){
+	return this.movieID;//need to change to movieID when howard is done
+	// should return movie name instead .. HOWARDDDDDDDD~~~
 }
 
 public String getLocation(){
@@ -92,31 +93,28 @@ public void printTicketShowTimeDetails(int row, int col){
 }
 
 public void displayShowTimes(Timetable t){
-	int i=0, j, k;
+	int j;
 	Integer[] timetable = t.getTimetable();
 	if (timetable == null){
 		System.out.println("No Showtime available");
 	}
 	else 
+		System.out.println("Show Timings are: ");
 		for (j=0;j<24;j++){
-			if (timetable[j] != null && timetable[j] == null){
-				customerTimetable[i] = timetable[j];
-				i++;
+			if (timetable[j] == movieID){
+				System.out.println(j + ":00 : " +getMovie());
+				
 			}
-			else if (timetable[j] != null && timetable[j] != customerTimetable[i-1]){
-				customerTimetable[i] = timetable[j];
-				i++;
+			else 
+				System.out.println(j + ":00 : -");
 			}
-			System.out.println("Show Timings are: ");
-		for (k=0;k<i;k++){
-			System.out.println((k+1) +". " + timetable[k]);
 			
-		}
+		
 	}
 	
 	
 }
 
-}
+
 
 
