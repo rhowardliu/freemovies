@@ -1,60 +1,53 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
-public class ShowTime implements Serializable, Comparable <ShowTime>{
-	private static final long serialVersionUID = 4963733738112261278L;
-	private Integer time;
-	private Movie movie;
-	private String location;
+public class ShowTime implements Comparable <ShowTime>{
+	private String movietitle;
+	private String cineplexname;
+	private String cineplexcode;
+	private String cinemacode;
+	private String date;
+	private int starttime;
 	private Ticket [][] seatLayout;
-	private Timetable timetable;
-	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
-	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
-	
-	public ShowTime(Timetable timetable, int Time, String location, Movie movie) {
-		this.timetable = timetable;
-		time = Time;
-		this.movie = movie;
-		this.location = location;
-		int i,j;
-		for (i=1; i<10; i++) {
-			for (j=1; j<18; j++) 
-				seatLayout [i][j] = new Ticket(i,j, this);
+	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, int cinemarows, int cinemacols) {
+		this.movietitle = movietitle;
+		this.cineplexname = cineplexname;
+		this.cineplexcode = cineplexcode;
+		this.cinemacode = cinemacode;
+		this.date = date;
+		this.starttime = starttime;
+		for (int i=1; i<cinemarows; i++) {
+			for (int j=1; j<cinemacols; j++) 
+				seatLayout [i][j] = new Ticket(i,j);
 		}
-		showtimelist.add(this);
+	}
+
+	public int getShowTimeStartTime() {
+		return this.starttime;
 	}
 	
+	public String getShowTimeMovieTitle(){
+		return this.movietitle;
+	}
+	
+	public String getShowTimeDate(){
+		return this.date;
+	}
 
-public Calendar getDate() {
-	return timetable.getDate();
-}
-
-
-public Integer getShowDateTime() {
-	return time;
-}
-
-
-public String getLocation(){
-	return this.location;
-}
-
-public void showSeatLayout() {
-	//assume 9 rows, 8x2 columns with an aisle in between 
-	int i, j, k, l=0, count=1, al=65;
-	//prints no. in increasing order horizontally 
-	while (l<2) {
-		System.out.print(" ");
-		for (k=0;k<8;k++) {
-			System.out.print(count);
-			count++;
+	public void showSeatLayout() {
+		//****this one needd to change cos number of rows and cols are not assumed anymore
+		//****its based on the cinema selected instead
+		
+		//assume 9 rows, 8x2 columns with an aisle in between 
+		int i, j, k, l=0, count=1, al=65;
+		//prints no. in increasing order horizontally 
+		while (l<2) {
+			System.out.print(" ");
+			for (k=0;k<8;k++) {
+				System.out.print(count);
+				count++;
 		}
 		
 		for (i=1; i<10; i++) {
@@ -82,8 +75,8 @@ public void showSeatLayout() {
 		}
 	}
 	
-	public Movie getMovie() {
-		return movie;
+	public String getMovieTitle() {
+		return this.movietitle;
 	}
 
 	//need to change uml diagram. void, not Ticket.
@@ -93,11 +86,7 @@ public void showSeatLayout() {
 		System.out.print("Row: "); int row = sc.nextInt();
 		System.out.print("Column: "); int col = sc.nextInt();
 		//check if the requested seat is already taken
-		if (seatLayout[row][col].isBooked() == true) {
-			System.out.println("Seat is already taken!");
-			return;
-		}
-		else {
+		if (seatLayout[row][col].isBooked() == false){
 			//if the requested seat is free, ask for age category for the ticket
 			System.out.println("Age Category: (1) Adult (2) Child (3) Student (4) Senior");
 			AgeCatEnum ticketage = AgeCatEnum.adult;
@@ -110,42 +99,35 @@ public void showSeatLayout() {
 				default: System.out.println("Invalid choice! Adult Category set by default!"); break;
 			}
 			//setting price using Ticket class's setPrice method and PriceSetting calPrice method
-			//may need to change Movie to movie cos of the static method problem
+			//need to convert String movietitle into Movie movie here again
 			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, this.timetable.getDayType()));
 			System.out.println("Ticket booked successfully!");
+			Calendar now = Calendar.getInstance();
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddhhmm");
+			String timestamp = dateFormatter.format(now.getTime());
 			printTicketShowTimeDetails(row, col);
+			seatLayout[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
 			System.out.println("Transaction ID is " +seatLayout[row][col].getTransactionID());
-			Ticket.ticketlist.add(seatLayout[row][col]);
+			//need a method to add the transaction to the user's transactionhistory
 		}
-		
 	}
 	
 	public void printTicketShowTimeDetails(int row, int col){
 		System.out.println("==========");
 		System.out.println("Booking details:");
-		System.out.println("Movie: " + this.movie.getTitle());
-		System.out.println("Date & Time: " + getShowDateTime() + "(" + seatLayout[row][col].getDayType() + ")");
+		System.out.println("Movie: " + this.movietitle);
+		System.out.println("Date: " + this.getShowTimeDate() + "(" + seatLayout[row][col].getDayType() + ")");
 		System.out.println("Seat Row: " + seatLayout[row][col].getSeatRow() + "\tSeat Column: " + seatLayout[row][col].getSeatCol());
-		System.out.println("Location: " + this.location);
+		System.out.println("Location: " + this.cineplexname);
 		System.out.println("Price: " + seatLayout[row][col].getPrice());
 		System.out.println("==========");
 	}
 
 @Override
 public int compareTo(ShowTime other) {
-	int compared = this.getShowDateTime().compareTo(other.getShowDateTime());
+	//changed this to getShowTimeDate
+	int compared = this.getShowTimeDate().compareTo(other.getShowTimeDate());
 	return compared;
-}
-
-
-public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
-	ObjectReader or = new ObjectReader(showtimeDatabase);
-	showtimelist = or.initialiseDataList(showtimelist);
-}
-
-public static void updateDatabase() throws FileNotFoundException, IOException {
-	ObjectWriter ow = new ObjectWriter(showtimeDatabase);
-	ow.updateDataList(showtimelist);
 }
 
 

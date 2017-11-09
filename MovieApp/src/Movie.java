@@ -130,7 +130,7 @@ public class Movie implements Serializable {
 	}
 	
 
-	public void addShowTime(ShowTime st) {
+	public void addShowTimeToMovie(ShowTime st) {
 		movieShowTime.add(st);
 	}
 	
@@ -155,6 +155,9 @@ public class Movie implements Serializable {
 		}
 		else {
 			System.out.println(" -ShowTime- ");
+			//check with howard if this one is ok
+			//format for below is aso dd-MM-yyyy
+			//temp_date.add(temp_list.get(i--).getShowTimeDate());
 			temp_date.add(dateFormat.format(temp_list.get(i--).getDate().getTime()));
 			
 			while(i>=0) {
