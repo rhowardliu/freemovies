@@ -8,10 +8,11 @@ public class ShowTime implements Comparable <ShowTime>{
 	private String cineplexcode;
 	private String cinemacode;
 	private String date;
+	private DayTypeEnum daytype;
 	private int starttime;
 	private Ticket [][] seatLayout;
 	
-	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, int cinemarows, int cinemacols) {
+	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, DayTypeEnum daytype, int starttime, int cinemarows, int cinemacols) {
 		this.movietitle = movietitle;
 		this.cineplexname = cineplexname;
 		this.cineplexcode = cineplexcode;
@@ -101,6 +102,12 @@ public class ShowTime implements Comparable <ShowTime>{
 			//setting price using Ticket class's setPrice method and PriceSetting calPrice method
 			//need to convert String movietitle into Movie movie here again
 			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, this.timetable.getDayType()));
+			//write buy more tickets?
+			//display info first then
+			//write confirm payment?
+			//if cancel, go back to main list
+			//if confirm then book, else, return back to screen where it shows buy more tickets?
+			seatLayout[row][col].setBooked(true);
 			System.out.println("Ticket booked successfully!");
 			Calendar now = Calendar.getInstance();
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddhhmm");

@@ -6,12 +6,14 @@ public class GoldenVillage {
 	
 	public GoldenVillage(){
 		cineplexes = new Cineplex[3];
+		//soft-code this portion
 		cineplexes[0] = new Cineplex ("GV-Jurong", "J", 10, 18);
 		cineplexes[1] = new Cineplex ("GV-Orchard", "O", 15, 18);
 		cineplexes[2] = new Cineplex ("GV-Bugis", "B", 10, 18);
 	}
 	
-	public void addShowTime(){
+	//switch to admin class?
+	public void addShowTime(){ 
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		
@@ -33,6 +35,7 @@ public class GoldenVillage {
 		System.out.println("Select date:");
 		for (int i = 0; i < tempcalendararray.length; i++)
 			System.out.println("(" + i + 1 + ")" + dateFormatter.format(tempcalendararray[i].getDate().getTime()));
+		//need to fetch the DayTypeEnum daytype from here to pass to constructor of ShowTime
 		int datechoice = sc.nextInt();
 		String date = dateFormatter.format(tempcalendararray[datechoice].getDate().getTime());
 		tempcalendararray[datechoice - 1].displaySchedule();
@@ -46,6 +49,6 @@ public class GoldenVillage {
 		int starttime = sc.nextInt();
 		tempcalendararray[datechoice - 1].addShowTimeToSchedule(moviechoice, starttime);
 		//afte this line, the showtime will be added
-		moviechoice.addShowTimeToMovie(new ShowTime(movietitle, cineplexname, cineplexcode, cinemacode, date, starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols()));
+		moviechoice.addShowTimeToMovie(new ShowTime(movietitle, cineplexname, cineplexcode, cinemacode, date, daytype, starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols()));
 	}
 }
