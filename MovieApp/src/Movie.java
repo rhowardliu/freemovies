@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ enum StatusEnum {
 	ComingSoon, Preview, NowShowing, EndOfShow
 }
 
-public class Movie implements Serializable, dataStorage {
+public class Movie implements Serializable {
 	private static final long serialVersionUID = -7025004981841146212L;
 	private int movieID;
 	private int duration;
@@ -50,6 +51,7 @@ public class Movie implements Serializable, dataStorage {
 			if (x.getmovieID()==movieID)
 				reviews.add(x);
 		}
+		movielist.add(this);
 		
 	}
 	
@@ -121,6 +123,7 @@ public class Movie implements Serializable, dataStorage {
 
 	public void addReview(Double rating, String review) {
 		new MovieReviews(movieID, rating, review);
+		averageRating=this.getAverageRating();
 	}
 	
 	public double getSales() {
@@ -153,6 +156,7 @@ public class Movie implements Serializable, dataStorage {
 		List<String> temp_date = new ArrayList<String>();
 		if (movieShowTime.isEmpty()){
 			System.out.println("No Showtime available");
+			return;
 		}
 		else {
 			System.out.println(" -ShowTime- ");
@@ -182,7 +186,29 @@ public class Movie implements Serializable, dataStorage {
 	  			}
 	  		}
 		}
-		
+	}
 	
+	static Comparator<Movie> getTitleComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return o1.getTitle().compareTo(o2.getTitle());
+			}
+		};	
+	}
+			
+	static Comparator<Movie> getRatingComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return Double.compare(o2.averageRating, o1.averageRating);
+			}
+		};
+	}
+		
+	static Comparator<Movie> getSalesComparator(){
+		return new Comparator<Movie>() {
+			public int compare(Movie o1, Movie o2) {
+				return Double.compare(o2.getSales(), o1.getSales());
+			}
+		};
 	}
 }

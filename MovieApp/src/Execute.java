@@ -12,6 +12,7 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class Execute {
 
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, InvalidLogin {
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
@@ -107,7 +108,7 @@ public class Execute {
 	}
 	
 	public static Account searchUser(String inputUser, String inputPW) throws InvalidLogin {
-		if (inputUser.equals("user") && inputPW.equals("pass")) {
+		if (inputUser.equals("admin") && inputPW.equals("pass")) {
 			return Admin.getInstance();
 		}
 		
