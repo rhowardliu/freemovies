@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 
 public class GoldenVillage {
-	private Cineplex[] cineplexes;
+	private static Cineplex[] cineplexes;
 	
 	public GoldenVillage(){
 		cineplexes = new Cineplex[3];
@@ -12,8 +12,12 @@ public class GoldenVillage {
 		cineplexes[2] = new Cineplex ("GV-Bugis", "B", 10, 18);
 	}
 	
+	public static Cineplex[] getCineplexes(){
+		return cineplexes;
+	}
+	
 	//switch to admin class?
-	public void addShowTime(){ 
+	public static void addShowTime(){ 
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		
@@ -44,7 +48,7 @@ public class GoldenVillage {
 		//temp line below
 		String movietitle = sc.nextLine();
 		//can use the search movie method to check if the inputted movie title exist
-		Movie moviechoice = ; //whatever that converts movietitle to movie class
+		Movie moviechoice; //whatever that converts movietitle to movie class
 		System.out.print(" time: ");
 		int starttime = sc.nextInt();
 		tempcalendararray[datechoice - 1].addShowTimeToSchedule(moviechoice, starttime);

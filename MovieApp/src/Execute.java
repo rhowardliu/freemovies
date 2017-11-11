@@ -9,11 +9,15 @@ public class Execute {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, InvalidLogin {
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
-		
 		Account user = login();	
-		if (user.getUserID().equals("admin"))
-			user = (Admin) user;
-		else user = (MovieGoer) user;
+		if (user.getUserID().equals("admin")){
+			Admin admin = (Admin) user;
+			admin.adminMainControl();
+		}
+		else {
+			MovieGoer moviegoer = (MovieGoer) user;
+			moviegoer.mgMainControl();
+		}
 		
 	}
 	

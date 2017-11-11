@@ -61,9 +61,17 @@ public class Timetable implements Serializable{
 				schedule[i] = movie.getTitle();
 		System.out.println("Show time has been successfully added");
 		}
+	}
+	
+	public void removeShowTimeFromSchedule (Movie movie, int starttime) {
+		if (schedule[starttime] == "-")
+			System.out.println("Slot is already empty!");
 		
-		//this line make sure the movie is aware that the admin has added a new showtime under its name
-		//movie.addShowTime(new ShowTime(this,starttime, this.cinema.getCineplex().getCineplexName(), movie));
+		else {
+			for (int i = starttime; i < starttime+ movie.getDuration(); i++)
+				schedule[i] = "-";
+		}
+		System.out.println("Show time has been successfully removed");
 	}
 
 	public void displaySchedule() {

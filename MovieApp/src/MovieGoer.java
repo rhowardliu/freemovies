@@ -30,6 +30,10 @@ public class MovieGoer extends Account {
 
 	}
 	
+	public void mgMainControl(){
+		//add the control stuff here
+	}
+	
 	public String getName(){
 		return this.name;
 	}

@@ -15,7 +15,7 @@ enum MovieTypeEnum {
 }
 
 enum StatusEnum {
-	ComingSoon, Preview, NowShowing, EndOfShow
+	ComingSoon, Preview, NowShowing, EndOfShow	
 }
 
 public class Movie implements Serializable {
@@ -35,7 +35,7 @@ public class Movie implements Serializable {
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
-	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast) {
+	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast, String synopsis) {
 		this.movieID = movieID;
 		this.duration = duration;
 		this.title = title;
@@ -43,6 +43,7 @@ public class Movie implements Serializable {
 		System.out.print("Directed by: ");
 		this.director = director;
 		this.cast=cast;
+		this.synopsis = synopsis;
 		//average rating
 		averageRating = this.getAverageRating();
 		//adding all the relevant reviews into reviews array
@@ -132,6 +133,10 @@ public class Movie implements Serializable {
 
 	public void addShowTimeToMovie(ShowTime st) {
 		movieShowTime.add(st);
+	}
+	
+	public void removeShowTimeFromMovie(ShowTime st){
+		//howard need to remove showtime from movie here
 	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
