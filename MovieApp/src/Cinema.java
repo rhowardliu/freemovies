@@ -1,38 +1,46 @@
 import java.util.Calendar;
 
 enum CinemaTypeEnum {
-	standard, VIP
+	_standard, _platinum
 }
 
 public class Cinema {
+<<<<<<< HEAD
 	private Timetable [] calendar;
 	
 
 
+=======
+	private Timetable [] calendar; // timetable is the schedule for the day
+>>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
 	private CinemaTypeEnum cinematype;
-	private Cineplex cineplex;
+	private String cinemacode;
+	private int numberofrows;
+	private int numberofcols;
 	
-	public Cinema(CinemaTypeEnum  cinematypeenum, Cineplex cineplex){
-		this.cineplex=cineplex;
+	public Cinema(CinemaTypeEnum  cinematypeenum, String cinemacode, int rows, int cols){
 		this.cinematype = cinematypeenum;
+		this.cinemacode = cinemacode;
 		this.calendar = new Timetable[31];
+		this.numberofrows = rows;
+		this.numberofcols = cols;
 		//set the date and day of each slot of the timetable
-		Calendar firstdec2017 = Calendar.getInstance();
-		firstdec2017.set(Calendar.MONTH, Calendar.DECEMBER);
-		firstdec2017.set(Calendar.YEAR, 2017);
-		firstdec2017.set(Calendar.DAY_OF_MONTH, 1);
-		 System.out.println("Date is " + firstdec2017.getTime());
-		//sets first slot of the calendar as 1 Dec 2017
-		calendar[0] = new Timetable(firstdec2017, this);
+		Calendar firstjan = Calendar.getInstance();
+		firstjan.set(Calendar.MONTH, Calendar.JANUARY);
+		//firstjan.set(Calendar.YEAR, 2017);
+		firstjan.set(Calendar.DAY_OF_MONTH, 1);
+		//sets first slot of the calendar as 1 Jan
+		calendar[0] = new Timetable(firstjan);
 		
-		//sets second slot as 1 day after 1 Dec 2017 and so on
+		//sets second slot as 1 day after 1 Jan and so on
 		for (int i = 1; i < calendar.length ; i++){
 			Calendar calTemp;
-			calTemp = (Calendar) firstdec2017.clone();
+			calTemp = (Calendar) firstjan.clone();
 			calTemp.add(Calendar.DAY_OF_YEAR,i);
-			calendar[i] = new Timetable(calTemp, this);
+			calendar[i] = new Timetable(calTemp);
 		}
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 	public Timetable[] getCalendar() {
@@ -43,6 +51,27 @@ public class Cinema {
 
 	public Cineplex getCineplex() {
 		return cineplex;
+=======
+	
+	public CinemaTypeEnum getCinemaType(){
+		return this.cinematype;
+	}
+	
+	public String getCinemaCode(){
+		return this.cinemacode;
+	}
+	
+	public int getNumberOfRows(){
+		return this.numberofrows;
+	}
+	
+	public int getNumberOfCols(){
+		return this.numberofcols;
+	}
+	
+	public Timetable[] getCalendar(){
+		return this.calendar;
+>>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
 	}
 
 }
