@@ -40,7 +40,7 @@ public class ObjectReader {
 			e.printStackTrace();
 		}finally {
 			if (ois!=null)
-			ois.close();
+				ois.close();
 		}
 		
 		return list;

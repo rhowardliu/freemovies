@@ -15,6 +15,7 @@ public class Execute {
 			user = (Admin) user;
 		else user = (MovieGoer) user;
 		
+		
 	}
 	
 	
