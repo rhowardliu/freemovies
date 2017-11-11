@@ -5,7 +5,7 @@ enum CinemaTypeEnum {
 }
 
 public class Cinema {
-	private Timetable [] calendar;
+	private Timetable [] calendar; // timetable is the schedule for the day
 	private CinemaTypeEnum cinematype;
 	private String cinemacode;
 	private int numberofrows;
