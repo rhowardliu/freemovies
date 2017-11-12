@@ -3,9 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.time.LocalDateTime;
 
 enum AgeCatEnum{
 	student, adult, child, senior
@@ -15,7 +13,6 @@ public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 9031951939120214545L;
 
-	//class attributes
 	private String userID;
 	private int seatrow, seatcol;
 	private String transactionID;
@@ -23,28 +20,20 @@ public class Ticket implements Serializable {
 	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
-	private ShowTime showtime;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
 	
-	//class methods
-	public Ticket(int seatrow, int seatcol, ShowTime showtime) {
+	public Ticket(int seatrow, int seatcol) {
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
 		this.isBooked = false;
-		this.showtime = showtime;
 		this.price = 0;
-	
 	}
 	
 	public String getuserID() {
 		return userID;
-	}
-	
-	public Calendar getDate(){
-		return this.showtime.getDate();
 	}
 	
 	public void setAge(AgeCatEnum age){
@@ -85,10 +74,6 @@ public class Ticket implements Serializable {
 	
 	public void setPrice(double price){
 		this.price = price;
-	}
-		
-	public String getMovieTitle(){
-		return this.showtime.getMovie().getTitle();
 	}
 	
 	public DayTypeEnum getDayType() {

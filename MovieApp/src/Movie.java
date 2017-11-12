@@ -15,7 +15,7 @@ enum MovieTypeEnum {
 }
 
 enum StatusEnum {
-	ComingSoon, Preview, NowShowing, EndOfShow
+	ComingSoon, Preview, NowShowing, EndOfShow	
 }
 
 public class Movie implements Serializable {
@@ -35,14 +35,16 @@ public class Movie implements Serializable {
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
-	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast) {
+	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {
 		this.movieID = movieID;
+		movietype =movieType;
 		this.duration = duration;
 		this.title = title;
 		this.status = status;
 		System.out.print("Directed by: ");
 		this.director = director;
 		this.cast=cast;
+		this.synopsis = synopsis;
 		//average rating
 		averageRating = this.getAverageRating();
 		//adding all the relevant reviews into reviews array
@@ -56,6 +58,9 @@ public class Movie implements Serializable {
 	
 	public int getDuration() {
 		return duration;
+	}
+	public StatusEnum getStatus() {
+		return status;
 	}
 	
 	public int getMovieID() {
@@ -96,7 +101,7 @@ public class Movie implements Serializable {
 	
 	public void updateMovieStatus(StatusEnum status){
 		this.status = status;
-		System.out.println("Movie Status Updated!");
+		System.out.println("Movie Status Updated! Movie Status is now " +getStatus());
 	}
 	
 	public static Movie searchMovie(int ID) throws NullPointerException {
@@ -111,6 +116,7 @@ public class Movie implements Serializable {
 	
 	public void updateMovieType(MovieTypeEnum movietypeenum) {
 		this.movietype = movietypeenum;
+		System.out.println("Movie Type Updated! Movie Type is now " +getMovieType());
 	}
 	public MovieTypeEnum getMovieType() {
 		return movietype;
@@ -130,8 +136,12 @@ public class Movie implements Serializable {
 	}
 	
 
-	public void addShowTime(ShowTime st) {
+	public void addShowTimeToMovie(ShowTime st) {
 		movieShowTime.add(st);
+	}
+	
+	public void removeShowTimeFromMovie(ShowTime st){
+		//howard need to remove showtime from movie here
 	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -155,6 +165,9 @@ public class Movie implements Serializable {
 		}
 		else {
 			System.out.println(" -ShowTime- ");
+			//check with howard if this one is ok
+			//format for below is aso dd-MM-yyyy
+			//temp_date.add(temp_list.get(i--).getShowTimeDate());
 			temp_date.add(dateFormat.format(temp_list.get(i--).getDate().getTime()));
 			
 			while(i>=0) {
