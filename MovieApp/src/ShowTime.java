@@ -1,16 +1,30 @@
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class ShowTime implements Comparable <ShowTime>{
+public class ShowTime implements Serializable {
+
+	private static final long serialVersionUID = 2001719944845781739L;
 	private String movietitle;
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
+	private String dd;
+	private String mm;
+	private String yy;
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
 	private Ticket [][] seatLayout;
+	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
+	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
 	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, DayTypeEnum daytype, int starttime, int cinemarows, int cinemacols) {
 		this.movietitle = movietitle;
@@ -18,14 +32,18 @@ public class ShowTime implements Comparable <ShowTime>{
 		this.cineplexcode = cineplexcode;
 		this.cinemacode = cinemacode;
 		this.date = date;
+		dd=date.substring(0, 2);
+		mm=date.substring(3,5);
+		yy=date.substring(6);
 		this.starttime = starttime;
 		for (int i=1; i<cinemarows; i++) {
 			for (int j=1; j<cinemacols; j++) 
 				seatLayout [i][j] = new Ticket(i,j);
 		}
+		showtimelist.add(this);
 	}
 
-	public int getShowTimeStartTime() {
+	public Integer getShowTimeStartTime() {
 		return this.starttime;
 	}
 	
@@ -130,17 +148,56 @@ public class ShowTime implements Comparable <ShowTime>{
 		System.out.println("==========");
 	}
 
-@Override
-public int compareTo(ShowTime other) {
-	//changed this to getShowTimeDate
-	int compared = this.getShowTimeDate().compareTo(other.getShowTimeDate());
-	return compared;
-}
-
-
 	
+//	static Comparator<ShowTime> getShowTimeComparator(){
+//		return new Comparator<ShowTime>() {
+//			public int compare(ShowTime o1, ShowTime o2) {
+//				
+//				if (o1.getMovieTitle()==o2.movietitle && o1.cineplexname==o2.cineplexname && o1.cineplexcode==o2.cineplexcode
+//						&& o1.cinemacode==o2.cinemacode && o1.date ==o2.date && o1.starttime == o2.starttime)
+//					return 0;
+//				else return 1;
+//			}
+//		};	
+//	}
+
+	static Comparator<ShowTime> getDateComparator(){
+		return new Comparator<ShowTime>() {
+			public int compare(ShowTime o1, ShowTime o2) {
+				int compared = o1.yy.compareTo(o2.yy);
+				if (compared == 0) {
+					compared=o1.mm.compareTo(o2.mm);
+					if (compared==0) {
+						compared=o1.dd.compareTo(o2.dd);
+					}
+				}
+				
+				return compared;
+			}
+		};	
+	}
+	
+	static Comparator<ShowTime> getTimeComparator(){
+		return new Comparator<ShowTime>() {
+			public int compare(ShowTime o1, ShowTime o2) {
+					return o1.getShowTimeStartTime().compareTo(o2.getShowTimeStartTime());
+			}
+		};	
+	}
+	
+	
+
+	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectReader or = new ObjectReader(showtimeDatabase);
+		showtimelist = or.initialiseDataList(showtimelist);
+	}
+	
+	public static void updateDatabase() throws FileNotFoundException, IOException {
+		ObjectWriter ow = new ObjectWriter(showtimeDatabase);
+		ow.updateDataList(showtimelist);
+	}
+	
+
+
 }
-
-
-
 

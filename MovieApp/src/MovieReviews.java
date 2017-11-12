@@ -11,20 +11,20 @@ import java.util.List;
 public class MovieReviews implements Serializable{
 
 	private static final long serialVersionUID = 5368997632500891145L;
-	private int movieID;
+	private String movieID;
 	private double rating;
 	private String review;
 	public static List<MovieReviews> reviewslist = new ArrayList<MovieReviews>();
 	public static final File reviewDatabase = new File ("MovieReviews.txt");
 	
-	public MovieReviews(int movieID, double rating, String review) {
+	public MovieReviews(String movieID, double rating, String review) {
 		this.movieID=movieID;
 		this.rating = rating;
 		this.review = review;
 		reviewslist.add(this);
 	}
 
-	public int getmovieID() {
+	public String getmovieID() {
 		return movieID;
 	}
 	public double getRating(){

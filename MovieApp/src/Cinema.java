@@ -14,7 +14,7 @@ public class Cinema {
 	public Cinema(CinemaTypeEnum  cinematypeenum, String cinemacode, int rows, int cols){
 		this.cinematype = cinematypeenum;
 		this.cinemacode = cinemacode;
-		this.calendar = new Timetable[31];
+		this.calendar = new Timetable[365];
 		this.numberofrows = rows;
 		this.numberofcols = cols;
 		//set the date and day of each slot of the timetable

@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 enum MovieTypeEnum {
 	_3D, BB, digital
@@ -20,7 +24,7 @@ enum StatusEnum {
 
 public class Movie implements Serializable {
 	private static final long serialVersionUID = -7025004981841146212L;
-	private int movieID;
+	private String movieID;
 	private int duration;
 	private String title;
 	private StatusEnum status;
@@ -36,7 +40,7 @@ public class Movie implements Serializable {
 	public static final File movieDatabase = new File ("Movie.txt");
 
 	
-	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {
+	public Movie(String movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {
 		this.movieID = movieID;
 		movietype =movieType;
 		this.duration = duration;
@@ -47,10 +51,10 @@ public class Movie implements Serializable {
 		this.cast=cast;
 		this.synopsis = synopsis;
 		//average rating
-		averageRating = this.getAverageRating();
+		setAverageRating(this.fetchAverageRating());
 		//adding all the relevant reviews into reviews array
 		for (MovieReviews x : MovieReviews.reviewslist) {
-			if (x.getmovieID()==movieID)
+			if (x.getmovieID().equals(movieID))
 				reviews.add(x);
 		}
 		movielist.add(this);
@@ -64,16 +68,26 @@ public class Movie implements Serializable {
 		return status;
 	}
 	
-	public int getMovieID() {
+	public String getMovieID() {
 		return movieID;
+	}
+	
+	public double getAverageRating() {
+		return averageRating;
 	}
 	
 	public void addMovieReview(double rating, String review) {
 		MovieReviews mr = new MovieReviews(movieID, rating, review);
 		reviews.add(mr);
+		setAverageRating(this.fetchAverageRating());
 	}
 	
-	public double getAverageRating() {
+	
+	public void setAverageRating(double averageRating) {
+		this.averageRating = averageRating;
+	}
+	
+	public double fetchAverageRating() {
 		double avgrating;
 		double sum = 0;
 		int ratingcount =  reviews.size();
@@ -105,13 +119,13 @@ public class Movie implements Serializable {
 		System.out.println("Movie Status Updated! Movie Status is now " +getStatus());
 	}
 	
-	public static Movie searchMovie(int ID) throws NullPointerException {
+	public static Movie searchMovie(String ID) throws Exception {
 		
 		for (Movie x : Movie.movielist) {
-			if (x.getMovieID() == ID)
+			if (x.getMovieID().equals(ID))
 				return x;
 		}
-			throw new NullPointerException ("movieID not found");
+			throw new Exception ("movieID not found");
 		
 	}
 	
@@ -123,10 +137,6 @@ public class Movie implements Serializable {
 		return movietype;
 	}
 
-	public void addReview(Double rating, String review) {
-		new MovieReviews(movieID, rating, review);
-		averageRating=this.getAverageRating();
-	}
 	
 	public double getSales() {
 		return totalSales;
@@ -142,9 +152,74 @@ public class Movie implements Serializable {
 	}
 	
 	public void removeShowTimeFromMovie(ShowTime st){
-		//howard need to remove showtime from movie here
+		int showtime_index = movieShowTime.lastIndexOf(st);
+		movieShowTime.remove(st);
+		ShowTime.showtimelist.remove(st);
+		ShowTime.showtimelist.remove(st);
+	}
+		
+	public void displayShowTimes(){
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		List<ShowTime> temp_list = movieShowTime;
+		int i= temp_list.size()-1;
+		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available
+		
+		if (movieShowTime.isEmpty()){
+			System.out.println("No Showtime available");
+			return;
+		}
+		else {
+			Collections.sort(temp_list,ShowTime.getDateComparator());
+			System.out.println(" -ShowTime- ");
+			for (ShowTime x: temp_list) {
+				temp_date.add(x.getShowTimeDate());
+			}
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(temp_date);
+			temp_date.clear();
+			temp_date.addAll(s);
+
+//			List<String> temp_date = temp.stream().distinct().collect(Collectors.toList());
+
+	  		for(int j = 0; j < temp_date.size();j++) {
+	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
+	  			String theDate = temp_date.get(j);
+	  			for(ShowTime x : temp_list) {
+	  				if (theDate.equals(x.getShowTimeDate()))
+	  					dailyshowtime.add(x);
+	  			}
+	  			Collections.sort(dailyshowtime,ShowTime.getTimeComparator());
+	  			System.out.println(theDate);
+	  			System.out.println("----------");
+	  			for(ShowTime x: dailyshowtime) {
+	  				int start_time = x.getShowTimeStartTime();
+	  				int end_time = start_time + this.getDuration();
+	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
+	  			}
+	  		}
+		}
 	}
 	
+	public void displayShowTimes(String date){
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
+		  			for(ShowTime x : movieShowTime) {
+		  				if (date.equals(x.getShowTimeDate()))
+		  					dailyshowtime.add(x);
+	  			}
+	  			Collections.sort(dailyshowtime,ShowTime.getTimeComparator());
+	  			System.out.println("----------");
+	  			for(ShowTime x: dailyshowtime) {
+	  				int start_time = x.getShowTimeStartTime();
+	  				int end_time = start_time + this.getDuration();
+	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
+	  			}
+	  		}
+	
+	
+	
+	
+
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(movieDatabase);
 		movielist = or.initialiseDataList(movielist);
@@ -155,69 +230,4 @@ public class Movie implements Serializable {
 		ow.updateDataList(movielist);
 	}
 	
-	public void displayShowTimes(){
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		List<ShowTime> temp_list = movieShowTime;
-		int i= temp_list.size()-1;
-		List<String> temp_date = new ArrayList<String>();
-		if (movieShowTime.isEmpty()){
-			System.out.println("No Showtime available");
-			return;
-		}
-		else {
-			System.out.println(" -ShowTime- ");
-			//check with howard if this one is ok
-			//format for below is aso dd-MM-yyyy
-			//temp_date.add(temp_list.get(i--).getShowTimeDate());
-			temp_date.add(dateFormat.format(temp_list.get(i--).getDate().getTime()));
-			
-			while(i>=0) {
-		    	String date = dateFormat.format(temp_list.get(i).getDate().getTime());
-				if (!temp_date.contains(date))
-					temp_date.add(date);
-				i--;
-				}
-	  		Collections.sort(temp_date);
-	  		for(int j = 0; j < temp_date.size();j++) {
-	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
-	  			String theDate = temp_date.get(j);
-	  			for(ShowTime x : temp_list) {
-	  				if (theDate.equals(dateFormat.format(x.getDate().getTime())))
-	  					dailyshowtime.add(x);
-	  			}
-	  			Collections.sort(dailyshowtime);
-	  			System.out.println(theDate);
-	  			System.out.println("----------");
-	  			for(ShowTime x: dailyshowtime) {
-	  				int start_time = x.getShowDateTime();
-	  				int end_time = start_time + x.getMovie().duration;
-	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
-	  			}
-	  		}
-		}
-	}
-	
-	static Comparator<Movie> getTitleComparator(){
-		return new Comparator<Movie>() {
-			public int compare(Movie o1, Movie o2) {
-				return o1.getTitle().compareTo(o2.getTitle());
-			}
-		};	
-	}
-			
-	static Comparator<Movie> getRatingComparator(){
-		return new Comparator<Movie>() {
-			public int compare(Movie o1, Movie o2) {
-				return Double.compare(o2.averageRating, o1.averageRating);
-			}
-		};
-	}
-		
-	static Comparator<Movie> getSalesComparator(){
-		return new Comparator<Movie>() {
-			public int compare(Movie o1, Movie o2) {
-				return Double.compare(o2.getSales(), o1.getSales());
-			}
-		};
-	}
 }
