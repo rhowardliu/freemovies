@@ -35,11 +35,7 @@ public class Movie implements Serializable {
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
 	
-<<<<<<< HEAD
-	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast) {
-=======
-	public Movie(int movieID, String title, int duration, StatusEnum status, String director, List<String> cast, String synopsis) {
->>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
+	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {
 		this.movieID = movieID;
 		movietype =movieType;
 		this.duration = duration;
