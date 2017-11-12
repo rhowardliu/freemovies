@@ -135,7 +135,7 @@ public class Execute {
 		super ("Incorrect username/password.");
 		}
 	}
-	public static StatusEnum getInputStatus() {
+	public static StatusEnum getInputStatus() { //transferred to admin
 		System.out.println("1) Coming Soon");
 		System.out.println("2) Preview");
 		System.out.println("3) Now Showing");
@@ -159,26 +159,22 @@ public class Execute {
 		return null;
 	}
 	
-	public static MovieTypeEnum getInputMovieType() {
-		System.out.println("1) 3D");
-		System.out.println("2) Blockbuster");
-		System.out.println("3) Digital");
+	public static MovieTypeEnum getInputMovieType() { //transferred to admin
+		System.out.println("(1) 3D");
+		System.out.println("(2) Blockbuster");
+		System.out.println("(3) Digital");
+		System.out.println("Enter movie type: ");
 		Scanner sc = new Scanner(System.in);
 		int i = sc.nextInt();
 		switch(i) {
-		case 1:
-			return MovieTypeEnum._3D;
-		case 2:
-			return MovieTypeEnum.BB;
-			
-		case 3:
-			return MovieTypeEnum.digital;
-			
+			case 1: return MovieTypeEnum._3D;
+			case 2: return MovieTypeEnum.BB;	
+			case 3: return MovieTypeEnum.digital;
+			default: { System.out.println("Invalid choice! Set to Digital by default."); return MovieTypeEnum.digital; }	
 		}
-		return null;
 	}
 	
-	public static Movie createMovie() {
+	public static Movie createMovie() { //transferred to admin
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Movie Name: ");
 		String title = sc.next();
@@ -202,7 +198,7 @@ public class Execute {
 		return newMovie;
 	}
 	
-	public static void updateStatus(Movie movie) {
+	public static void updateStatus(Movie movie) { //transferred to admin
 		System.out.println("The current status of " +movie.getTitle() +" is : " +movie.getStatus());
 		System.out.println("Update to:");
 		System.out.println("1) Coming Soon");
@@ -227,7 +223,7 @@ public class Execute {
 		}
 	}
 	
-	public static void updateMovieType(Movie movie) {
+	public static void updateMovieType(Movie movie) { //not in admin. need transfer over
 		System.out.println("The current Movie Type of " +movie +" is : " +movie.getMovieType());
 		System.out.println("Update to:");
 		System.out.println("1) 3D");
@@ -247,7 +243,7 @@ public class Execute {
 			break;
 		}
 	}
-	public static void switchDayType(Cineplex p) {
+	public static void switchDayType(Cineplex p) { //not in admin. need this for the addHoliday method 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Cineplex: ");//ideally code should not be specific 
 		Cinema[] cinema = p.getCinemas();

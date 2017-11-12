@@ -34,6 +34,7 @@ public class Movie implements Serializable {
 	private MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
 	public static final File movieDatabase = new File ("Movie.txt");
+
 	
 	public Movie(int movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {
 		this.movieID = movieID;
@@ -154,33 +155,6 @@ public class Movie implements Serializable {
 		ow.updateDataList(movielist);
 	}
 	
-	public static void updateStatus(int statuschoice) {
-		System.out.println("The current status of " +movie.getTitle() +" is : " +movie.getStatus());
-		System.out.println("Update to:");
-		System.out.println("1) Coming Soon");
-		System.out.println("2) Preview");
-		System.out.println("3) Now Showing");
-		System.out.println("4) End of Show");
-		Scanner sc = new Scanner(System.in);
-		int statusChoice = sc.nextInt();
-		switch (statusChoice) {
-		case 1:
-			movie.updateMovieStatus(StatusEnum.ComingSoon);
-			break;
-		case 2:
-			movie.updateMovieStatus(StatusEnum.Preview);
-			break;
-		case 3:
-			movie.updateMovieStatus(StatusEnum.NowShowing);
-			break;
-		case 4:
-			movie.updateMovieStatus(StatusEnum.EndOfShow);
-			break;
-		}
-	}
-	
-	
-
 	public void displayShowTimes(){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		List<ShowTime> temp_list = movieShowTime;
