@@ -129,7 +129,6 @@ public class Admin extends Account {
 		System.out.println("(2) Preview");
 		System.out.println("(3) Now Showing");
 		System.out.println("(4) End of Show");
-		Scanner sc = new Scanner(System.in);
 		int newstatus = sc.nextInt();
 		switch (newstatus) {
 			case 1: selectedmovie.updateMovieStatus(StatusEnum.ComingSoon); break;
