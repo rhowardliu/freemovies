@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.text.SimpleDateFormat;
 
 public class MovieGoer extends Account {
@@ -29,9 +30,129 @@ public class MovieGoer extends Account {
 		moviegoerlist.add(this);
 
 	}
+	public void movieGoerMainControl() {
+		System.out.println("===== Welcome! " +name +"=====");
+		do {
+		System.out.println("Select option:");
+		System.out.println("(1) Search movie");
+		System.out.println("(2) View Booking History");
+		System.out.println("(3) Log out");
+		
+		Scanner sc = new Scanner(System.in);
+		int mgmainmenuchoice = sc.nextInt();
+		
+			switch (mgmainmenuchoice){
+			case 1: this.searchMovie(); break;
+			case 2: this.adminShowTimeControl(); break;
+			case 3: this.adminSystemControl(); break;
+			case 4: System.out.println("Logging out..."); return;
+			default: System.out.println("Invalid choice! Logging out..."); return; 
+			}
+		} while (true);
+	}
 	
-	public void mgMainControl(){
-		//add the control stuff here
+	public void searchMovie() {
+		//need to loop this
+		//should i create a if selection is out of range...blah, okay la if got time
+		
+		System.out.println("Search Movie By: ");
+		System.out.println("(1) Movie Title");
+		System.out.println("(2) Overall Reviewers' Rating");
+		System.out.println("(3) Ticket Sales");
+		Scanner sc = new Scanner(System.in);
+		int movieListChoice = sc.nextInt();
+		System.out.println("Status of Movie");
+		System.out.println("(1) Coming Soon");
+		System.out.println("(2) Preview");
+		System.out.println("(3) Now Showing");
+		int statusChoice = sc.nextInt();
+		System.out.println("(1) List everything");
+		System.out.println("(2) List Top 5");
+		int listChoice = sc.nextInt();
+		StatusEnum status = null;
+		switch (statusChoice) {
+		case 1:
+			status = StatusEnum.ComingSoon;
+			break;
+		case 2:
+			status = StatusEnum.Preview;
+			break;
+		case 3:
+			status = StatusEnum.NowShowing;
+			break;
+		}
+		
+		switch (movieListChoice) {
+		case 1:
+			if(listChoice == 1) {
+				int i=1;
+				for (Movie movie : MovieListing.getMovieListByTitle(status)) {
+					System.out.println(i +") " +movie.getTitle() );
+				}
+			}
+			if (listChoice == 2) {
+					for (int j=0;j<5;j++) {
+						System.out.println(j +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
+					}
+				}
+			getMovieChoice(MovieListing.getMovieListByTitle(status));
+			break;
+		case 2:
+			if(listChoice == 1) {
+				int i=1;
+				for (Movie movie : MovieListing.getMovieListByRating(status)) {
+					System.out.println(i +") " +movie.getTitle() );
+				}
+			}
+			if (listChoice == 2) {
+					for (int j=0;j<5;j++) {
+						System.out.println(j +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
+					}
+				}
+			getMovieChoice(MovieListing.getMovieListByRating(status));
+			break;
+		case 3:
+			if(listChoice == 1) {
+				int i=1;
+				for (Movie movie : MovieListing.getMovieListBySales(status)) {
+					System.out.println(i +") " +movie.getTitle() );
+				}
+			}
+			if (listChoice == 2) {
+					for (int j=0;j<5;j++) {
+						System.out.println(j +") " +MovieListing.getMovieListBySales(status).get(j).getTitle());	
+					}
+				}
+			getMovieChoice(MovieListing.getMovieListBySales(status));
+			break;
+		}
+
+	}
+	
+	public void getMovieChoice(List<Movie> movieList) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Movie Choice: ");
+		int i = sc.nextInt();
+		movieList.get(i-1).getMovieInfo();
+		movieList.get(i-1).getAverageRating();
+		System.out.println(" ");
+		System.out.println("(1) View Individual Reviews and Ratings");
+		System.out.println("(2) View ShowTimes");
+		System.out.println("(3) Return ");
+		int choice = sc.nextInt();
+		switch (choice) {
+		case 1:
+			
+			break;
+		case 2:
+			movieList.get(i-1).displayShowTimes();
+			break;
+		case 3:
+			searchMovie();
+			break;
+		}
+		
+			
 	}
 	
 	public String getName(){

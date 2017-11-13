@@ -31,7 +31,7 @@ public class Movie implements Serializable {
 	private String director;
 	private List<String> cast;
 	private String synopsis;
-	private ArrayList<MovieReviews> reviews;
+	private List<MovieReviews> reviews;
 	private double averageRating;
 	private double totalSales;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
