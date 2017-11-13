@@ -87,7 +87,7 @@ public class MovieGoer extends Account {
 		case 1:
 			if(listChoice == 1) {
 				int i=1;
-				for (Movie movie : MovieListing.getMovieListByTitle(status)) {
+				for (Movie movie : MovieListing.getMovieListByTitle(status)) { //getMovieListByTitle will return a array of movies that has same status as user input and sorted by title
 					System.out.println(i +") " +movie.getTitle() );
 				}
 			}
