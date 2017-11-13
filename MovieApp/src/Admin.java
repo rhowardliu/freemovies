@@ -113,11 +113,7 @@ public class Admin extends Account {
 	public void updateMovieDetails(){
 		//ellen need fill up code over here
 		//need a switch statement here. one of the switch options should include updateMovieStatus method (found right below this method)
-	}
-
-	public static void updateMovieStatus() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println(" ===== Update movie ===== ");
 		Movie selectedmovie=null;
 		do {
 			System.out.println("Enter MovieID to update: ");
@@ -130,6 +126,123 @@ public class Admin extends Account {
 		} while(selectedmovie!=null);
 		
 		
+		System.out.println("(1) Movie Title");
+		System.out.println("(2) Movie Status");
+		System.out.println("(3) Movie Type ");
+		System.out.println("(4) Movie Director ");
+		System.out.println("(5) Movie Cast ");
+		System.out.println("(6) Movie Synopsis ");
+		System.out.println("(7) Movie Duration ");
+		System.out.println("(8) Display Updated Movie Details ");
+		System.out.println("(9) Quit ");
+		System.out.println("Select Movie Detail to update: ");
+		int detailChoice = sc.nextInt();
+		boolean quit = false;
+		while (quit = false) {
+			switch(detailChoice) {
+			case 1:
+				System.out.println("Enter New Movie Title:");
+				String newMovieTitle = sc.next();
+				selectedmovie.setMovieTitle(newMovieTitle);
+				System.out.println("Movie Title has been updated");
+				break;
+			case 2:
+				updateMovieStatus(selectedmovie);
+				System.out.println("Movie Status has been updated");
+				break;
+			case 3:
+				selectedmovie.setMovieType(getInputMovieType());
+				System.out.println("Movie Type has been updated");
+				break;
+			case 4:
+				System.out.println("Enter New Movie Director:");
+				String newMovieDirector = sc.next();
+				selectedmovie.setMovieDirector(newMovieDirector);
+				System.out.println("Movie Director has been updated");
+				break;
+			case 5:
+				System.out.println("Current Cast Input:");
+				for (int i = 0; i < 10; i++){
+					System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
+				}
+				System.out.println("(1) Update Individual Cast Member:");
+				System.out.println("(2) Re-enter All Cast Members:");
+				System.out.println("Enter Choice:");
+				int castChoice = sc.nextInt();
+				switch (castChoice) {
+				case 1:
+					updateIndividualCast(selectedmovie);
+					break;
+					
+				case 2:
+					System.out.println("Enter Cast Names:");
+					ArrayList<String> moviecastlist = new ArrayList<String>();
+					while(sc.hasNextLine()){
+						moviecastlist.add(sc.next());
+				      }
+					selectedmovie.setMovieCast(moviecastlist);
+					break;
+				}
+				
+				break;
+			case 6:
+				System.out.println("Enter New Movie Synopsis:");
+				String newMovieSynopsis = sc.next();
+				selectedmovie.setMovieSynopsis(newMovieSynopsis);
+				System.out.println("Movie Synopsis has been updated");
+				break;
+			case 7:
+				System.out.println("Enter New Movie Duration:");
+				int newMovieDuration = sc.nextInt();
+				selectedmovie.setMovieDuration(newMovieDuration);
+				System.out.println("Movie Duration has been updated");
+				break;
+			case 8:
+				selectedmovie.getMovieInfo();
+				break;
+			case 9:
+				quit = true;
+				break;
+			}
+		}
+	
+	}
+	
+	public static void updateIndividualCast(Movie selectedmovie) {
+		Scanner sc = new Scanner(System.in);
+		char ans;
+		do {
+			System.out.println("Enter Index of Cast Name to be updated:");
+			int index = sc.nextInt();
+			System.out.println("(1) Delete Cast");
+			System.out.println("(2) Re-enter Cast Name");
+			int choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				selectedmovie.getCast().remove(index-1);
+				System.out.println("Cast has been deleted");
+				break;
+			case 2:
+				System.out.println("Enter Updated Cast Name: ");
+				String castName = sc.next();
+				selectedmovie.getCast().set(index-1, castName);
+				System.out.println("Cast Name has been updated ");
+				break;
+			}
+			System.out.println("Updated Cast Input:");
+			for (int i = 0; i < 10; i++){
+				System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
+			}
+			System.out.println("Update another individual cast member? (Y/N)");
+			ans = sc.next().charAt(0);
+			
+		} while (ans != 'n' || ans != 'N');
+		
+	}
+
+	public static void updateMovieStatus(Movie selectedmovie) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println(" ===== Update movie ===== ");
 		System.out.println("The current status of " + selectedmovie.getTitle() +" is : " + selectedmovie.getStatus());
 		System.out.println("Update to:");
 		System.out.println("(1) Coming Soon");

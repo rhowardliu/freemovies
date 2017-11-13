@@ -60,10 +60,34 @@ public class Movie implements Serializable {
 		movielist.add(this);
 		
 	}
+	public void setMovieTitle(String movieTitle) {
+		title = movieTitle;
+	}
+	
+	public void setMovieType(MovieTypeEnum movieType) {
+		movietype = movieType;
+	}
+	
+	public void setMovieDirector (String movieDirector) {
+		director = movieDirector;
+	}
+	
+	public void setMovieDuration (int movieDuration) {
+		duration = movieDuration;
+	}
+	
+	public void setMovieSynopsis (String movieSynopsis) {
+		synopsis = movieSynopsis;
+	}
+	
+	public void setMovieCast (List<String> movieCast) {
+		cast = movieCast;
+	}
 	
 	public int getDuration() {
 		return duration;
 	}
+	
 	public StatusEnum getStatus() {
 		return status;
 	}
@@ -74,6 +98,10 @@ public class Movie implements Serializable {
 	
 	public double getAverageRating() {
 		return averageRating;
+	}
+	
+	public List<String> getCast(){
+		return cast;
 	}
 	
 	public void addMovieReview(double rating, String review) {
@@ -103,14 +131,17 @@ public class Movie implements Serializable {
 	}
 	
 	public void getMovieInfo() {
+		//Ellen added some stuff here. kiv
 		System.out.println("Movie title: " + this.title);
+		System.out.println("Movie duration: " + this.duration);
+		System.out.println("Movie type: " + this.movietype);
 		System.out.println("Status: " + this.status);
 		System.out.println("Synopsis" + this.synopsis);
 				System.out.println("Directed by: " + director);
 		System.out.println("Cast(s): ");
 		for (int i = 0; i < 10; i++){
 			System.out.println((i+1) + ". " + cast.get(i));
-		}
+		} //this part might generate some errors. not sure yet. kiv.
 		System.out.println("\n");
 	}
 	
