@@ -26,7 +26,7 @@ public class ShowTime implements Serializable {
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
-	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, DayTypeEnum daytype, int starttime, int cinemarows, int cinemacols) {
+	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, int cinemarows, int cinemacols) throws Exception {
 		this.movietitle = movietitle;
 		this.cineplexname = cineplexname;
 		this.cineplexcode = cineplexcode;
@@ -40,7 +40,14 @@ public class ShowTime implements Serializable {
 			for (int j=1; j<cinemacols; j++) 
 				seatLayout [i][j] = new Ticket(i,j);
 		}
+		
+		this.daytype = Timetable.getTimetableByDate(date).getDayType();
+		
 		showtimelist.add(this);
+	}
+	
+	public void updateShowTime() throws Exception {
+		this.daytype = Timetable.getTimetableByDate(date).getDayType();
 	}
 
 	public Integer getShowTimeStartTime() {
