@@ -9,12 +9,17 @@ public class PriceSetting {
 	private static double ticketPremium3D = 3.0;
 	private static double ticketPremiumBB = 2.0;
 	private static double ticketPremiumHol = 4.0;
+	private static double ticketPlatinum = 2.0;
 	private static List<String> publicHol;
 	
 	public static double calPrice(MovieTypeEnum movietype, AgeCatEnum agecat,
-	DayTypeEnum daytype) {
+	DayTypeEnum daytype, CinemaTypeEnum cinematype) {
 		//Initialize price
 		double price = 0;
+		
+		//calculate price based on cinema type
+		if (cinematype == CinemaTypeEnum._platinum)
+			price += ticketPlatinum;
 		
 		//calculate price base on whether it is weekday or PH
 		if (daytype == DayTypeEnum.PH)
@@ -92,6 +97,14 @@ public class PriceSetting {
 	}
 	public static List<String> getPublicHol() {
 		return publicHol;
+	}
+
+	public static double getTPPlatinum() {
+		return ticketPlatinum;
+	}
+
+	public static void setTPPlatinum(double ticketPlatinum) {
+		PriceSetting.ticketPlatinum = ticketPlatinum;
 	}
 
 }

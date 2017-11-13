@@ -277,6 +277,7 @@ public class Admin extends Account {
 		} while(true);
 	}
 	
+	@SuppressWarnings("null")
 	public void updateShowTime(int i) throws Exception{
 		if (i == 1)
 			System.out.println(" ===== Add Showtime =====");
@@ -298,8 +299,12 @@ public class Admin extends Account {
 		for (int j = 0; j < tempcinemaarray.length ; j++)
 			System.out.println("(" + j+1 + ")" + tempcinemaarray[j].getCinemaCode());
 		int cinemachoice = sc.nextInt();
+		CinemaTypeEnum cinematype = CinemaTypeEnum._standard;
 		String cinemacode = tempcinemaarray[cinemachoice - 1].getCinemaCode();
 		Timetable [] tempcalendararray = tempcinemaarray[cinemachoice - 1].getCalendar();
+		
+		if (cinemachoice == 1)
+			cinematype=CinemaTypeEnum._platinum;
 		
 		Timetable tt = null;
 		String date;
@@ -335,7 +340,8 @@ public class Admin extends Account {
 		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
 		System.out.println("Select timeslot:");
 		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols());
+		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, starttime, 
+				tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 		boolean available;
 		if (i == 1){ //if admin wanted to add showtime		
 	
@@ -441,7 +447,8 @@ public class Admin extends Account {
 			System.out.println("(5) Premium 3D");
 			System.out.println("(6) Premium Blockbuster");
 			System.out.println("(7) Premium Holiday");
-			System.out.println("(8) Quit");
+			System.out.println("(8) Platinum");
+			System.out.println("(9) Quit");
 			System.out.println("Enter Price Category to be updated: ");
 			int catChoice = sc.nextInt();
 			switch (catChoice) {
@@ -488,6 +495,12 @@ public class Admin extends Account {
 				System.out.println("Premium Holiday Category price has been updated to " +PriceSetting.getTPHoliday());
 				break;
 			case 8:
+				System.out.println("Enter new price for Cinema Platinum Category");
+				double platinumPrice = sc.nextInt();
+				PriceSetting.setTPPlatinum(platinumPrice);
+				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
+				break;
+			case 9:
 				quit = true;
 				break;
 			}

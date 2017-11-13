@@ -16,6 +16,7 @@ public class ShowTime implements Serializable {
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
+	private CinemaTypeEnum cinematype;
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
@@ -23,11 +24,13 @@ public class ShowTime implements Serializable {
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
-	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, int cinemarows, int cinemacols) throws Exception {
+	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
+			int cinemarows, int cinemacols, CinemaTypeEnum cinematype) throws Exception {
 		this.movietitle = movietitle;
 		this.cineplexname = cineplexname;
 		this.cineplexcode = cineplexcode;
 		this.cinemacode = cinemacode;
+		this.cinematype = cinematype;
 		this.date = date;
 		this.daytype = null;
 		this.starttime = starttime;
@@ -140,7 +143,7 @@ public class ShowTime implements Serializable {
 				System.out.println("Timetable not found");
 				return;
 			}
-			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype));
+			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
 			//write buy more tickets?
 			//display info first then
 			//write confirm payment?
