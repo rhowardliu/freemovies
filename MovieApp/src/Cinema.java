@@ -4,6 +4,11 @@ enum CinemaTypeEnum {
 	_standard, _platinum
 }
 
+/**
+ * Cinema class contains an array of Timetable objects, its cinema type (CinemaTypeEnum), cinema code and number of rows and columns in the cinema
+ * @author user
+ *
+ */
 public class Cinema {
 	private Timetable [] calendar; // timetable is the schedule for the day
 	private CinemaTypeEnum cinematype;
@@ -11,6 +16,13 @@ public class Cinema {
 	private int numberofrows;
 	private int numberofcols;
 	
+	/**
+	 * Constructor for Cinema class
+	 * @param cinematypeenum
+	 * @param cinemacode
+	 * @param rows
+	 * @param cols
+	 */
 	public Cinema(CinemaTypeEnum  cinematypeenum, String cinemacode, int rows, int cols){
 		this.cinematype = cinematypeenum;
 		this.cinemacode = cinemacode;
@@ -33,8 +45,6 @@ public class Cinema {
 			calendar[i] = new Timetable(calTemp);
 		}
 	}
-
-
 
 	public CinemaTypeEnum getCinemaType(){
 		return this.cinematype;

@@ -10,6 +10,12 @@ enum AgeCatEnum{
 	student, adult, child, senior
 }
 
+/**
+ * Tickets created automatically when a ShowTime is created
+ * When a MovieGoer books a Ticket through ShowTime, the Ticket will be assigned a price and will be assigned to the MovieGoer's transactionhistory
+ * @author user
+ *
+ */
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 9031951939120214545L;
@@ -17,6 +23,7 @@ public class Ticket implements Serializable {
 	private String userID;
 	
 	private String movietitle;
+	private String movieID;
 	private String date;
 	private int seatrow, seatcol;
 	private String transactionID;
@@ -27,8 +34,9 @@ public class Ticket implements Serializable {
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
 	
-	public Ticket(String movietitle,String date,int seatrow, int seatcol) {
+	public Ticket(String movietitle, String movieID, String date,int seatrow, int seatcol) {
 		this.movietitle=movietitle;
+		this.movieID = movieID;
 		this.date=date;
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;

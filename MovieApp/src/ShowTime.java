@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
+/**
+ * ShowTime class is created whenever the admin adds a ShowTime to a cinema
+ * ShowTime class creates an array of Ticket objects automatically when it is constructed
+ * ShowTime contains information of the movie title it it is screening, show date, show start time, and showtime location
+ * @author user
+ *
+ */
 public class ShowTime implements Serializable {
 
 	private static final long serialVersionUID = 2001719944845781739L;
@@ -16,6 +23,7 @@ public class ShowTime implements Serializable {
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
+	private String movieID;
 	private CinemaTypeEnum cinematype;
 	private String date;
 	private DayTypeEnum daytype;
@@ -24,9 +32,10 @@ public class ShowTime implements Serializable {
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
-	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
+	public ShowTime(String movietitle, String movieID, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
 			int cinemarows, int cinemacols, CinemaTypeEnum cinematype) throws Exception {
 		this.movietitle = movietitle;
+		this.movieID = movieID;
 		this.cineplexname = cineplexname;
 		this.cineplexcode = cineplexcode;
 		this.cinemacode = cinemacode;
@@ -36,7 +45,7 @@ public class ShowTime implements Serializable {
 		this.starttime = starttime;
 		for (int i=1; i<cinemarows; i++) {
 			for (int j=1; j<cinemacols; j++) 
-				seatLayout [i][j] = new Ticket(movietitle,date,i,j);
+				seatLayout [i][j] = new Ticket(movietitle,movieID,date,i,j);
 		}
 		
 		showtimelist.add(this);
@@ -108,7 +117,12 @@ public class ShowTime implements Serializable {
 	public String getMovieTitle() {
 		return this.movietitle;
 	}
-
+	
+	/**
+	 * Method request user to input which seat row and column he wants, along with the age category of the person he is booking for
+	 * Method will calculate the price of the ticket based on the cinema type, movie type, day type and the age of the person 
+	 * After which, after the movie goer confirms booking of Ticket, a transaction id will be generated and the ticket purchase will be recorded under the user's transaction history
+	 */
 	//need to change uml diagram. void, not Ticket.
 	public void bookTicket() { 
 		//first algo ask the user which seat he wants
@@ -166,6 +180,11 @@ public class ShowTime implements Serializable {
 		}
 	}
 	
+	/**
+	 * Prints out booking details, including price of ticket
+	 * @param row
+	 * @param col
+	 */
 	public void printTicketShowTimeDetails(int row, int col){
 		System.out.println("==========");
 		System.out.println("Booking details:");
