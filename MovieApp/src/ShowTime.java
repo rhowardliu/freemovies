@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
+/**
+ * ShowTime class is created whenever the admin adds a ShowTime to a cinema
+ * ShowTime class creates an array of Ticket objects automatically when it is constructed
+ * ShowTime contains information of the movie title it it is screening, show date, show start time, and showtime location
+ * @author user
+ *
+ */
 public class ShowTime implements Serializable {
 
 	private static final long serialVersionUID = 2001719944845781739L;
@@ -105,7 +112,12 @@ public class ShowTime implements Serializable {
 	public String getMovieTitle() {
 		return this.movietitle;
 	}
-
+	
+	/**
+	 * Method request user to input which seat row and column he wants, along with the age category of the person he is booking for
+	 * Method will calculate the price of the ticket based on the cinema type, movie type, day type and the age of the person 
+	 * After which, after the movie goer confirms booking of Ticket, a transaction id will be generated and the ticket purchase will be recorded under the user's transaction history
+	 */
 	//need to change uml diagram. void, not Ticket.
 	public void bookTicket() { 
 		//first algo ask the user which seat he wants
@@ -145,6 +157,11 @@ public class ShowTime implements Serializable {
 		}
 	}
 	
+	/**
+	 * Prints out booking details, including price of ticket
+	 * @param row
+	 * @param col
+	 */
 	public void printTicketShowTimeDetails(int row, int col){
 		System.out.println("==========");
 		System.out.println("Booking details:");
