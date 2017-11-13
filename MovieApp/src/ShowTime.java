@@ -57,7 +57,14 @@ public class ShowTime implements Serializable {
 	public String getShowTimeDate(){
 		return this.date;
 	}
-	
+
+	public String getCineplexcode() {
+		return cineplexcode;
+	}
+
+	public String getCinemacode() {
+		return cinemacode;
+	}
 
 	public void showSeatLayout() {
 		//****this one needd to change cos number of rows and cols are not assumed anymore
@@ -134,9 +141,7 @@ public class ShowTime implements Serializable {
 			} catch (Exception e) {
 				System.out.println("Movie ID not found");
 				return;
-			}
-			//need to convert String movietitle into Movie movie here again
-			
+			}			
 			try {
 				this.daytype=Timetable.getTimetableByDate(date).getDayType();
 			} catch (Exception e) {

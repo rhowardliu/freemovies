@@ -15,6 +15,7 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = 9031951939120214545L;
 
 	private String userID;
+	
 	private String movietitle;
 	private String date;
 	private int seatrow, seatcol;

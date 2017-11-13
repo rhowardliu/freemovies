@@ -194,6 +194,7 @@ public class MovieGoer extends Account {
 			  		if (theDate.equals(x.getDate()))
 			  			daytransaction.add(x);
 	  			}
+			  	System.out.println();
 		  		System.out.println(theDate);
 		  		int i = 1;
 		  		for (Ticket printx: daytransaction) {
