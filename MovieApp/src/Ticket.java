@@ -10,6 +10,12 @@ enum AgeCatEnum{
 	student, adult, child, senior
 }
 
+/**
+ * Tickets created automatically when a ShowTime is created
+ * When a MovieGoer books a Ticket through ShowTime, the Ticket will be assigned a price and will be assigned to the MovieGoer's transactionhistory
+ * @author user
+ *
+ */
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 9031951939120214545L;

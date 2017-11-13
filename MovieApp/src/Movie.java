@@ -22,6 +22,11 @@ enum StatusEnum {
 	ComingSoon, Preview, NowShowing, EndOfShow	
 }
 
+/**
+ * Movie class consist of movie ID, duration, title, show status, director name, cast list, synopsis, an array of Review objects, and total ticket sales for that movie
+ * @author user
+ *
+ */
 public class Movie implements Serializable {
 	private static final long serialVersionUID = -7025004981841146212L;
 	private String movieID;
@@ -104,12 +109,18 @@ public class Movie implements Serializable {
 		return cast;
 	}
 	
+	/**
+	 * Method to add a movie review to a Movie object
+	 * @param rating
+	 * @param review
+	 */
 	public void addMovieReview(double rating, String review) {
 		MovieReviews mr = new MovieReviews(movieID, rating, review);
 		reviews.add(mr);
 		setAverageRating(this.fetchAverageRating());
 	}
 	
+
 	public List<MovieReviews> getMovieReview() {
 		return reviews;
 	}
@@ -118,6 +129,10 @@ public class Movie implements Serializable {
 		this.averageRating = averageRating;
 	}
 	
+	/**
+	 * Recalculates the average movie rating and returns the value
+	 * @return
+	 */
 	public double fetchAverageRating() {
 		double avgrating;
 		double sum = 0;
@@ -133,6 +148,9 @@ public class Movie implements Serializable {
 		return avgrating;
 	}
 	
+	/**
+	 * Prints out the Movie object's info
+	 */
 	public void getMovieInfo() {
 		//Ellen added some stuff here. kiv
 		System.out.println("Movie title: " + this.title);
@@ -148,6 +166,7 @@ public class Movie implements Serializable {
 		System.out.println("\n");
 	}
 	
+
 	public List<ShowTime> getShowTimes() {
 		return movieShowTime;
 	}
@@ -157,6 +176,12 @@ public class Movie implements Serializable {
 		System.out.println("Movie Status Updated! Movie Status is now " +getStatus());
 	}
 	
+	/**
+	 * returns the corresponding Movie object for the movie id entered by the user
+	 * @param ID
+	 * @return
+	 * @throws Exception
+	 */
 	public static Movie searchMovie(String ID) throws Exception {
 		
 		for (Movie x : Movie.movielist) {
@@ -167,10 +192,15 @@ public class Movie implements Serializable {
 		
 	}
 	
+	/**
+	 * Updates the movie type (e.g. 3D, blockbuster) of the Movie object
+	 * @param movietypeenum
+	 */
 	public void updateMovieType(MovieTypeEnum movietypeenum) {
 		this.movietype = movietypeenum;
 		System.out.println("Movie Type Updated! Movie Type is now " +getMovieType());
 	}
+	
 	public MovieTypeEnum getMovieType() {
 		return movietype;
 	}
@@ -184,20 +214,30 @@ public class Movie implements Serializable {
 		return title;
 	}
 	
-
+	/**
+	 * adds a ShowTime object to the Movie object's array of ShowTimes
+	 * @param st
+	 */
 	public void addShowTimeToMovie(ShowTime st) {
 		movieShowTime.add(st);
 	}
 	
+	/**
+	 * Removes a ShowTime object from the Movie object's array of ShowTimes
+	 * @param st
+	 */
 	public void removeShowTimeFromMovie(ShowTime st){
 //		int showtime_index = movieShowTime.lastIndexOf(st);
 		movieShowTime.remove(st);
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
 	}
-		
+	
+	/**
+	 * Prints out the ShowTimes associated with the Movie 
+	 */
 	public void displayShowTimes(){
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		//SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		List<ShowTime> temp_list = movieShowTime;
 		int i= temp_list.size()-1;
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available

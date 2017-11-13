@@ -4,19 +4,41 @@ import java.util.List;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 
+/**
+ * Admin class derived from Account class
+ * Admin class has class methods that allow it extra priviledges to add/remove/update ShowTimes to Cinema classes, add/remove/update Movies to MovieListing class, and change pricing policies in PriceSetting class
+ * @author user
+ *
+ */
 public class Admin extends Account {
 
 	private static final long serialVersionUID = 6340675425878862000L;
 	private static final Admin INSTANCE = new Admin(); 
 	
+	/**
+	 * Constructor method for Admin object. It is simple userID = "admin", password = "pass" for login purposes
+	 */
 	private Admin () {
 		super("admin", "pass");
 	}
-		
+	
+	/**
+	 * Calls constructor for Admin object and returns the newly created Admin object to the main Execute class
+	 * @return
+	 */
 	public static Admin getInstance() {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Admin main control method that serves as the admin's main menu. It allows admin to select between
+	 * (1) Add/Update/Remove movies from movie listing
+	 * (2) Add/Remove cinema showtimes
+	 * (3) Configure system settings (add holiday dates, change pricing policy)
+	 * (4) Log out (i.e. returns control back to Execute class)
+	 * If invalid choice is selected, admin will be logged out by default
+	 * @throws Exception
+	 */
 	public void adminMainControl() throws Exception{
 		System.out.println("===== Logged in as admin =====");
 		do {
@@ -39,6 +61,13 @@ public class Admin extends Account {
 		} while (true);
 	}
 	
+	/**
+	 * Allows user to selected between
+	 * (1) Add movie
+	 * (2) Update movie's details
+	 * (3) Return to admin's main menu
+	 * An invalid choice will bring the user back to the admin's main menu
+	 */
 	public void adminMovieControl(){
 		do {
 			System.out.println(" ===== Add/Update/Remove movie from movie listing =====");
@@ -57,6 +86,10 @@ public class Admin extends Account {
 		} while(true); //end of do-while bracket
 	} //end of A/U/R Movie menu
 	
+	/**
+	 * Request user for movie information and passes the user's inputs into the constructor method for the new Movie object
+	 * New Movie object is added to the movie listing
+	 */
 	public void addMovie(){
 		System.out.println(" ===== Add movie =====");
 		Scanner sc = new Scanner (System.in);
@@ -78,6 +111,10 @@ public class Admin extends Account {
         Movie movietoadd = new Movie (movieid, movietitle, movieduration, moviestatus, movietype, moviedirector, moviecastlist, moviesynopsis); 
 	}
 	
+	/**
+	 * Gets user's desired show status and return it as a StatusEnum type value
+	 * @return StatusEnum 
+	 */
 	public StatusEnum getInputStatus() {
 		System.out.println("(1) Coming Soon");
 		System.out.println("(2) Preview");
@@ -95,6 +132,11 @@ public class Admin extends Account {
 		}
 	}
 	
+	/**
+	 * Gets user's desired movie type and return it as a MovieTypeEnum type value
+	 * @return MovieTypeEnum 
+	 */
+	
 	public MovieTypeEnum getInputMovieType() {
 		System.out.println("(1) 3D");
 		System.out.println("(2) Blockbuster");
@@ -110,6 +152,10 @@ public class Admin extends Account {
 		}
 	}
 	
+	/**
+	 * Allows admin to change a Movie object's attribute values by keying in the Movie object's movie ID
+	 * Informs the user when the attribute values has been updated
+	 */
 	public void updateMovieDetails(){
 		//ellen need fill up code over here
 		//need a switch statement here. one of the switch options should include updateMovieStatus method (found right below this method)
@@ -208,6 +254,10 @@ public class Admin extends Account {
 	
 	}
 	
+	/**
+	 * Method to allow admin to update the cast members of a Movie object
+	 * @param selectedmovie
+	 */
 	public static void updateIndividualCast(Movie selectedmovie) {
 		Scanner sc = new Scanner(System.in);
 		char ans;
@@ -239,7 +289,11 @@ public class Admin extends Account {
 		} while (ans != 'n' || ans != 'N');
 		
 	}
-
+	
+	/**
+	 * Allows admin to update a Movie object's show status
+	 * @param selectedmovie
+	 */
 	public static void updateMovieStatus(Movie selectedmovie) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println(" ===== Update movie ===== ");
@@ -258,6 +312,13 @@ public class Admin extends Account {
 		}
 	}
 	
+	/**
+	 * Allows admin to choose between
+	 * (1) Adding showtime to cinema
+	 * (2) Removing showtime from cinema
+	 * (3) Return to admin main menu
+	 * An invalid choice will return the user back to the admin main menu
+	 */
 	public void adminShowTimeControl() throws Exception{
 		do {
 			System.out.println(" ===== Add/Update/Remove Showtimes =====");
@@ -277,6 +338,11 @@ public class Admin extends Account {
 		} while(true);
 	}
 	
+	/**
+	 * Request user to input cineplex, cinema, date and time to add or remove a showtime
+	 * 
+	 * @param i
+	 */
 	@SuppressWarnings("null")
 	public void updateShowTime(int i) throws Exception{
 		if (i == 1)
@@ -380,6 +446,10 @@ public class Admin extends Account {
 		} while (true);
 	}
 	
+	/**
+	 * Allows admin to add a holiday date which will be added to the PriceSetting class
+	 * @throws Exception
+	 */
 	public void addHoliday() throws Exception{
 		Scanner sc = new Scanner(System.in);
 		System.out.println(" ===== Add Holiday ===== ");
@@ -404,7 +474,11 @@ public class Admin extends Account {
 
 		//ellen help
 	}
-	
+	/**
+	 * User is requested for a date to remove its holiday status
+	 * PriceSetting class is updated accordingly 
+	 * @throws Exception
+	 */
 	public void removeHoliday() throws Exception{
 		Scanner sc = new Scanner(System.in);
 		System.out.println(" ===== Remove Holiday ===== ");
@@ -423,6 +497,10 @@ public class Admin extends Account {
 			System.out.println("Date entered is not set as public holiday");
 	}
 	
+	/**
+	 * Removes holiday status from all dates in the year
+	 * @throws Exception
+	 */
 	public void clearHolidays() throws Exception{
 		System.out.println(" ===== Clear Holiday ===== ");
 		//ellen help. this method supposed to reset all public holidays back to their normal days. if a public holiday is on a weekend already it needs to be reset to a weekend too.
@@ -435,6 +513,9 @@ public class Admin extends Account {
 		System.out.println("Public Holidays all rest back to their respective day type.");
 	}
 	
+	/**
+	 * To allow admin to update price settings in PriceSetting class
+	 */
 	public void updatePrices(){
 		Scanner sc = new Scanner (System.in);
 		boolean quit = false;

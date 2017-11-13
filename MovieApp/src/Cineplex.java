@@ -1,4 +1,8 @@
-
+/**
+ * Each Cineplex class contains an array of Cinema objects, a cineplex code and a name
+ * @author user
+ *
+ */
 public class Cineplex {
 	private final Cinema [] cinemas;
 	private String cineplexcode;
