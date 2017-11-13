@@ -493,11 +493,11 @@ public class Admin extends Account {
 			}
 		}
 	}
-}
+	
 	static class InvalidChoice extends Exception{
 		public InvalidChoice () {
 		super ("Invalid choice!");
 		}
 	}
-	
 }
+
