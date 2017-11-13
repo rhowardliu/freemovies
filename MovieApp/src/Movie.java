@@ -36,7 +36,7 @@ public class Movie implements Serializable {
 	private String director;
 	private List<String> cast;
 	private String synopsis;
-	private ArrayList<MovieReviews> reviews;
+	private List<MovieReviews> reviews;
 	private double averageRating;
 	private double totalSales;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
@@ -221,7 +221,7 @@ public class Movie implements Serializable {
 	 * @param st
 	 */
 	public void removeShowTimeFromMovie(ShowTime st){
-		int showtime_index = movieShowTime.lastIndexOf(st);
+//		int showtime_index = movieShowTime.lastIndexOf(st);
 		movieShowTime.remove(st);
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
@@ -253,9 +253,8 @@ public class Movie implements Serializable {
 
 //			List<String> temp_date = temp.stream().distinct().collect(Collectors.toList());
 
-	  		for(int j = 0; j < temp_date.size();j++) {
+	  		for(String theDate : temp_date) {
 	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
-	  			String theDate = temp_date.get(j);
 	  			for(ShowTime x : temp_list) {
 	  				if (theDate.equals(x.getShowTimeDate()))
 	  					dailyshowtime.add(x);

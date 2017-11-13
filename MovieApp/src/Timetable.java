@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 enum DayTypeEnum{
@@ -114,5 +115,28 @@ public class Timetable implements Serializable{
 		ObjectWriter ow = new ObjectWriter(timetableDatabase);
 		ow.updateDataList(timetablelist);
 	}
+	
+	static Comparator<String> getDateComparator(){
+		return new Comparator<String>() {
+			public int compare(String o1, String o2) {
 
+				String dd1=o1.substring(0, 2);
+				String mm1=o1.substring(3,5);
+				String yy1=o1.substring(6);
+				
+				String dd2=o2.substring(0, 2);
+				String mm2=o2.substring(3,5);
+				String yy2=o2.substring(6);
+				int compared = yy1.compareTo(yy2);
+				if (compared == 0) {
+					compared=mm1.compareTo(mm2);
+					if (compared==0) {
+						compared=dd1.compareTo(dd2);
+					}
+				}
+				
+				return compared;
+			}
+		};	
+	}
 }

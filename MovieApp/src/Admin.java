@@ -319,15 +319,16 @@ public class Admin extends Account {
 	 * (3) Return to admin main menu
 	 * An invalid choice will return the user back to the admin main menu
 	 */
-	public void adminShowTimeControl(){
-		System.out.println(" ===== Add/Update/Remove Showtimes =====");
-		System.out.println("Select option: ");
-		System.out.print("(1) Add showtime");
-		System.out.println("(2) Remove showtime");
-		System.out.println("(3) Return to admin main menu");
-		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
+	public void adminShowTimeControl() throws Exception{
 		do {
+			System.out.println(" ===== Add/Update/Remove Showtimes =====");
+			System.out.println("Select option: ");
+			System.out.print("(1) Add showtime");
+			System.out.println("(2) Remove showtime");
+			System.out.println("(3) Return to admin main menu");
+			Scanner sc = new Scanner(System.in);
+			int choice = sc.nextInt();
+		
 			switch(choice){
 				case 1: this.updateShowTime(1); break;
 				case 2: this.updateShowTime(2); break;
@@ -342,7 +343,8 @@ public class Admin extends Account {
 	 * 
 	 * @param i
 	 */
-	public void updateShowTime(int i){
+	@SuppressWarnings("null")
+	public void updateShowTime(int i) throws Exception{
 		if (i == 1)
 			System.out.println(" ===== Add Showtime =====");
 		else if (i == 2)
@@ -363,8 +365,12 @@ public class Admin extends Account {
 		for (int j = 0; j < tempcinemaarray.length ; j++)
 			System.out.println("(" + j+1 + ")" + tempcinemaarray[j].getCinemaCode());
 		int cinemachoice = sc.nextInt();
+		CinemaTypeEnum cinematype = CinemaTypeEnum._standard;
 		String cinemacode = tempcinemaarray[cinemachoice - 1].getCinemaCode();
 		Timetable [] tempcalendararray = tempcinemaarray[cinemachoice - 1].getCalendar();
+		
+		if (cinemachoice == 1)
+			cinematype=CinemaTypeEnum._platinum;
 		
 		Timetable tt = null;
 		String date;
@@ -393,14 +399,15 @@ public class Admin extends Account {
 			try {
 				moviechoice = Movie.searchMovie(movieid);
 			}catch(Exception e) {
-				System.out.println("Movie not found");;
+				System.out.println("Movie not found");
 			}
 		} while(moviechoice!=null);
 	
 		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
 		System.out.println("Select timeslot:");
 		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, tt.getDayType(), starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols());
+		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, starttime, 
+				tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 		boolean available;
 		if (i == 1){ //if admin wanted to add showtime		
 	
@@ -521,7 +528,8 @@ public class Admin extends Account {
 			System.out.println("(5) Premium 3D");
 			System.out.println("(6) Premium Blockbuster");
 			System.out.println("(7) Premium Holiday");
-			System.out.println("(8) Quit");
+			System.out.println("(8) Platinum");
+			System.out.println("(9) Quit");
 			System.out.println("Enter Price Category to be updated: ");
 			int catChoice = sc.nextInt();
 			switch (catChoice) {
@@ -568,6 +576,12 @@ public class Admin extends Account {
 				System.out.println("Premium Holiday Category price has been updated to " +PriceSetting.getTPHoliday());
 				break;
 			case 8:
+				System.out.println("Enter new price for Cinema Platinum Category");
+				double platinumPrice = sc.nextInt();
+				PriceSetting.setTPPlatinum(platinumPrice);
+				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
+				break;
+			case 9:
 				quit = true;
 				break;
 			}
@@ -579,5 +593,5 @@ public class Admin extends Account {
 		super ("Invalid choice!");
 		}
 	}
-	
 }
+
