@@ -22,6 +22,7 @@ public class Ticket implements Serializable {
 
 	private String userID;
 	private String movietitle;
+	private String movieID;
 	private String date;
 	private int seatrow, seatcol;
 	private String transactionID;
@@ -31,15 +32,10 @@ public class Ticket implements Serializable {
 	private double price;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
-
-	/**
-	 * Ticket is constructed with a seat row and seat column number and isBooked is set to false
-	 * Transaction ID, agecat is set to null and price is set to 0 by default
-	 * @param seatrow
-	 * @param seatcol
-	 */
-	public Ticket(String movietitle,String date,int seatrow, int seatcol) {
+	
+	public Ticket(String movietitle, String movieID, String date,int seatrow, int seatcol) {
 		this.movietitle=movietitle;
+		this.movieID = movieID;
 		this.date=date;
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;

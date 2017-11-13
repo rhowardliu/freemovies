@@ -393,9 +393,10 @@ public class Admin extends Account {
 		
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;
+		String movieid=null;
 		do {
 			System.out.println("Enter movieID: ");
-			String movieid = sc.next();
+			movieid = sc.next();
 			try {
 				moviechoice = Movie.searchMovie(movieid);
 			}catch(Exception e) {
@@ -406,7 +407,7 @@ public class Admin extends Account {
 		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
 		System.out.println("Select timeslot:");
 		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, starttime, 
+		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
 				tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 		boolean available;
 		if (i == 1){ //if admin wanted to add showtime		
@@ -489,7 +490,7 @@ public class Admin extends Account {
 		System.out.println("Enter Year (XXXX) : ");
 		int year = sc.nextInt();
 		String date = String.format("%02d-%d-%d",day,month,year);
-		if (PriceSetting.getPublicHol().contains(date)) {
+		if (PriceSetting.getPublicHol().contains(date) == true) {
 			Timetable.getTimetableByDate(date).setPublicHoliday(DayTypeEnum.Weekday);
 		}
 		else 

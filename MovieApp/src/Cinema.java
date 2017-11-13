@@ -46,8 +46,6 @@ public class Cinema {
 		}
 	}
 
-
-
 	public CinemaTypeEnum getCinemaType(){
 		return this.cinematype;
 	}

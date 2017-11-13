@@ -23,6 +23,7 @@ public class ShowTime implements Serializable {
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
+	private String movieID;
 	private CinemaTypeEnum cinematype;
 	private String date;
 	private DayTypeEnum daytype;
@@ -31,9 +32,10 @@ public class ShowTime implements Serializable {
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
-	public ShowTime(String movietitle, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
+	public ShowTime(String movietitle, String movieID, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
 			int cinemarows, int cinemacols, CinemaTypeEnum cinematype) throws Exception {
 		this.movietitle = movietitle;
+		this.movieID = movieID;
 		this.cineplexname = cineplexname;
 		this.cineplexcode = cineplexcode;
 		this.cinemacode = cinemacode;

@@ -120,6 +120,11 @@ public class Movie implements Serializable {
 		setAverageRating(this.fetchAverageRating());
 	}
 	
+
+	public List<MovieReviews> getMovieReview() {
+		return reviews;
+	}
+	
 	public void setAverageRating(double averageRating) {
 		this.averageRating = averageRating;
 	}
@@ -161,10 +166,11 @@ public class Movie implements Serializable {
 		System.out.println("\n");
 	}
 	
-	/**
-	 * updates the show status of the Movie object
-	 * @param status
-	 */
+
+	public List<ShowTime> getShowTimes() {
+		return movieShowTime;
+	}
+	
 	public void updateMovieStatus(StatusEnum status){
 		this.status = status;
 		System.out.println("Movie Status Updated! Movie Status is now " +getStatus());
