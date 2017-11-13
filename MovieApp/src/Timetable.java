@@ -37,6 +37,8 @@ public class Timetable implements Serializable{
 		timetablelist.add(this);
 		
 		date_string = dateFormat.format(date);
+		
+		
 	}
 	
 	public static Timetable getTimetableByDate(String date) throws Exception {
@@ -46,13 +48,6 @@ public class Timetable implements Serializable{
 				return x;
 		throw new Exception ("timetable not found");
 	}
-
-
-	public void switchDayType (DayTypeEnum type) {
-		daytype = type;
-		System.out.println("Day type has been successfully switched to " +getDayType());
-	}
-
 
 	public DayTypeEnum getDayType(){
 		return this.daytype;
@@ -68,7 +63,9 @@ public class Timetable implements Serializable{
 	
 	public void setPublicHoliday (DayTypeEnum type) {
 		daytype = type;
-	}
+				
+		}
+	
 
 	public boolean addShowTimeToSchedule (Movie movie, int starttime) {
 		

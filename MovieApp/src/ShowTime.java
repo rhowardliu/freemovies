@@ -54,6 +54,7 @@ public class ShowTime implements Serializable {
 	public String getShowTimeDate(){
 		return this.date;
 	}
+	
 
 	public void showSeatLayout() {
 		//****this one needd to change cos number of rows and cols are not assumed anymore
