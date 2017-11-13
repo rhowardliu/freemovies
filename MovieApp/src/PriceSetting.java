@@ -61,5 +61,26 @@ public class PriceSetting {
 	public static void setTPHol(double newprice) {
 		ticketPremiumHol = newprice;
 	}
+	public static double getTPAdult() {
+		return ticketPriceAdult;
+	}
+	public static double getTPChild() {
+		return ticketPriceChild;
+	}
+	public static double getTPStudent() {
+		return ticketPriceStudent;
+	}
+	public static double getTPSenior() {
+		return ticketPriceSenior;
+	}
+	public static double getTP3D() {
+		return ticketPremium3D;
+	}
+	public static double getTPBB() {
+		return ticketPremium3D;
+	}
+	public static double getTPHoliday() {
+		return ticketPremiumHol;
+	}
 
 }

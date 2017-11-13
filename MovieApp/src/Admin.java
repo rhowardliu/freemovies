@@ -386,8 +386,68 @@ public class Admin extends Account {
 	}
 	
 	public void updatePrices(){
-		System.out.println(" ===== Update Pricing Policy ===== ");
-		//ellen help
+		Scanner sc = new Scanner (System.in);
+		boolean quit = false;
+		while (quit != true) {
+			System.out.println(" ===== Update Pricing Policy ===== ");
+			//ellen help
+			System.out.println("(1) Adult");
+			System.out.println("(2) Child");
+			System.out.println("(3) Student");
+			System.out.println("(4) Senior");
+			System.out.println("(5) Premium 3D");
+			System.out.println("(6) Premium Blockbuster");
+			System.out.println("(7) Premium Holiday");
+			System.out.println("(8) Quit");
+			System.out.println("Enter Price Category to be updated: ");
+			int catChoice = sc.nextInt();
+			switch (catChoice) {
+			case 1:
+				System.out.println("Enter new price for Adult Category");
+				double adultPrice = sc.nextInt();
+				PriceSetting.setTPAdult(adultPrice);
+				System.out.println("Adult Category price has been updated to " +PriceSetting.getTPAdult());
+				break;
+			case 2:
+				System.out.println("Enter new price for Child Category");
+				double childPrice = sc.nextInt();
+				PriceSetting.setTPChild(childPrice);
+				System.out.println("Child Category price has been updated to " +PriceSetting.getTPChild());
+				break;
+			case 3:
+				System.out.println("Enter new price for Student Category");
+				double studentPrice = sc.nextInt();
+				PriceSetting.setTPStudent(studentPrice);
+				System.out.println("Student Category price has been updated to " +PriceSetting.getTPStudent());
+				break;
+			case 4:
+				System.out.println("Enter new price for Senior Category");
+				double seniorPrice = sc.nextInt();
+				PriceSetting.setTPSenior(seniorPrice);
+				System.out.println("Senior Category price has been updated to " +PriceSetting.getTPSenior());
+				break;
+			case 5:
+				System.out.println("Enter new price for Premium 3D Category");
+				double threeDPrice = sc.nextInt();
+				PriceSetting.setTP3D(threeDPrice);
+				System.out.println("Premium 3D Category price has been updated to " +PriceSetting.getTP3D());
+				break;
+			case 6:
+				System.out.println("Enter new price for Premium Blockbuster Category");
+				double BBPrice = sc.nextInt();
+				PriceSetting.setTPBB(BBPrice);
+				System.out.println("Premium Blockbuster Category price has been updated to " +PriceSetting.getTPBB());
+				break;
+			case 7:
+				System.out.println("Enter new price for Premium Holiday Category");
+				double holidayPrice = sc.nextInt();
+				PriceSetting.setTPAdult(holidayPrice);
+				System.out.println("Premium Holiday Category price has been updated to " +PriceSetting.getTPHoliday());
+				break;
+			case 8:
+				quit = true;
+				break;
+			}
 	}
 	
 	static class InvalidChoice extends Exception{
