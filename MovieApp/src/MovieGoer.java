@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.text.SimpleDateFormat;
 
 public class MovieGoer extends Account {
@@ -24,8 +26,7 @@ public class MovieGoer extends Account {
 		this.mobilenumber = mobilenumber;
 		this.email = email;
 		
-		
-		
+				
 		moviegoerlist.add(this);
 
 	}
@@ -47,17 +48,39 @@ public class MovieGoer extends Account {
 	}
 	
 	public void printTransactionHistory(){
-		int i = transactionhistory.size()-1;
 		System.out.println("Transaction History of " + this.name + ":\n");
 		System.out.println("***");
-		while(i>=0) {
-			Ticket temp = transactionhistory.get(i);
-			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-			System.out.print(dateFormatter.format(temp.getDate().getTime())+ " " + temp.getTransactionID());
-			System.out.printf(":%s $%6.2f",temp.getMovieTitle(), temp.getPrice());
-
+		List<Ticket> temp_list = transactionhistory;
+		List<String> temp_date = new ArrayList<String>(); //this is a list of all dates
+		
+		if (transactionhistory.isEmpty()){
+			System.out.println("No Transaction");
+			return;
 		}
+		else {
+			for (Ticket x: temp_list) {
+				temp_date.add(x.getDate());
+			}
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(temp_date);
+			temp_date.clear();
+			temp_date.addAll(s);
+			
 
+	  		for(String theDate : temp_date) {
+	   			List<Ticket> daytransaction = new ArrayList<Ticket>();
+			  	for(Ticket x : temp_list) {
+			  		if (theDate.equals(x.getDate()))
+			  			daytransaction.add(x);
+	  			}
+		  		System.out.println(theDate);
+		  		int i = 1;
+		  		for (Ticket printx: daytransaction) {
+		  			System.out.println(i+". " +printx.getMovietitle()+" " +printx.getPrice()+" "+printx.getTransactionID());
+		  		}
+			
+	  		}
+		}
 	}
 	
 	public void addTransaction(Ticket ticket) {

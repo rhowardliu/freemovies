@@ -17,7 +17,7 @@ public class Admin extends Account {
 		return INSTANCE;
 	}
 	
-	public void adminMainControl(){
+	public void adminMainControl() throws Exception{
 		System.out.println("===== Logged in as admin =====");
 		do {
 		System.out.println("Select option:");
@@ -258,15 +258,16 @@ public class Admin extends Account {
 		}
 	}
 	
-	public void adminShowTimeControl(){
-		System.out.println(" ===== Add/Update/Remove Showtimes =====");
-		System.out.println("Select option: ");
-		System.out.print("(1) Add showtime");
-		System.out.println("(2) Remove showtime");
-		System.out.println("(3) Return to admin main menu");
-		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
+	public void adminShowTimeControl() throws Exception{
 		do {
+			System.out.println(" ===== Add/Update/Remove Showtimes =====");
+			System.out.println("Select option: ");
+			System.out.print("(1) Add showtime");
+			System.out.println("(2) Remove showtime");
+			System.out.println("(3) Return to admin main menu");
+			Scanner sc = new Scanner(System.in);
+			int choice = sc.nextInt();
+		
 			switch(choice){
 				case 1: this.updateShowTime(1); break;
 				case 2: this.updateShowTime(2); break;
@@ -276,7 +277,7 @@ public class Admin extends Account {
 		} while(true);
 	}
 	
-	public void updateShowTime(int i){
+	public void updateShowTime(int i) throws Exception{
 		if (i == 1)
 			System.out.println(" ===== Add Showtime =====");
 		else if (i == 2)
@@ -327,14 +328,14 @@ public class Admin extends Account {
 			try {
 				moviechoice = Movie.searchMovie(movieid);
 			}catch(Exception e) {
-				System.out.println("Movie not found");;
+				System.out.println("Movie not found");
 			}
 		} while(moviechoice!=null);
 	
 		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
 		System.out.println("Select timeslot:");
 		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, tt.getDayType(), starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols());
+		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), cineplexname, cineplexcode, cinemacode, date, starttime, tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols());
 		boolean available;
 		if (i == 1){ //if admin wanted to add showtime		
 	
@@ -449,7 +450,7 @@ public class Admin extends Account {
 				break;
 			}
 	}
-	
+}
 	static class InvalidChoice extends Exception{
 		public InvalidChoice () {
 		super ("Invalid choice!");

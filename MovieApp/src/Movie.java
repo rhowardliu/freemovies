@@ -139,7 +139,7 @@ public class Movie implements Serializable {
 		System.out.println("Synopsis" + this.synopsis);
 				System.out.println("Directed by: " + director);
 		System.out.println("Cast(s): ");
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < cast.size(); i++){
 			System.out.println((i+1) + ". " + cast.get(i));
 		} //this part might generate some errors. not sure yet. kiv.
 		System.out.println("\n");
@@ -183,7 +183,7 @@ public class Movie implements Serializable {
 	}
 	
 	public void removeShowTimeFromMovie(ShowTime st){
-		int showtime_index = movieShowTime.lastIndexOf(st);
+//		int showtime_index = movieShowTime.lastIndexOf(st);
 		movieShowTime.remove(st);
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
@@ -212,9 +212,8 @@ public class Movie implements Serializable {
 
 //			List<String> temp_date = temp.stream().distinct().collect(Collectors.toList());
 
-	  		for(int j = 0; j < temp_date.size();j++) {
+	  		for(String theDate : temp_date) {
 	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
-	  			String theDate = temp_date.get(j);
 	  			for(ShowTime x : temp_list) {
 	  				if (theDate.equals(x.getShowTimeDate()))
 	  					dailyshowtime.add(x);

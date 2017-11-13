@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 enum AgeCatEnum{
@@ -14,6 +15,8 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = 9031951939120214545L;
 
 	private String userID;
+	private String movietitle;
+	private String date;
 	private int seatrow, seatcol;
 	private String transactionID;
 	private AgeCatEnum agecat;
@@ -23,7 +26,9 @@ public class Ticket implements Serializable {
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.txt");
 	
-	public Ticket(int seatrow, int seatcol) {
+	public Ticket(String movietitle,String date,int seatrow, int seatcol) {
+		this.movietitle=movietitle;
+		this.date=date;
 		this.seatrow = seatrow;
 		this.seatcol = seatcol;
 		this.transactionID = null;
@@ -79,15 +84,28 @@ public class Ticket implements Serializable {
 	public DayTypeEnum getDayType() {
 		return dayType;
 	}
+	
+
+	public String getMovietitle() {
+		return movietitle;
+	}
+
 
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(ticketsDatabase);
 		ticketlist = or.initialiseDataList(ticketlist);
 	}
 	
+	
+	public String getDate() {
+		return date;
+	}
+
 	public static void updateDatabase() throws FileNotFoundException, IOException {
 		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
 		ow.updateDataList(ticketlist);
 	}
+	
+
 		
 }

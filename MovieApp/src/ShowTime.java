@@ -16,9 +16,6 @@ public class ShowTime implements Serializable {
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
-	private String dd;
-	private String mm;
-	private String yy;
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
@@ -32,16 +29,12 @@ public class ShowTime implements Serializable {
 		this.cineplexcode = cineplexcode;
 		this.cinemacode = cinemacode;
 		this.date = date;
-		dd=date.substring(0, 2);
-		mm=date.substring(3,5);
-		yy=date.substring(6);
+		this.daytype = null;
 		this.starttime = starttime;
 		for (int i=1; i<cinemarows; i++) {
 			for (int j=1; j<cinemacols; j++) 
-				seatLayout [i][j] = new Ticket(i,j);
+				seatLayout [i][j] = new Ticket(movietitle,date,i,j);
 		}
-		
-		this.daytype = Timetable.getTimetableByDate(date).getDayType();
 		
 		showtimelist.add(this);
 	}
@@ -112,7 +105,12 @@ public class ShowTime implements Serializable {
 		System.out.print("Row: "); int row = sc.nextInt();
 		System.out.print("Column: "); int col = sc.nextInt();
 		//check if the requested seat is already taken
-		if (seatLayout[row][col].isBooked() == false){
+		
+		if (seatLayout[row][col].isBooked()==true){
+			System.out.println("Seat is already taken.");
+			return;
+		}
+		else{
 			//if the requested seat is free, ask for age category for the ticket
 			System.out.println("Age Category: (1) Adult (2) Child (3) Student (4) Senior");
 			AgeCatEnum ticketage = AgeCatEnum.adult;
@@ -125,8 +123,23 @@ public class ShowTime implements Serializable {
 				default: System.out.println("Invalid choice! Adult Category set by default!"); break;
 			}
 			//setting price using Ticket class's setPrice method and PriceSetting calPrice method
+			
+			Movie movie;
+			try {
+				movie = Movie.searchMovie(movietitle);
+			} catch (Exception e) {
+				System.out.println("Movie ID not found");
+				return;
+			}
 			//need to convert String movietitle into Movie movie here again
-			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, this.timetable.getDayType()));
+			
+			try {
+				this.daytype=Timetable.getTimetableByDate(date).getDayType();
+			} catch (Exception e) {
+				System.out.println("Timetable not found");
+				return;
+			}
+			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype));
 			//write buy more tickets?
 			//display info first then
 			//write confirm payment?
@@ -171,11 +184,19 @@ public class ShowTime implements Serializable {
 	static Comparator<ShowTime> getDateComparator(){
 		return new Comparator<ShowTime>() {
 			public int compare(ShowTime o1, ShowTime o2) {
-				int compared = o1.yy.compareTo(o2.yy);
+
+				String dd1=o1.getShowTimeDate().substring(0, 2);
+				String mm1=o1.getShowTimeDate().substring(3,5);
+				String yy1=o1.getShowTimeDate().substring(6);
+				
+				String dd2=o2.getShowTimeDate().substring(0, 2);
+				String mm2=o2.getShowTimeDate().substring(3,5);
+				String yy2=o2.getShowTimeDate().substring(6);
+				int compared = yy1.compareTo(yy2);
 				if (compared == 0) {
-					compared=o1.mm.compareTo(o2.mm);
+					compared=mm1.compareTo(mm2);
 					if (compared==0) {
-						compared=o1.dd.compareTo(o2.dd);
+						compared=dd1.compareTo(dd2);
 					}
 				}
 				
@@ -183,6 +204,7 @@ public class ShowTime implements Serializable {
 			}
 		};	
 	}
+	
 	
 	static Comparator<ShowTime> getTimeComparator(){
 		return new Comparator<ShowTime>() {
@@ -193,7 +215,6 @@ public class ShowTime implements Serializable {
 	}
 	
 	
-
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(showtimeDatabase);
 		showtimelist = or.initialiseDataList(showtimelist);
