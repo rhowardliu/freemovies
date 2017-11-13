@@ -17,7 +17,7 @@ public class Admin extends Account {
 		return INSTANCE;
 	}
 	
-	public void adminMainControl(){
+	public void adminMainControl() throws Exception{
 		System.out.println("===== Logged in as admin =====");
 		do {
 		System.out.println("Select option:");
@@ -135,7 +135,7 @@ public class Admin extends Account {
 		System.out.println("(7) Movie Duration ");
 		System.out.println("(8) Display Updated Movie Details ");
 		System.out.println("(9) Quit ");
-		System.out.println("Select Movie Detail to update: ");
+		System.out.println("Enter Selection: ");
 		int detailChoice = sc.nextInt();
 		boolean quit = false;
 		while (quit = false) {
@@ -162,7 +162,7 @@ public class Admin extends Account {
 				break;
 			case 5:
 				System.out.println("Current Cast Input:");
-				for (int i = 0; i < 10; i++){
+				for (int i = 0; i < selectedmovie.getCast().size(); i++){
 					System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
 				}
 				System.out.println("(1) Update Individual Cast Member:");
@@ -230,7 +230,7 @@ public class Admin extends Account {
 				break;
 			}
 			System.out.println("Updated Cast Input:");
-			for (int i = 0; i < 10; i++){
+			for (int i = 0; i < selectedmovie.getCast().size(); i++){
 				System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
 			}
 			System.out.println("Update another individual cast member? (Y/N)");
@@ -304,11 +304,11 @@ public class Admin extends Account {
 		String date;
 		do {
 		System.out.println("Select date:");
-		System.out.println("Enter day:");
+		System.out.println("Enter day (XX) :");
 		int day = sc.nextInt();
-		System.out.println("Enter month:");
+		System.out.println("Enter month (XX) :");
 		int month = sc.nextInt();
-		System.out.println("Enter year:");
+		System.out.println("Enter year (XXXX) :");
 		int year = sc.nextInt();
 		date = String.format("%02d-%d-%d",day,month,year);
 		
@@ -350,39 +350,81 @@ public class Admin extends Account {
 		}
 	}
 	
-	public void adminSystemControl(){
+	public void adminSystemControl() throws Exception{
 		System.out.println(" ===== Settings ===== ");
 		System.out.println("Select option: ");
 		System.out.println("(1) Add holiday");
-		System.out.println("(2) Clear all holidays");
-		System.out.println("(3) Update pricing policy");
-		System.out.println("(4) Return to admin main menu");
+		System.out.println("(2) Remove Holiday");
+		System.out.println("(3) Clear all holidays");
+		System.out.println("(4) Update pricing policy");
+		System.out.println("(5) Return to admin main menu");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
 		do{
 			switch(choice){
 				case 1: addHoliday(); break; //ellen need create method for this
-				case 2: clearHolidays(); break; //ellen need create method for this
-				case 3: updatePrices(); break; //ellen need create method for this
-				case 4: { System.out.println("Returning to admin main menu..."); return; }
+				case 2: removeHoliday();break;
+				case 3: clearHolidays(); break; //ellen need create method for this
+				case 4: updatePrices(); break; //ellen need create method for this
+				case 5: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu"); return; }
 			}
 		} while (true);
 	}
 	
-	public void addHoliday(){
+	public void addHoliday() throws Exception{
+		Scanner sc = new Scanner(System.in);
 		System.out.println(" ===== Add Holiday ===== ");
 		System.out.println("Enter a date to enter as holiday");
-
+		System.out.println("Enter Day (XX) : ");
+		int day = sc.nextInt();
+		System.out.println("Enter Month (XX) : ");
+		int month = sc.nextInt();
+		System.out.println("Enter Year (XXXX) : ");
+		int year = sc.nextInt();
+		String date = String.format("%02d-%d-%d",day,month,year);
+		if (Timetable.getTimetableByDate(date).getDayType() != DayTypeEnum.PH) {
+			PriceSetting.addPublicHol(date);
+			System.out.println(date +"set as Public Holiday");
+			Timetable.getTimetableByDate(date).setPublicHoliday(DayTypeEnum.PH);
+		}
+		else 
+			System.out.println("Date is already set as a Holiday");
+	
+	
 		//yet to do
 
 		//ellen help
 	}
 	
-	public void clearHolidays(){
+	public void removeHoliday() throws Exception{
+		Scanner sc = new Scanner(System.in);
+		System.out.println(" ===== Remove Holiday ===== ");
+		System.out.println("Enter a date to enter as holiday");
+		System.out.println("Enter Day (XX) : ");
+		int day = sc.nextInt();
+		System.out.println("Enter Month (XX) : ");
+		int month = sc.nextInt();
+		System.out.println("Enter Year (XXXX) : ");
+		int year = sc.nextInt();
+		String date = String.format("%02d-%d-%d",day,month,year);
+		if (PriceSetting.getPublicHol().contains(date)) {
+			Timetable.getTimetableByDate(date).setPublicHoliday(DayTypeEnum.Weekday);
+		}
+		else 
+			System.out.println("Date entered is not set as public holiday");
+	}
+	
+	public void clearHolidays() throws Exception{
 		System.out.println(" ===== Clear Holiday ===== ");
 		//ellen help. this method supposed to reset all public holidays back to their normal days. if a public holiday is on a weekend already it needs to be reset to a weekend too.
 		//cannot change everyday into weekday by accident take note
+		
+		for (int i=0; i<PriceSetting.getPublicHol().size();i++) {
+			Timetable.getTimetableByDate(PriceSetting.getPublicHol().get(i)).setPublicHoliday(DayTypeEnum.Weekday);
+		}
+			PriceSetting.clearPublicHol();
+		System.out.println("Public Holidays all rest back to their respective day type.");
 	}
 	
 	public void updatePrices(){
@@ -448,6 +490,7 @@ public class Admin extends Account {
 				quit = true;
 				break;
 			}
+		}
 	}
 	
 	static class InvalidChoice extends Exception{

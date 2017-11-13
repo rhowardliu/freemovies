@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class PriceSetting {
 	
@@ -8,6 +9,7 @@ public class PriceSetting {
 	private static double ticketPremium3D = 3.0;
 	private static double ticketPremiumBB = 2.0;
 	private static double ticketPremiumHol = 4.0;
+	private static List<String> publicHol;
 	
 	public static double calPrice(MovieTypeEnum movietype, AgeCatEnum agecat,
 	DayTypeEnum daytype) {
@@ -81,6 +83,15 @@ public class PriceSetting {
 	}
 	public static double getTPHoliday() {
 		return ticketPremiumHol;
+	}
+	public static void addPublicHol(String date) {
+		publicHol.add(date);
+	}
+	public static void clearPublicHol() {
+		publicHol.clear();
+	}
+	public static List<String> getPublicHol() {
+		return publicHol;
 	}
 
 }

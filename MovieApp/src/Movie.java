@@ -139,9 +139,9 @@ public class Movie implements Serializable {
 		System.out.println("Synopsis" + this.synopsis);
 				System.out.println("Directed by: " + director);
 		System.out.println("Cast(s): ");
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < cast.size(); i++){
 			System.out.println((i+1) + ". " + cast.get(i));
-		} //this part might generate some errors. not sure yet. kiv.
+		} 
 		System.out.println("\n");
 	}
 	
