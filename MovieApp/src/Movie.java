@@ -110,6 +110,9 @@ public class Movie implements Serializable {
 		setAverageRating(this.fetchAverageRating());
 	}
 	
+	public List<MovieReviews> getMovieReview() {
+		return reviews;
+	}
 	
 	public void setAverageRating(double averageRating) {
 		this.averageRating = averageRating;
@@ -143,6 +146,10 @@ public class Movie implements Serializable {
 			System.out.println((i+1) + ". " + cast.get(i));
 		} 
 		System.out.println("\n");
+	}
+	
+	public List<ShowTime> getShowTimes() {
+		return movieShowTime;
 	}
 	
 	public void updateMovieStatus(StatusEnum status){

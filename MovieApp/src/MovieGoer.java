@@ -18,6 +18,7 @@ public class MovieGoer extends Account {
 	private String mobilenumber;
 	private String email;
 	private List <Ticket> transactionhistory;
+	private static List <String> moviehistory;
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
 	public static final File moviegoerDatabase = new File ("MovieGoer.txt");
 	
@@ -36,7 +37,7 @@ public class MovieGoer extends Account {
 		do {
 		System.out.println("Select option:");
 		System.out.println("(1) Search movie");
-		System.out.println("(2) View Booking History");
+		System.out.println("(2) View Booking History/Add Review");
 		System.out.println("(3) Log out");
 		
 		Scanner sc = new Scanner(System.in);
@@ -44,9 +45,9 @@ public class MovieGoer extends Account {
 		
 			switch (mgmainmenuchoice){
 			case 1: this.searchMovie(); break;
-			case 2: this.adminShowTimeControl(); break;
-			case 3: this.adminSystemControl(); break;
-			case 4: System.out.println("Logging out..."); return;
+			case 2: this.printTransactionHistory(); 
+				break;
+			case 3: System.out.println("Logging out..."); return;
 			default: System.out.println("Invalid choice! Logging out..."); return; 
 			}
 		} while (true);
@@ -89,6 +90,7 @@ public class MovieGoer extends Account {
 				int i=1;
 				for (Movie movie : MovieListing.getMovieListByTitle(status)) {
 					System.out.println(i +") " +movie.getTitle() );
+					i++;
 				}
 			}
 			if (listChoice == 2) {
@@ -103,6 +105,7 @@ public class MovieGoer extends Account {
 				int i=1;
 				for (Movie movie : MovieListing.getMovieListByRating(status)) {
 					System.out.println(i +") " +movie.getTitle() );
+					i++;
 				}
 			}
 			if (listChoice == 2) {
@@ -117,6 +120,7 @@ public class MovieGoer extends Account {
 				int i=1;
 				for (Movie movie : MovieListing.getMovieListBySales(status)) {
 					System.out.println(i +") " +movie.getTitle() );
+					i++;
 				}
 			}
 			if (listChoice == 2) {
@@ -138,22 +142,64 @@ public class MovieGoer extends Account {
 		movieList.get(i-1).getAverageRating();
 		System.out.println(" ");
 		System.out.println("(1) View Individual Reviews and Ratings");
-		System.out.println("(2) View ShowTimes");
-		System.out.println("(3) Return ");
+		System.out.println("(2) Select Cineplex to watch movie");
+		System.out.println("(3) Return to Movie List");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
-			
+			for (int j = 0; j<10; j++) {
+				System.out.println((j+1) + ") " +movieList.get(i-1).getMovieReview().get(j).getReview());
+				System.out.println("Rating is " +movieList.get(i-1).getMovieReview().get(j).getRating());
+				System.out.println("Proceed to Select Cineplex? (Y/N) ");
+				char ans = sc.next().charAt(0);
+				if (ans == 'y' || ans == 'Y') {
+					displayCineplexes(movieList.get(i-1));;
+				}
+				else 
+					return;	
+			}
 			break;
 		case 2:
-			movieList.get(i-1).displayShowTimes();
-			break;
+			displayCineplexes(movieList.get(i-1));
+				return;
 		case 3:
-			searchMovie();
-			break;
+			return;
+		}	
+	}
+	
+	public void displayCineplexes(Movie movie) {
+		Scanner sc = new Scanner(System.in);
+		int i=1;
+		for(Cineplex cine : GoldenVillage.getCineplexes()) {
+			System.out.println(i + ") " +cine.getCineplexName());
+			i++;
 		}
-		
-			
+		System.out.println("Enter Cineplex: ");
+		int cineplexInt = sc.nextInt();
+		displayShowTimes(movie, GoldenVillage.getCineplexes() [cineplexInt-1].getCineplexCode());
+	}
+	
+	public void displayShowTimes(Movie movie, String cineplexCode) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("\" ===== Update Pricing Policy ===== \"");
+		movie.displayShowTimes();
+		System.out.println("Proceed to book tickets? (Y/N)");
+		char ans = sc.next().charAt(0);
+		if (ans == 'y' || ans == 'Y') {
+				bookTickets(movieList, i);
+			}
+			else 
+				return;
+
+	}
+	
+	public void bookTickets(List<Movie> movieList, int i) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter start time of desired Show Time: ");
+		int startTime = sc.nextInt();
+		for (ShowTime showTime : movieList.get(i-1).getShowTimes()) {
+		showTime.getShowTimeStartTime().indexOf(startTime);
+		}
 	}
 	
 	public String getName(){
@@ -169,6 +215,7 @@ public class MovieGoer extends Account {
 	}
 	
 	public void printTransactionHistory(){
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Transaction History of " + this.name + ":\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
@@ -199,11 +246,56 @@ public class MovieGoer extends Account {
 		  		for (Ticket printx: daytransaction) {
 		  			System.out.println(i+". " +printx.getMovietitle()+" " +printx.getPrice()+" "+printx.getTransactionID());
 		  		}
+		  		
 			
 	  		}
 		}
+		
 	}
 	
+	public void printMovieHistory(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Movie History of " + this.name + ":\n");
+		System.out.println("***");
+		List<Ticket> temp_list = transactionhistory;
+		
+		if (transactionhistory.isEmpty()){
+			System.out.println("No History");
+			return;
+		}
+		else {
+			for (Ticket x: temp_list) {
+				temp_date.add(x.getDate());
+			}
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(temp_date);
+			temp_date.clear();
+			temp_date.addAll(s);
+			
+
+	  		for(String theDate : temp_date) {
+	   			List<Ticket> daytransaction = new ArrayList<Ticket>();
+			  	for(Ticket x : temp_list) {
+			  		if (theDate.equals(x.getDate()))
+			  			daytransaction.add(x);
+	  			}
+		  		System.out.println(theDate);
+		  		int i = 1;
+		  		for (Ticket printx: daytransaction) {
+		  			System.out.println(i+". " +printx.getMovietitle()+" " +printx.getPrice()+" "+printx.getTransactionID());
+		  		}
+		  		
+			
+	  		}
+		}
+		
+	}
+	
+	public void addReview(Ticket ticket) {
+		
+	}
+			
+	  		
 	public void addTransaction(Ticket ticket) {
 		transactionhistory.add(ticket);
 	}

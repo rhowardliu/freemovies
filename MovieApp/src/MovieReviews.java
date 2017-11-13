@@ -31,6 +31,9 @@ public class MovieReviews implements Serializable{
 		return rating;
 	}
 	
+	public String getReview() {
+		return review;
+	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(reviewDatabase);
