@@ -92,7 +92,7 @@ public class MovieGoer extends Account {
 			status = StatusEnum.NowShowing;
 			break;
 		}
-		
+		System.out.println("==== Movies ====");
 		switch (movieListChoice) {
 		case 1:
 			if(listChoice == 1) {
