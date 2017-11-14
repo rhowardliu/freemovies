@@ -391,7 +391,7 @@ public class Admin extends Account {
 		int month = sc.nextInt();
 		System.out.println("Enter year (XXXX) :");
 		int year = sc.nextInt();
-		date = String.format("%02d-%d-%d",day,month,year);
+		date = String.format("%02d-%02d-%d",day,month,year);
 		
 		try {
 			tt = Timetable.getTimetableByDate(date);
