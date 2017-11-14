@@ -22,6 +22,8 @@ public class Execute {
 		Timetable.initialiseDatabase();
 		
 		GoldenVillage.getInstance();
+		
+		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
 		Account user = login();	
 		if (user.getUserID().equals("admin")){
 			Admin admin = (Admin) user;
