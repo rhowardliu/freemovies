@@ -13,7 +13,7 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 public class Execute {
 
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {;
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
 		Movie.initialiseDatabase();
