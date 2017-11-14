@@ -65,7 +65,7 @@ public class MovieGoer extends Account {
 		//need to loop this
 		//should i create a if selection is out of range...blah, okay la if got time
 		
-		System.out.println("Search Movie By: ");
+		System.out.println("===== Search Movie By =====");
 		System.out.println("(1) Movie Title");
 		System.out.println("(2) Overall Reviewers' Rating");
 		System.out.println("(3) Ticket Sales");
@@ -247,7 +247,7 @@ public class MovieGoer extends Account {
 	
 	public void printTransactionHistory(){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Transaction History of " + this.name + ":\n");
+		System.out.println("===== Transaction History of " + this.name + " =====\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all dates
@@ -290,7 +290,7 @@ public class MovieGoer extends Account {
 	public void addingMovieReview(){
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Movie History of " + this.name + ":\n");
+		System.out.println("===== Movie History of " + this.name + " =====\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
 		
