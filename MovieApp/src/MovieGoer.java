@@ -26,7 +26,7 @@ public class MovieGoer extends Account {
 	private List <Ticket> transactionhistory;
 	private static List <String> moviehistory;
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
-	public static final File moviegoerDatabase = new File ("MovieGoer.txt");
+	public static final File moviegoerDatabase = new File ("MovieGoer.tmp");
 	
 	public MovieGoer(String userID,String password, String name, String mobilenumber, String email){
 		super(userID,password);

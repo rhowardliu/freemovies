@@ -32,7 +32,7 @@ public class ShowTime implements Serializable {
 	private int starttime;
 	private Ticket [][] ticket;
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
-	public static final File showtimeDatabase = new File ("ShowTime.txt");
+	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
 	public ShowTime(String movietitle, String movieID, String cineplexname, String cineplexcode, String cinemacode, String date, int starttime, 
 			int cinemarows, int cinemacols, CinemaTypeEnum cinematype) throws Exception {
