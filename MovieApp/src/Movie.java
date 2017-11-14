@@ -152,13 +152,14 @@ public class Movie implements Serializable {
 	 */
 	public void getMovieInfo() {
 		//Ellen added some stuff here. kiv
-		System.out.println("Movie title: " + this.title);
-		System.out.println("Movie duration: " + this.duration);
-		System.out.println("Movie type: " + this.movietype);
-		System.out.println("Status: " + this.status);
-		System.out.println("Synopsis" + this.synopsis);
+		System.out.println("===== Details of " + this.getTitle() + "=====");
+		System.out.println("Movie title: \n" + this.title);
+		System.out.println("Movie duration: \n" + this.duration);
+		System.out.println("Movie type: \n" + this.movietype);
+		System.out.println("Status: \n" + this.status);
+		System.out.println("Synopsis: \n" + this.synopsis);
 				System.out.println("Directed by: " + director);
-		System.out.println("Cast(s): ");
+		System.out.println("Cast(s): \n");
 		for (int i = 0; i < cast.size(); i++){
 			System.out.println((i+1) + ". " + cast.get(i));
 		} 

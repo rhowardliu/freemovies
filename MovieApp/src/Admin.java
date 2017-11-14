@@ -97,7 +97,7 @@ public class Admin extends Account {
 		//need ask howard to check which class and which method to call to add new movie object to?
 		System.out.print("Movie ID: "); String movieid = sc.nextLine();
 		System.out.print("Movie title: "); String movietitle = sc.nextLine();
-		System.out.println("Movie type: \n"); MovieTypeEnum movietype = this.getInputMovieType();
+		System.out.print("Movie type: "); MovieTypeEnum movietype = this.getInputMovieType();
 		System.out.print("Movie duration: "); int movieduration = sc.nextInt();sc.nextLine();
 		System.out.println("Movie status:");
 		StatusEnum moviestatus = this.getInputStatus();       
@@ -148,6 +148,7 @@ public class Admin extends Account {
 	 */
 	
 	public MovieTypeEnum getInputMovieType() {
+		System.out.println("\n");
 		System.out.println("(1) 3D");
 		System.out.println("(2) Blockbuster");
 		System.out.println("(3) Digital");
@@ -177,24 +178,28 @@ public class Admin extends Account {
 			try {
 				selectedmovie = Movie.searchMovie(movieid);
 			}catch(Exception e) {
-				System.out.println("Movie not found");;
+				System.out.println("Movie not found.");
+				return;
 			}
-		} while(selectedmovie!=null);
+		} while(selectedmovie == null);
 		
 		
-		System.out.println("(1) Movie Title");
-		System.out.println("(2) Movie Status");
-		System.out.println("(3) Movie Type ");
-		System.out.println("(4) Movie Director ");
-		System.out.println("(5) Movie Cast ");
-		System.out.println("(6) Movie Synopsis ");
-		System.out.println("(7) Movie Duration ");
-		System.out.println("(8) Display Updated Movie Details ");
-		System.out.println("(9) Quit ");
-		System.out.println("Enter Selection: ");
-		int detailChoice = sc.nextInt();
+
 		boolean quit = false;
-		while (quit = false) {
+		while (quit == false) {	
+			System.out.println("\n");
+			System.out.println("===== Select features to update =====");
+			System.out.println("(1) Movie Title");
+			System.out.println("(2) Movie Status");
+			System.out.println("(3) Movie Type ");
+			System.out.println("(4) Movie Director ");
+			System.out.println("(5) Movie Cast ");
+			System.out.println("(6) Movie Synopsis ");
+			System.out.println("(7) Movie Duration ");
+			System.out.println("(8) Display Updated Movie Details ");
+			System.out.println("(9) Quit ");
+			System.out.println("Enter Selection: ");
+			int detailChoice = sc.nextInt();
 			switch(detailChoice) {
 			case 1:
 				System.out.println("Enter New Movie Title:");
@@ -271,7 +276,7 @@ public class Admin extends Account {
 	public static void updateIndividualCast(Movie selectedmovie) {
 		Scanner sc = new Scanner(System.in);
 		char ans;
-		do {
+		while(true){
 			System.out.println("Enter Index of Cast Name to be updated:");
 			int index = sc.nextInt();
 			System.out.println("(1) Delete Cast");
@@ -294,9 +299,9 @@ public class Admin extends Account {
 				System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
 			}
 			System.out.println("Update another individual cast member? (Y/N)");
-			ans = sc.next().charAt(0);
-			
-		} while (ans != 'n' || ans != 'N');
+			if (sc.next().equalsIgnoreCase("n"))
+				break;
+		} 
 		
 	}
 	
@@ -333,7 +338,7 @@ public class Admin extends Account {
 		do {
 			System.out.println(" ===== Add/Update/Remove Showtimes =====");
 			System.out.println("Select option: ");
-			System.out.print("(1) Add showtime");
+			System.out.println("(1) Add showtime");
 			System.out.println("(2) Remove showtime");
 			System.out.println("(3) Return to admin main menu");
 			Scanner sc = new Scanner(System.in);
