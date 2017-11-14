@@ -13,7 +13,7 @@ enum DayTypeEnum{
 }
 
 public class Timetable implements Serializable{	
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	
 	private static final long serialVersionUID = -31706793024846802L;
 	private static final String showEmpty = "-";
 	private DayTypeEnum daytype;
@@ -26,6 +26,7 @@ public class Timetable implements Serializable{
 
 
 	public Timetable (Calendar date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		this.date = date;
 		int dayoftheweek = date.get(Calendar.DAY_OF_WEEK);
 		if (dayoftheweek == 6 || dayoftheweek == 7)
@@ -36,7 +37,7 @@ public class Timetable implements Serializable{
 			schedule[i] = showEmpty;
 		timetablelist.add(this);
 		
-		date_string = dateFormat.format(date);
+		date_string = dateFormat.format(date.getTime());
 		
 		
 	}
