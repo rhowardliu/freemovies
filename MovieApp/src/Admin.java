@@ -376,7 +376,7 @@ public class Admin extends Account {
 			
 		System.out.println("Select cinema");
 		for (int j = 0; j < tempcinemaarray.length ; j++)
-			System.out.println("(" + j+1 + ")" + tempcinemaarray[j].getCinemaCode());
+			System.out.println("(" + (j+1) + ")" + tempcinemaarray[j].getCinemaCode());
 		int cinemachoice = sc.nextInt();
 		CinemaTypeEnum cinematype = CinemaTypeEnum._standard;
 		String cinemacode = tempcinemaarray[cinemachoice - 1].getCinemaCode();
