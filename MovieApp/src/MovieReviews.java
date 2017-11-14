@@ -15,7 +15,7 @@ public class MovieReviews implements Serializable{
 	private double rating;
 	private String review;
 	public static List<MovieReviews> reviewslist = new ArrayList<MovieReviews>();
-	public static final File reviewDatabase = new File ("MovieReviews.txt");
+	public static final File reviewDatabase = new File ("MovieReviews.tmp");
 	
 	public MovieReviews(String movieID, double rating, String review) {
 		this.movieID=movieID;

@@ -22,7 +22,7 @@ public class Timetable implements Serializable{
 	//schedule is an array of movie titles i.e. array of strings
 	private String [] schedule = new String [24];
 	public static List<Timetable> timetablelist = new ArrayList<Timetable>();
-	public static final File timetableDatabase = new File ("Timetable.txt");
+	public static final File timetableDatabase = new File ("Timetable.tmp");
 
 
 	public Timetable (Calendar date) {
