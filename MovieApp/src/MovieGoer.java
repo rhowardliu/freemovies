@@ -149,20 +149,38 @@ public class MovieGoer extends Account {
 		System.out.println("Enter Movie Choice: ");
 		int i = sc.nextInt();
 		movieList.get(i-1).getMovieInfo();
-		movieList.get(i-1).getAverageRating();
-		System.out.println(" ");
+		System.out.print("\n");
+		System.out.println("Rating : " +movieList.get(i-1).getAverageRating() +" /5");
+		System.out.print("\n");
 		System.out.println("================");
 		System.out.println("(1) View Individual Reviews and Ratings");
 		System.out.println("(2) Select Cineplex to watch movie");
-		System.out.println("(3) Return to Movie List");
+		System.out.println("(3) Return to Search Movie");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
-			for (int j = 0; j<10; j++) {
+			System.out.println("==== Reviews ====");
+			if (movieList.get(i-1).getMovieReview().size() <10) {
+				for (int k = 0; k<movieList.get(i-1).getMovieReview().size(); k++) {
+					System.out.println((k+1) + ") " );
+					System.out.println("Review : " +movieList.get(i-1).getMovieReview().get(k).getReview());
+					System.out.println("Rating : " +movieList.get(i-1).getMovieReview().get(k).getRating()+" /5");
+				}
+			}
+			else
+				{
+				for (int j = 0; j<10; j++) {
 				System.out.println((j+1) + ") " +movieList.get(i-1).getMovieReview().get(j).getReview());
-				System.out.println("Rating is " +movieList.get(i-1).getMovieReview().get(j).getRating());
-				System.out.println("Proceed to Select Cineplex? (Y/N) ");
+				System.out.println("Rating : " +movieList.get(i-1).getMovieReview().get(j).getRating()+" /5");
+				}
+			}
+			System.out.println("");
+			System.out.println("Proceed to Select Cineplex? (Y/N) ");
+			//if (sc.next().equalsIgnoreCase("n"));
+			//break;
+			
 				char ans;
+		
 				do{
 					ans = sc.next().charAt(0);
 				
@@ -170,24 +188,27 @@ public class MovieGoer extends Account {
 					displayCineplexes(movieList.get(i-1));;
 				}
 				else if (ans == 'n' || ans == 'N') {
+					System.out.println("");
 					return;	
 				}
 				else
 					System.out.println("Invalid Choice! Please enter again.");
 				} while (ans != 'y' || ans != 'Y' || ans != 'N' || ans != 'n');
-			}
+			
 			break;
 		case 2:
 			displayCineplexes(movieList.get(i-1));
 				return;
 		case 3:
-			return;
+			searchMovie();
+			break;
 		}	
 	}
 	
 	public void displayCineplexes(Movie movie) {
 		Scanner sc = new Scanner(System.in);
 		int i=1;
+		System.out.println("==== Cineplexes ====");
 		for(Cineplex cine : GoldenVillage.getCineplexes()) {
 			System.out.println(i + ") " +cine.getCineplexName());
 			i++;
