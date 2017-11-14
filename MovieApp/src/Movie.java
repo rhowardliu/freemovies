@@ -257,7 +257,7 @@ public class Movie implements Serializable {
 			Collections.sort(temp_list,ShowTime.getDateComparator());
 			System.out.println(" ===== ShowTime ===== ");
 			for (ShowTime x: temp_list) {
-				temp_date.add(x.getShowTimeDate());
+				temp_date.add(x.getShowTimeDate()); 
 			}
 			//the next 3 steps remove the duplicates within temp_date
 			Set<String> s = new LinkedHashSet<String>(temp_date);

@@ -16,7 +16,7 @@ public class Cineplex {
 		//each cinema will have a timetable of 365 slots, each slot represents one day of the month
 		//each timetable slot is set to weekdays and weekends by default
 		//
-		cinemas[0] = new Cinema(CinemaTypeEnum._platinum, "01", 3, 5);
+		cinemas[0] = new Cinema(CinemaTypeEnum._platinum, "01", 7, 7);
 		cinemas[1] = new Cinema(CinemaTypeEnum._standard, "02", rows, cols);
 		cinemas[2] = new Cinema(CinemaTypeEnum._standard, "03", rows, cols);
 	}
