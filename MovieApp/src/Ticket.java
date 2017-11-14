@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 enum AgeCatEnum{
 	student, adult, child, senior
@@ -109,12 +111,33 @@ public class Ticket implements Serializable {
 	public String getDate() {
 		return date;
 	}
-
+	
+	public String getMovieID() {
+		return movieID;
+	}
+	
 	public static void updateDatabase() throws FileNotFoundException, IOException {
 		ObjectWriter ow = new ObjectWriter(ticketsDatabase);
 		ow.updateDataList(ticketlist);
 	}
 	
+	public static List<Ticket> removeDuplicates(List<Ticket> listWithDuplicates) {
+	    /* Set of all attributes seen so far */
+	    Set<String> attributes = new HashSet<String>();
+	    /* All confirmed duplicates go in here */
+	    List duplicates = new ArrayList<Ticket>();
+
+	    for(Ticket x : listWithDuplicates) {
+	        if(attributes.contains(x.getMovietitle())) {
+	            duplicates.add(x);
+	        }
+	        attributes.add(x.getMovietitle());
+	    }
+	    /* Clean list without any dups */
+	    listWithDuplicates.removeAll(duplicates);
+	    return listWithDuplicates;
+	}
+
 
 		
 }
