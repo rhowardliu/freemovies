@@ -43,17 +43,19 @@ public class MovieGoer extends Account {
 		do {
 		System.out.println("Select option:");
 		System.out.println("(1) Search movie");
-		System.out.println("(2) View Booking History/Add Review");
-		System.out.println("(3) Log out");
+		System.out.println("(2) View Booking History");
+		System.out.println("(3) Add Review");
+		System.out.println("(4) Log out");
 		
 		Scanner sc = new Scanner(System.in);
 		int mgmainmenuchoice = sc.nextInt();
 		
 			switch (mgmainmenuchoice){
 			case 1: this.searchMovie(); break;
-			case 2: this.printTransactionHistory(); 
+			case 2: this.printTransactionHistory();
 				break;
-			case 3: System.out.println("Logging out..."); return;
+			case 3: this.addingMovieReview();
+			case 4: System.out.println("Logging out..."); return;
 			default: System.out.println("Invalid choice! Logging out..."); return; 
 			}
 		} while (true);
