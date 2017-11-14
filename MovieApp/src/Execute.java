@@ -16,6 +16,12 @@ public class Execute {
 	public static void main(String[] args) throws Exception {
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
+		Movie.initialiseDatabase();
+		ShowTime.initialiseDatabase();
+		Ticket.initialiseDatabase();
+		Timetable.initialiseDatabase();
+		
+		GoldenVillage.getInstance();
 		Account user = login();	
 		if (user.getUserID().equals("admin")){
 			Admin admin = (Admin) user;
@@ -25,6 +31,13 @@ public class Execute {
 			MovieGoer moviegoer = (MovieGoer) user;
 			moviegoer.movieGoerMainControl();
 		}
+		
+		MovieGoer.updateDatabase();
+		MovieReviews.updateDatabase();
+		Movie.updateDatabase();
+		ShowTime.updateDatabase();
+		Ticket.updateDatabase();
+		Timetable.updateDatabase();
 		
 	}
 	public static Account login() throws InvalidLogin {

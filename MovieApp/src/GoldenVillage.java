@@ -8,9 +8,10 @@ import java.text.SimpleDateFormat;
  *
  */
 public class GoldenVillage {
+	private static GoldenVillage INSTANCE;
 	private static Cineplex[] cineplexes;
 	
-	public GoldenVillage(){
+	private GoldenVillage(){
 		cineplexes = new Cineplex[3];
 		//soft-code this portion 
 		cineplexes[0] = new Cineplex ("GV-Jurong", "J", 10, 18);
@@ -22,6 +23,13 @@ public class GoldenVillage {
 	 * Returns GoldenVillage's array of cineplexes
 	 * @return
 	 */
+	
+	public static GoldenVillage getInstance() {
+		if (INSTANCE==null) {
+			return INSTANCE = new GoldenVillage();
+		}
+		return INSTANCE;
+	}
 	
 	public static Cineplex[] getCineplexes(){
 		return cineplexes;

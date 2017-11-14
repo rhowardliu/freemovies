@@ -36,7 +36,7 @@ public class Movie implements Serializable {
 	private String director;
 	private List<String> cast;
 	private String synopsis;
-	private List<MovieReviews> reviews;
+	private List<MovieReviews> reviews=new ArrayList<MovieReviews>();
 	private double averageRating;
 	private double totalSales;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
@@ -51,7 +51,6 @@ public class Movie implements Serializable {
 		this.duration = duration;
 		this.title = title;
 		this.status = status;
-		System.out.print("Directed by: ");
 		this.director = director;
 		this.cast=cast;
 		this.synopsis = synopsis;
