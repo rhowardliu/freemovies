@@ -23,6 +23,8 @@ public class ShowTime implements Serializable {
 	private String cineplexname;
 	private String cineplexcode;
 	private String cinemacode;
+	private int cinemarows;
+	private int cinemacols;
 	private String movieID;
 	private CinemaTypeEnum cinematype;
 	private String date;
@@ -43,6 +45,8 @@ public class ShowTime implements Serializable {
 		this.date = date;
 		this.daytype = null;
 		this.starttime = starttime;
+		this.cinemarows = cinemarows;
+		this.cinemacols = cinemacols;
 		for (int i=1; i<cinemarows; i++) {
 			for (int j=1; j<cinemacols; j++) 
 				ticket [i][j] = new Ticket(movietitle,movieID,date,i,j);
@@ -80,39 +84,51 @@ public class ShowTime implements Serializable {
 		//****its based on the cinema selected instead
 		
 		//assume 9 rows, 8x2 columns with an aisle in between 
-		int i, j, k, l=0, count=1, al=65;
-		//prints no. in increasing order horizontally 
-		while (l<2) {
-			System.out.print(" ");
-			for (k=0;k<8;k++) {
-				System.out.print(count);
-				count++;
+		int al = 65;
+		System.out.print("   ");
+		int i;
+		for (i = 1; i <= cinemacols/2 ;i++) {
+			System.out.printf("%02d ", i);
 		}
+		System.out.print("  ");
 		
-		for (i=1; i<10; i++) {
-			System.out.print((char)(al));//prints character vertically
-			al++;
-			for (j=1;j<9;j++) {
-				
-				 //need a function in Ticket to check if booked already, sth like bookedStatus()
+		while (i<=cinemacols) {
+			System.out.printf("%02d ", i);
+			i++;
+		}
+		System.out.print("\n");
+		
+		for (int j = 0; j<cinemarows ; j++) {
+			System.out.print((char)(al));
+			System.out.print("  ");
+			for (i = 1; i <= cinemacols/2 ;i++) {
 				if (ticket[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
 					System.out.print(" X ");
 			}
-			System.out.print("   ");
-			j++;
-			for (j=9;j<17;j++) {
-				if (ticket[i][j].isBooked() == false)//not booked
-					System.out.print(" O ");
-				else 
-					System.out.print(" X ");
-			}
-			System.out.print("\n");
+			System.out.print("  ");
 			
+			while (i<=cinemacols) {
+				if (ticket[i][j].isBooked() == false)//not booked
+					System.out.print(" O ");
+				else 
+					System.out.print(" X ");
+				i++;
+			}
+			System.out.print("  ");
+			System.out.print((char)(al));
+			al++;
+			System.out.print("\n");
 		}
+			System.out.print("\n");
+			System.out.print("  ");
+		for (int k = 0; k<(cinemacols*3)/2 ; k++) {
+			System.out.print(" ");
 		}
+		System.out.println("SCREEN");
 	}
+	
 	
 	public String getMovieTitle() {
 		return this.movietitle;
