@@ -97,8 +97,9 @@ public class Admin extends Account {
 		//need ask howard to check which class and which method to call to add new movie object to?
 		System.out.print("Movie ID: "); String movieid = sc.nextLine();
 		System.out.print("Movie title: "); String movietitle = sc.nextLine();
-		System.out.println("Movie type: "); MovieTypeEnum movietype = this.getInputMovieType();
+		System.out.println("Movie type: \n"); MovieTypeEnum movietype = this.getInputMovieType();
 		System.out.print("Movie duration: "); int movieduration = sc.nextInt();sc.nextLine();
+		System.out.print("Movie status:\n");
 		System.out.println("Movie status:");
 		StatusEnum moviestatus = this.getInputStatus();       
         System.out.print("Directed by: "); String moviedirector = sc.nextLine();
