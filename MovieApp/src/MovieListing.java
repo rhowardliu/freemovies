@@ -11,12 +11,12 @@ import java.util.List;
 public class MovieListing {
 	
 	private static List<Movie> setTemp(StatusEnum status){ //returns list of movie based on its status
-		List<Movie> temp = new ArrayList<Movie>();
-		switch (status) {
+		List<Movie> temp = new ArrayList<Movie>(); //creates a new List of Movies called temp
+		switch (status) { //based on the show status chosen by the user in MovieGoer method
 		case ComingSoon:
-			for (Movie x : Movie.movielist) {
-				if (x.getStatus().equals(StatusEnum.ComingSoon))
-					temp.add(x);
+			for (Movie x : Movie.movielist) { //for every movie in the static list of movies in Movie class
+				if (x.getStatus().equals(StatusEnum.ComingSoon)) //if that movie's status is "Coming Soon"
+					temp.add(x); //add that movie to the newly made array of Movies called temp
 			}
 			break;
 		case Preview:
@@ -47,10 +47,10 @@ public class MovieListing {
 	 * @return
 	 */
 	public static List<Movie> getMovieListByRating(StatusEnum status) { //sorts movie by rating
-		List<Movie> temp = setTemp(status);
+		List<Movie> temp = setTemp(status); //setTemp (status) returns a list of movies with the same status that the moviegoer wants to see
 		
-		Collections.sort(temp,getRatingComparator());
-		return temp;
+		Collections.sort(temp,getRatingComparator()); //sorts the array by rating
+		return temp; 
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class MovieListing {
 	 */
 	public static List<Movie> getMovieListByTitle(StatusEnum status) { //sorts movie by title
 		List<Movie> temp = setTemp(status);
-		Collections.sort(temp,getTitleComparator());
+		Collections.sort(temp,getTitleComparator()); //this line sorts temp's movies by title
 		return temp;
 	}
 	
