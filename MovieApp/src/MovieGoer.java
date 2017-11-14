@@ -39,7 +39,7 @@ public class MovieGoer extends Account {
 
 	}
 	public void movieGoerMainControl() {
-		System.out.println("===== Welcome! " +name +"=====");
+		System.out.println("===== Welcome! " +name +" =====");
 		do {
 		System.out.println("Select option:");
 		System.out.println("(1) Search movie");
@@ -71,11 +71,12 @@ public class MovieGoer extends Account {
 		System.out.println("(3) Ticket Sales");
 		Scanner sc = new Scanner(System.in);
 		int movieListChoice = sc.nextInt();
-		System.out.println("Status of Movie");
+		System.out.println(" ===== Status of Movie =====");
 		System.out.println("(1) Coming Soon");
 		System.out.println("(2) Preview");
 		System.out.println("(3) Now Showing");
 		int statusChoice = sc.nextInt();
+		System.out.println("================");
 		System.out.println("(1) List everything");
 		System.out.println("(2) List Top 5");
 		int listChoice = sc.nextInt();
@@ -103,7 +104,7 @@ public class MovieGoer extends Account {
 			}
 			if (listChoice == 2) {
 					for (int j=0;j<5;j++) {
-						System.out.println(j +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
+						System.out.println((j+1) +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
 					}
 				}
 			getMovieChoice(MovieListing.getMovieListByTitle(status));
@@ -118,7 +119,7 @@ public class MovieGoer extends Account {
 			}
 			if (listChoice == 2) {
 					for (int j=0;j<5;j++) {
-						System.out.println(j +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
+						System.out.println((j+1) +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
 					}
 				}
 			getMovieChoice(MovieListing.getMovieListByRating(status));
@@ -144,11 +145,13 @@ public class MovieGoer extends Account {
 	
 	public void getMovieChoice(List<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("Enter Movie Choice: ");
 		int i = sc.nextInt();
 		movieList.get(i-1).getMovieInfo();
 		movieList.get(i-1).getAverageRating();
 		System.out.println(" ");
+		System.out.println("================");
 		System.out.println("(1) View Individual Reviews and Ratings");
 		System.out.println("(2) Select Cineplex to watch movie");
 		System.out.println("(3) Return to Movie List");
@@ -215,6 +218,7 @@ public class MovieGoer extends Account {
 
 	
 		else 
+			System.out.println("================");
 			System.out.println("(1) Back to View ShowTimes");
 			System.out.println("(2) Back to Search Movie");
 			Scanner sc =  new Scanner(System.in);
