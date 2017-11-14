@@ -28,7 +28,7 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
-	private Ticket [][] seatLayout;
+	private Ticket [][] ticket;
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.txt");
 	
@@ -45,7 +45,7 @@ public class ShowTime implements Serializable {
 		this.starttime = starttime;
 		for (int i=1; i<cinemarows; i++) {
 			for (int j=1; j<cinemacols; j++) 
-				seatLayout [i][j] = new Ticket(movietitle,movieID,date,i,j);
+				ticket [i][j] = new Ticket(movietitle,movieID,date,i,j);
 		}
 		
 		showtimelist.add(this);
@@ -95,7 +95,7 @@ public class ShowTime implements Serializable {
 			for (j=1;j<9;j++) {
 				
 				 //need a function in Ticket to check if booked already, sth like bookedStatus()
-				if (seatLayout[i][j].isBooked() == false)//not booked
+				if (ticket[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
 					System.out.print(" X ");
@@ -103,7 +103,7 @@ public class ShowTime implements Serializable {
 			System.out.print("   ");
 			j++;
 			for (j=9;j<17;j++) {
-				if (seatLayout[i][j].isBooked() == false)//not booked
+				if (ticket[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
 					System.out.print(" X ");
@@ -124,16 +124,17 @@ public class ShowTime implements Serializable {
 	 * After which, after the movie goer confirms booking of Ticket, a transaction id will be generated and the ticket purchase will be recorded under the user's transaction history
 	 */
 	//need to change uml diagram. void, not Ticket.
-	public void bookTicket() { 
+	public Ticket bookTicket() { 
 		//first algo ask the user which seat he wants
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter desired seat: ");
 		System.out.print("Row: "); int row = sc.nextInt();
 		System.out.print("Column: "); int col = sc.nextInt();
 		//check if the requested seat is already taken
 		
-		if (seatLayout[row][col].isBooked()==true){
+		if (ticket[row][col].isBooked()==true){
 			System.out.println("Seat is already taken.");
-			return;
+			return null;
 		}
 		else{
 			//if the requested seat is free, ask for age category for the ticket
@@ -154,28 +155,29 @@ public class ShowTime implements Serializable {
 				movie = Movie.searchMovie(movietitle);
 			} catch (Exception e) {
 				System.out.println("Movie ID not found");
-				return;
+				return null;
 			}			
 			try {
 				this.daytype=Timetable.getTimetableByDate(date).getDayType();
 			} catch (Exception e) {
 				System.out.println("Timetable not found");
-				return;
+				return null;
 			}
-			seatLayout[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
+			ticket[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
 			//write buy more tickets?
 			//display info first then
 			//write confirm payment?
 			//if cancel, go back to main list
 			//if confirm then book, else, return back to screen where it shows buy more tickets?
-			seatLayout[row][col].setBooked(true);
+			ticket[row][col].setBooked(true);
 			System.out.println("Ticket booked successfully!");
 			Calendar now = Calendar.getInstance();
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddhhmm");
 			String timestamp = dateFormatter.format(now.getTime());
 			printTicketShowTimeDetails(row, col);
-			seatLayout[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
-			System.out.println("Transaction ID is " +seatLayout[row][col].getTransactionID());
+			ticket[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
+			System.out.println("Transaction ID is " +ticket[row][col].getTransactionID());
+			return ticket[row][col];
 			//need a method to add the transaction to the user's transactionhistory
 		}
 	}
@@ -189,10 +191,10 @@ public class ShowTime implements Serializable {
 		System.out.println("==========");
 		System.out.println("Booking details:");
 		System.out.println("Movie: " + this.movietitle);
-		System.out.println("Date: " + this.getShowTimeDate() + "(" + seatLayout[row][col].getDayType() + ")");
-		System.out.println("Seat Row: " + seatLayout[row][col].getSeatRow() + "\tSeat Column: " + seatLayout[row][col].getSeatCol());
+		System.out.println("Date: " + this.getShowTimeDate() + "(" + ticket[row][col].getDayType() + ")");
+		System.out.println("Seat Row: " + ticket[row][col].getSeatRow() + "\tSeat Column: " + ticket[row][col].getSeatCol());
 		System.out.println("Location: " + this.cineplexname);
-		System.out.println("Price: " + seatLayout[row][col].getPrice());
+		System.out.println("Price: " + ticket[row][col].getPrice());
 		System.out.println("==========");
 	}
 

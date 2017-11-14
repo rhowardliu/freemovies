@@ -23,7 +23,7 @@ public class Execute {
 		}
 		else {
 			MovieGoer moviegoer = (MovieGoer) user;
-			moviegoer.mgMainControl();
+			moviegoer.movieGoerMainControl();
 		}
 		
 		//

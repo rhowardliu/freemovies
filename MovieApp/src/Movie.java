@@ -255,7 +255,7 @@ public class Movie implements Serializable {
 		}
 		else {
 			Collections.sort(temp_list,ShowTime.getDateComparator());
-			System.out.println(" -ShowTime- ");
+			System.out.println(" ===== ShowTime ===== ");
 			for (ShowTime x: temp_list) {
 				temp_date.add(x.getShowTimeDate());
 			}
@@ -269,22 +269,41 @@ public class Movie implements Serializable {
 	  		for(String theDate : temp_date) {
 	  			displayDailyShowTime(theDate,temp_list);
 	  		}
-	  		
-	  		System.out.println("*****");
-	  		System.out.println("Select Show date");
-	  		int i=1;
-	  		for (String theDate: temp_date) {
-	  			System.out.println(i + theDate);
-	  			i++;
-	  		}
-	  		Scanner scan = new Scanner (System.in);
-	  		int dateChoice = scan.nextInt();
-	  		List<ShowTime> dailyshowlist = displayDailyShowTime(temp_date.get(dateChoice-1),temp_list);
-	  		System.out.println("Select Show:");
-	  		int showChoice = scan.nextInt();
-	  		return dailyshowlist.get(showChoice-1);
-		}
+	  		Scanner sc = new Scanner (System.in);
+	  		System.out.print("Proceed to book ticket? (Y/N)");
+	  		char bookChoice;
+	  		do{
+	  			bookChoice = sc.next().charAt(0);
+	  				if (bookChoice == 'y' || bookChoice == 'Y') {
+	  			
+	  			  		System.out.println("================");
+	  			  		System.out.println("Select Show date");
+	  			  		int i=1;
+	  			  		for (String theDate: temp_date) {
+	  			  			System.out.println(i + theDate);
+	  			  			i++;
+	  			  		}
+	  			  		
+	  			  		int dateChoice = sc.nextInt();
+	  			  		List<ShowTime> dailyshowlist = displayDailyShowTime(temp_date.get(dateChoice-1),temp_list);
+	  			  		System.out.println("Select Show:");
+	  			  		int showChoice = sc.nextInt();
+	  			  		return dailyshowlist.get(showChoice-1);
+	  				
+	  			}
+	  				else if (bookChoice == 'n' || bookChoice == 'N') {
+	  					return null;
+	  				}
+	  				else 
+	  					System.out.println("Invalid Choice! Please enter again.");
+		}while (bookChoice != 'y' || bookChoice != 'Y' || bookChoice != 'N' || bookChoice != 'n');
 	}
+		return null;		
+}
+		
+		
+	
+
 	
 	public List<ShowTime> displayDailyShowTime(String date,List<ShowTime> showtimelist){
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
