@@ -99,18 +99,19 @@ public class Admin extends Account {
 		System.out.print("Movie title: "); String movietitle = sc.nextLine();
 		System.out.println("Movie type: \n"); MovieTypeEnum movietype = this.getInputMovieType();
 		System.out.print("Movie duration: "); int movieduration = sc.nextInt();sc.nextLine();
-		System.out.print("Movie status:\n");
 		System.out.println("Movie status:");
 		StatusEnum moviestatus = this.getInputStatus();       
         System.out.print("Directed by: "); String moviedirector = sc.nextLine();
 		System.out.println("Enter Cast Names (done to end): ");
 		ArrayList<String> moviecastlist = new ArrayList<String>();
 		try {
-			String s;
-			while(sc.hasNext());
-		while(!(s=sc.nextLine()).equals("done")){
-			moviecastlist.add(sc.nextLine());
-	      }
+			while(true){
+				String s = sc.nextLine();
+				if (s.equalsIgnoreCase("done"))
+					break;
+				else
+					moviecastlist.add(s);
+		      }
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
