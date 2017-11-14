@@ -364,7 +364,7 @@ public class Admin extends Account {
 		Cineplex [] cineplexes = GoldenVillage.getCineplexes();
 		System.out.println("Select cineplex");
 		for (int j = 0; j < cineplexes.length; j++)
-			System.out.println("(" + j+1 + ") " + cineplexes[j].getCineplexName());
+			System.out.println("(" + (j+1) + ") " + cineplexes[j].getCineplexName());
 		int cineplexchoice = sc.nextInt();
 		String cineplexname = cineplexes[cineplexchoice - 1].getCineplexName();
 		String cineplexcode = cineplexes[cineplexchoice - 1].getCineplexCode();
