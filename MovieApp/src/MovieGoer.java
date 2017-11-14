@@ -26,7 +26,7 @@ public class MovieGoer extends Account {
 	private List <Ticket> transactionhistory;
 	private static List <String> moviehistory;
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
-	public static final File moviegoerDatabase = new File ("MovieGoer.txt");
+	public static final File moviegoerDatabase = new File ("MovieGoer.tmp");
 	
 	public MovieGoer(String userID,String password, String name, String mobilenumber, String email){
 		super(userID,password);
@@ -39,7 +39,7 @@ public class MovieGoer extends Account {
 
 	}
 	public void movieGoerMainControl() {
-		System.out.println("===== Welcome! " +name +"=====");
+		System.out.println("===== Welcome! " +name +" =====");
 		do {
 		System.out.println("Select option:");
 		System.out.println("(1) Search movie");
@@ -65,17 +65,18 @@ public class MovieGoer extends Account {
 		//need to loop this
 		//should i create a if selection is out of range...blah, okay la if got time
 		
-		System.out.println("Search Movie By: ");
+		System.out.println("===== Search Movie By =====");
 		System.out.println("(1) Movie Title");
 		System.out.println("(2) Overall Reviewers' Rating");
 		System.out.println("(3) Ticket Sales");
 		Scanner sc = new Scanner(System.in);
 		int movieListChoice = sc.nextInt();
-		System.out.println("Status of Movie");
+		System.out.println(" ===== Status of Movie =====");
 		System.out.println("(1) Coming Soon");
 		System.out.println("(2) Preview");
 		System.out.println("(3) Now Showing");
 		int statusChoice = sc.nextInt();
+		System.out.println("================");
 		System.out.println("(1) List everything");
 		System.out.println("(2) List Top 5");
 		int listChoice = sc.nextInt();
@@ -91,7 +92,7 @@ public class MovieGoer extends Account {
 			status = StatusEnum.NowShowing;
 			break;
 		}
-		
+		System.out.println("==== Movies ====");
 		switch (movieListChoice) {
 		case 1:
 			if(listChoice == 1) {
@@ -103,7 +104,7 @@ public class MovieGoer extends Account {
 			}
 			if (listChoice == 2) {
 					for (int j=0;j<5;j++) {
-						System.out.println(j +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
+						System.out.println((j+1) +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
 					}
 				}
 			getMovieChoice(MovieListing.getMovieListByTitle(status));
@@ -118,7 +119,7 @@ public class MovieGoer extends Account {
 			}
 			if (listChoice == 2) {
 					for (int j=0;j<5;j++) {
-						System.out.println(j +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
+						System.out.println((j+1) +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
 					}
 				}
 			getMovieChoice(MovieListing.getMovieListByRating(status));
@@ -144,11 +145,13 @@ public class MovieGoer extends Account {
 	
 	public void getMovieChoice(List<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("Enter Movie Choice: ");
 		int i = sc.nextInt();
 		movieList.get(i-1).getMovieInfo();
 		movieList.get(i-1).getAverageRating();
 		System.out.println(" ");
+		System.out.println("================");
 		System.out.println("(1) View Individual Reviews and Ratings");
 		System.out.println("(2) Select Cineplex to watch movie");
 		System.out.println("(3) Return to Movie List");
@@ -215,6 +218,7 @@ public class MovieGoer extends Account {
 
 	
 		else 
+			System.out.println("================");
 			System.out.println("(1) Back to View ShowTimes");
 			System.out.println("(2) Back to Search Movie");
 			Scanner sc =  new Scanner(System.in);
@@ -247,7 +251,7 @@ public class MovieGoer extends Account {
 	
 	public void printTransactionHistory(){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Transaction History of " + this.name + ":\n");
+		System.out.println("===== Transaction History of " + this.name + " =====\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all dates
@@ -290,7 +294,7 @@ public class MovieGoer extends Account {
 	public void addingMovieReview(){
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Movie History of " + this.name + ":\n");
+		System.out.println("===== Movie History of " + this.name + " =====\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
 		

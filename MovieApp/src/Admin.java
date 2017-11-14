@@ -181,11 +181,9 @@ public class Admin extends Account {
 				System.out.println("Movie not found.");
 				return;
 			}
-		} while(selectedmovie == null);
-		
-		
+		} while(selectedmovie==null);
 
-		boolean quit = false;
+
 		while (quit == false) {	
 			System.out.println("\n");
 			System.out.println("===== Select features to update =====");
@@ -397,14 +395,14 @@ public class Admin extends Account {
 		int month = sc.nextInt();
 		System.out.println("Enter year (XXXX) :");
 		int year = sc.nextInt();
-		date = String.format("%02d-%d-%d",day,month,year);
+		date = String.format("%02d-%02d-%d",day,month,year);
 		
 		try {
 			tt = Timetable.getTimetableByDate(date);
 		}catch(Exception e) {
 			System.out.println("Timetable not found");
 		}
-		}while(tt!=null);
+		}while(tt==null);
 		
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;

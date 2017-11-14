@@ -42,7 +42,7 @@ public class Movie implements Serializable {
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
 	private MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
-	public static final File movieDatabase = new File ("Movie.txt");
+	public static final File movieDatabase = new File ("Movie.tmp");
 
 	
 	public Movie(String movieID, String title, int duration, StatusEnum status, MovieTypeEnum movieType, String director, List<String> cast, String synopsis) {

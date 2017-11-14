@@ -34,7 +34,7 @@ public class Ticket implements Serializable {
 	private boolean isBooked;
 	private double price;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
-	public static final File ticketsDatabase = new File ("Ticket.txt");
+	public static final File ticketsDatabase = new File ("Ticket.tmp");
 	
 	public Ticket(String movietitle, String movieID, String date,int seatrow, int seatcol) {
 		this.movietitle=movietitle;
