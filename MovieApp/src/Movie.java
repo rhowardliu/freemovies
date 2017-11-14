@@ -232,19 +232,26 @@ public class Movie implements Serializable {
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
 	}
-	
-	/**
-	 * Prints out the ShowTimes associated with the Movie 
-	 */
-	public void displayShowTimes(){
-		//SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		List<ShowTime> temp_list = movieShowTime;
-		int i= temp_list.size()-1;
+
+/**
+ * Prints out the ShowTimes associated with the Movie 
+ */
+	public ShowTime displayShowTimes(String cineplexcode){
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		List<ShowTime> temp_list=null;
+		for (ShowTime x : movieShowTime) {
+			if (x.getCineplexcode().equals(cineplexcode))
+				temp_list.add(x);
+		}
+		if(temp_list.isEmpty()) {
+			System.out.println("Cineplexcode not found.");
+			return null;
+		}
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available
 		
 		if (movieShowTime.isEmpty()){
 			System.out.println("No Showtime available");
-			return;
+			return null;
 		}
 		else {
 			Collections.sort(temp_list,ShowTime.getDateComparator());
@@ -260,37 +267,44 @@ public class Movie implements Serializable {
 //			List<String> temp_date = temp.stream().distinct().collect(Collectors.toList());
 
 	  		for(String theDate : temp_date) {
-	   			List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
-	  			for(ShowTime x : temp_list) {
-	  				if (theDate.equals(x.getShowTimeDate()))
-	  					dailyshowtime.add(x);
-	  			}
-	  			Collections.sort(dailyshowtime,ShowTime.getTimeComparator());
-	  			System.out.println(theDate);
-	  			System.out.println("----------");
-	  			for(ShowTime x: dailyshowtime) {
-	  				int start_time = x.getShowTimeStartTime();
-	  				int end_time = start_time + this.getDuration();
-	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
-	  			}
+	  			displayDailyShowTime(theDate,temp_list);
 	  		}
+	  		
+	  		System.out.println("*****");
+	  		System.out.println("Select Show date");
+	  		int i=1;
+	  		for (String theDate: temp_date) {
+	  			System.out.println(i + theDate);
+	  			i++;
+	  		}
+	  		Scanner scan = new Scanner (System.in);
+	  		int dateChoice = scan.nextInt();
+	  		List<ShowTime> dailyshowlist = displayDailyShowTime(temp_date.get(dateChoice-1),temp_list);
+	  		System.out.println("Select Show:");
+	  		int showChoice = scan.nextInt();
+	  		return dailyshowlist.get(showChoice-1);
 		}
 	}
 	
-	public void displayShowTimes(String date){
+	public List<ShowTime> displayDailyShowTime(String date,List<ShowTime> showtimelist){
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		List<ShowTime> dailyshowtime = new ArrayList<ShowTime>();
-		  			for(ShowTime x : movieShowTime) {
+		  			for(ShowTime x : showtimelist) {
 		  				if (date.equals(x.getShowTimeDate()))
 		  					dailyshowtime.add(x);
 	  			}
 	  			Collections.sort(dailyshowtime,ShowTime.getTimeComparator());
+	  			System.out.println(date);
 	  			System.out.println("----------");
+	  			int i=1;
 	  			for(ShowTime x: dailyshowtime) {
 	  				int start_time = x.getShowTimeStartTime();
 	  				int end_time = start_time + this.getDuration();
-	  				System.out.printf("%02d:00 - %02d:00", start_time, end_time);
+	  				System.out.printf("%d. %02d:00 - %02d:00",i, start_time, end_time);
+	  				i++;
 	  			}
+	  			return dailyshowtime;
+	  			
 	  		}
 	
 	
