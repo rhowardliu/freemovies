@@ -8,8 +8,14 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
+
+
 
 public class MovieGoer extends Account {
 
@@ -163,7 +169,7 @@ public class MovieGoer extends Account {
 				}
 				else
 					System.out.println("Invalid Choice! Please enter again.");
-				} while (ans != 'y' || ans != 'Y' || ans != 'N' || ans != 'n')
+				} while (ans != 'y' || ans != 'Y' || ans != 'N' || ans != 'n');
 			}
 			break;
 		case 2:
@@ -278,48 +284,57 @@ public class MovieGoer extends Account {
 		
 	}
 	
-	/*public void printMovieHistory(){
+
+	public void addingMovieReview(){
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Movie History of " + this.name + ":\n");
 		System.out.println("***");
 		List<Ticket> temp_list = transactionhistory;
 		
+		
 		if (transactionhistory.isEmpty()){
 			System.out.println("No History");
 			return;
 		}
+		
+		
 		else {
-			for (Ticket x: temp_list) {
-				temp_date.add(x.getDate());
+			Collections.reverse(temp_list);
+			int i=1;
+			Ticket.removeDuplicates(temp_list);
+			for(Ticket x : temp_list) {
+				System.out.println(i + x.getMovietitle());
+				i++;			
 			}
-			//the next 3 steps remove the duplicates within temp_date
-			Set<String> s = new LinkedHashSet<String>(temp_date);
-			temp_date.clear();
-			temp_date.addAll(s);
+			System.out.println("***");
+			System.out.println("Do you want to enter a review? (Y/N)");
+			if(!(sc.next().equals("Y")||(sc.next().equals("y"))))
+					return;
+			System.out.println("Select index of movie:");
+			int selection = sc.nextInt();
+			Movie movieSelected;
+			try {
+				movieSelected = Movie.searchMovie(temp_list.get(selection-1).getMovieID());
+			} catch (Exception e) {
+				System.out.println("Movie not found!");
+				return;
+			}
+			int rating;
+			do {
+				System.out.println("Enter Rating(0-5)");
+				rating = sc.nextInt();
+				if (rating<0 || rating>5)
+					System.out.println("Invalid Rating. Only enter (0-5)");
+			} while (rating<0 || rating>5);
 			
-
-	  		for(String theDate : temp_date) {
-	   			List<Ticket> daytransaction = new ArrayList<Ticket>();
-			  	for(Ticket x : temp_list) {
-			  		if (theDate.equals(x.getDate()))
-			  			daytransaction.add(x);
-	  			}
-		  		System.out.println(theDate);
-		  		int i = 1;
-		  		for (Ticket printx: daytransaction) {
-		  			System.out.println(i+". " +printx.getMovietitle()+" " +printx.getPrice()+" "+printx.getTransactionID());
-		  			i++;
-		  		}
-		  		
-			
-	  		}
+			System.out.println("Enter Review:");
+			String review = sc.nextLine();
+			movieSelected.addMovieReview(rating, review);
+			System.out.println("Review added!");
 		}
-		
-	}*/
-	
-	public void addReview(Ticket ticket) {
-		
 	}
+
 			
 	  		
 	public void addTransaction(Ticket ticket) {
