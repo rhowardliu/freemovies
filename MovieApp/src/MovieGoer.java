@@ -157,12 +157,19 @@ public class MovieGoer extends Account {
 				System.out.println((j+1) + ") " +movieList.get(i-1).getMovieReview().get(j).getReview());
 				System.out.println("Rating is " +movieList.get(i-1).getMovieReview().get(j).getRating());
 				System.out.println("Proceed to Select Cineplex? (Y/N) ");
-				char ans = sc.next().charAt(0);
+				char ans;
+				do{
+					ans = sc.next().charAt(0);
+				
 				if (ans == 'y' || ans == 'Y') {
 					displayCineplexes(movieList.get(i-1));;
 				}
-				else 
+				else if (ans == 'n' || ans == 'N') {
 					return;	
+				}
+				else
+					System.out.println("Invalid Choice! Please enter again.");
+				} while (ans != 'y' || ans != 'Y' || ans != 'N' || ans != 'n');
 			}
 			break;
 		case 2:
@@ -186,27 +193,39 @@ public class MovieGoer extends Account {
 	}
 	
 	public void displayShowTimes(Movie movie, String cineplexCode) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("\" ===== Update Pricing Policy ===== \"");
-		movie.displayShowTimes();
-		System.out.println("Proceed to book tickets? (Y/N)");
-		char ans = sc.next().charAt(0);
-		if (ans == 'y' || ans == 'Y') {
-				bookTickets(movieList, i);
+		ShowTime showTime = movie.displayShowTimes(cineplexCode);
+		if (showTime !=null) {
+			char tixChoice = 0;
+			do{
+				showTime.showSeatLayout();
+			Ticket ticket = showTime.bookTicket();
+			if (ticket != null) {
+				addTransaction(ticket);
+				System.out.println("Buy more Tickets? (Y/N)");
+				Scanner sc = new Scanner (System.in);
+				tixChoice = sc.nextLine().charAt(0);
 			}
 			else 
-				return;
+				System.out.println("Please re-enter desired seat");
+			
+			}while (tixChoice != 'n' || tixChoice != 'N');
+		}
 
+	
+		else 
+			System.out.println("(1) Back to View ShowTimes");
+			System.out.println("(2) Back to Search Movie");
+			Scanner sc =  new Scanner(System.in);
+			int selection = sc.nextInt();
+			switch (selection) {
+			case 1:
+				movie.displayShowTimes(cineplexCode);
+				break;
+			case 2:
+				searchMovie();
+			}
 	}
 	
-	public void bookTickets(List<Movie> movieList, int i) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter start time of desired Show Time: ");
-		int startTime = sc.nextInt();
-		for (ShowTime showTime : movieList.get(i-1).getShowTimes()) {
-		showTime.getShowTimeStartTime().indexOf(startTime);
-		}
-	}
 	
 	public String getName(){
 		return this.name;
@@ -218,6 +237,10 @@ public class MovieGoer extends Account {
 	
 	public String getEmail(){
 		return this.email;
+	}
+	
+	public List<Ticket> getTransactionHistory(){
+		return transactionhistory;
 	}
 	
 	public void printTransactionHistory(){
@@ -261,7 +284,9 @@ public class MovieGoer extends Account {
 		
 	}
 	
+
 	public void addingMovieReview(){
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Movie History of " + this.name + ":\n");
 		System.out.println("***");
@@ -309,10 +334,7 @@ public class MovieGoer extends Account {
 			System.out.println("Review added!");
 		}
 	}
-	
-	public void addReview(Ticket ticket) {
-		
-	}
+
 			
 	  		
 	public void addTransaction(Ticket ticket) {
