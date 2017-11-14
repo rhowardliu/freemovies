@@ -415,7 +415,7 @@ public class Admin extends Account {
 			}catch(Exception e) {
 				System.out.println("Movie not found");
 			}
-		} while(moviechoice!=null);
+		} while(moviechoice == null);
 	
 		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
 		System.out.println("Select timeslot:");
