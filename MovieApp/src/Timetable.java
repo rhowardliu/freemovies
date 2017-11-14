@@ -50,6 +50,8 @@ public class Timetable implements Serializable{
 		throw new Exception ("timetable not found");
 	}
 
+	
+	
 	public DayTypeEnum getDayType(){
 		return this.daytype;
 	}

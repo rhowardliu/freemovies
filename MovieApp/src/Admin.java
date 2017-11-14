@@ -178,7 +178,7 @@ public class Admin extends Account {
 			}catch(Exception e) {
 				System.out.println("Movie not found");;
 			}
-		} while(selectedmovie!=null);
+		} while(selectedmovie==null);
 		
 		
 		System.out.println("(1) Movie Title");
@@ -193,7 +193,7 @@ public class Admin extends Account {
 		System.out.println("Enter Selection: ");
 		int detailChoice = sc.nextInt();
 		boolean quit = false;
-		while (quit = false) {
+		while (quit == false) {
 			switch(detailChoice) {
 			case 1:
 				System.out.println("Enter New Movie Title:");
@@ -398,7 +398,7 @@ public class Admin extends Account {
 		}catch(Exception e) {
 			System.out.println("Timetable not found");
 		}
-		}while(tt!=null);
+		}while(tt==null);
 		
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;

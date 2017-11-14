@@ -19,15 +19,20 @@ public class Execute {
 		Movie.initialiseDatabase();
 		ShowTime.initialiseDatabase();
 		Ticket.initialiseDatabase();
-		Timetable.initialiseDatabase();
 		
 		GoldenVillage.getInstance();
 		
 //		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
 //		
 //		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
-		Account user = login();	
-		
+		Account user=null;
+		do {
+			try {
+				user = login();	
+			}catch(InvalidLogin e) {
+				System.out.println(e.toString());
+			}
+		}while(user==null);
 		
 		if (user.getUserID().equals("admin")){
 			Admin admin = (Admin) user;
