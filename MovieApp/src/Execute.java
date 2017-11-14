@@ -23,8 +23,12 @@ public class Execute {
 		
 		GoldenVillage.getInstance();
 		
-		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
+//		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
+//		
+//		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
 		Account user = login();	
+		
+		
 		if (user.getUserID().equals("admin")){
 			Admin admin = (Admin) user;
 			admin.adminMainControl();
