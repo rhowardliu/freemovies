@@ -183,7 +183,7 @@ public class Admin extends Account {
 			}
 		} while(selectedmovie==null);
 
-
+		boolean quit= false;
 		while (quit == false) {	
 			System.out.println("\n");
 			System.out.println("===== Select features to update =====");
