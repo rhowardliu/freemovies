@@ -50,6 +50,8 @@ public class Timetable implements Serializable{
 		throw new Exception ("timetable not found");
 	}
 
+	
+	
 	public DayTypeEnum getDayType(){
 		return this.daytype;
 	}
@@ -100,7 +102,7 @@ public class Timetable implements Serializable{
 
 	public void displaySchedule() {
 		for (int i = 0 ; i<24; i++) 
-			System.out.printf("%02d:00 : ,%s", i, schedule[i]);
+			System.out.printf("%02d:00 : %s\n", i, schedule[i]);
 		}
 	
 	public String[] getTimetable(){

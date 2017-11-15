@@ -19,12 +19,12 @@ public class Execute {
 		Movie.initialiseDatabase();
 		ShowTime.initialiseDatabase();
 		Ticket.initialiseDatabase();
-		Timetable.initialiseDatabase();
 		
 		GoldenVillage.getInstance();
 		
 //		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
 //		
+<<<<<<< HEAD
 		Movie Avatar = new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
 		Movie Thor = new Movie("A1235", "Thor", 2,StatusEnum.NowShowing, MovieTypeEnum.digital, "Hwdbby", new ArrayList(Arrays.asList("hwdbby", "justin")), "It's Christ Hemsworth cmon");
 		Movie Avengers = new Movie("A1236", "Avengers", 2,StatusEnum.NowShowing, MovieTypeEnum.digital, "Howard", new ArrayList(Arrays.asList("newnew")), "Mutants unite");
@@ -57,6 +57,17 @@ public class Execute {
 		
 		Account user = login();	
 		
+=======
+//		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
+		Account user=null;
+		do {
+			try {
+				user = login();	
+			}catch(InvalidLogin e) {
+				System.out.println(e.toString());
+			}
+		}while(user==null);
+>>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
 		
 		if (user.getUserID().equals("admin")){
 			Admin admin = (Admin) user;
