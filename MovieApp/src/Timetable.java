@@ -44,9 +44,10 @@ public class Timetable implements Serializable{
 	
 	public static Timetable getTimetableByDate(String date) throws Exception {
 		
-		for (Timetable x: timetablelist)
+		for (Timetable x: timetablelist){
 			if (x.getDateString().equals(date))
 				return x;
+		}
 		throw new Exception ("timetable not found");
 	}
 

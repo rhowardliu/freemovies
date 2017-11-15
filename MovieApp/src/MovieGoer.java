@@ -33,38 +33,31 @@ public class MovieGoer extends Account {
 		this.name = name;
 		this.mobilenumber = mobilenumber;
 		this.email = email;
-		
-				
 		moviegoerlist.add(this);
 
 	}
+	
 	public void movieGoerMainControl() {
-		System.out.println("===== Welcome! " +name +" =====");
+		System.out.println("===== Welcome " + name + "! =====");
 		do {
-		System.out.println("Select option:");
-		System.out.println("(1) Search movie");
-		System.out.println("(2) View Booking History");
-		System.out.println("(3) Add Review");
-		System.out.println("(4) Log out");
-		
-		Scanner sc = new Scanner(System.in);
-		int mgmainmenuchoice = sc.nextInt();
-		
+			System.out.println("Select option:");
+			System.out.println("(1) Search movie");
+			System.out.println("(2) View Booking History");
+			System.out.println("(3) Add Review");
+			System.out.println("(4) Log out");
+			Scanner sc = new Scanner(System.in);
+			int mgmainmenuchoice = sc.nextInt();
 			switch (mgmainmenuchoice){
-			case 1: this.searchMovie(); break;
-			case 2: this.printTransactionHistory();
-				break;
-			case 3: this.addingMovieReview();
-			case 4: System.out.println("Logging out..."); return;
-			default: System.out.println("Invalid choice! Logging out..."); return; 
-			}
+				case 1: this.searchMovie(); break;
+				case 2: this.printTransactionHistory(); break;
+				case 3: this.addingMovieReview(); break;
+				case 4: System.out.println("Logging out..."); return;
+				default: System.out.println("Invalid choice! Logging out..."); return; 
+				}
 		} while (true);
 	}
 	
 	public void searchMovie() {
-		//need to loop this
-		//should i create a if selection is out of range...blah, okay la if got time
-		
 		System.out.println("===== Search Movie By =====");
 		System.out.println("(1) Movie Title");
 		System.out.println("(2) Overall Reviewers' Rating");
@@ -75,23 +68,22 @@ public class MovieGoer extends Account {
 		System.out.println("(1) Coming Soon");
 		System.out.println("(2) Preview");
 		System.out.println("(3) Now Showing");
-		int statusChoice = sc.nextInt();
+		StatusEnum status = null;
+		switch (sc.nextInt()) {
+			case 1:
+				status = StatusEnum.ComingSoon;
+				break;
+			case 2:
+				status = StatusEnum.Preview;
+				break;
+			case 3:
+				status = StatusEnum.NowShowing;
+				break;
+		}
 		System.out.println("================");
 		System.out.println("(1) List everything");
 		System.out.println("(2) List Top 5");
 		int listChoice = sc.nextInt();
-		StatusEnum status = null;
-		switch (statusChoice) {
-		case 1:
-			status = StatusEnum.ComingSoon;
-			break;
-		case 2:
-			status = StatusEnum.Preview;
-			break;
-		case 3:
-			status = StatusEnum.NowShowing;
-			break;
-		}
 		System.out.println("==== Movies ====");
 		switch (movieListChoice) {
 		case 1:
@@ -215,7 +207,10 @@ public class MovieGoer extends Account {
 		}
 		System.out.println("Enter Cineplex: ");
 		int cineplexInt = sc.nextInt();
-		displayShowTimes(movie, GoldenVillage.getCineplexes() [cineplexInt-1].getCineplexCode());
+		Cineplex tempcinemplexarray [] = GoldenVillage.getCineplexes();
+		//user has selected the cinema. now code supposed to display the movie's showtimes that
+		//are screen at the cineplex selected
+		displayShowTimes(movie, tempcinemplexarray[cineplexInt-1].getCineplexCode());
 	}
 	
 	public void displayShowTimes(Movie movie, String cineplexCode) {
@@ -224,15 +219,15 @@ public class MovieGoer extends Account {
 			char tixChoice = 0;
 			do{
 				showTime.showSeatLayout();
-			Ticket ticket = showTime.bookTicket();
-			if (ticket != null) {
-				addTransaction(ticket);
-				System.out.println("Buy more Tickets? (Y/N)");
-				Scanner sc = new Scanner (System.in);
-				tixChoice = sc.nextLine().charAt(0);
-			}
-			else 
-				System.out.println("Please re-enter desired seat");
+				Ticket ticket = showTime.bookTicket();
+				if (ticket != null) {
+					addTransaction(ticket);
+					System.out.println("Buy more Tickets? (Y/N)");
+					Scanner sc = new Scanner (System.in);
+					tixChoice = sc.nextLine().charAt(0);
+				}
+				else 
+					System.out.println("Please re-enter desired seat");
 			
 			}while (tixChoice != 'n' || tixChoice != 'N');
 		}
@@ -245,12 +240,9 @@ public class MovieGoer extends Account {
 			Scanner sc =  new Scanner(System.in);
 			int selection = sc.nextInt();
 			switch (selection) {
-			case 1:
-				movie.displayShowTimes(cineplexCode);
-				break;
-			case 2:
-				searchMovie();
-			}
+				case 1: movie.displayShowTimes(cineplexCode);break;
+				case 2: searchMovie(); break;
+				}
 	}
 	
 	
@@ -360,9 +352,7 @@ public class MovieGoer extends Account {
 			movieSelected.addMovieReview(rating, review);
 			System.out.println("Review added!");
 		}
-	}
-
-			
+	}	
 	  		
 	public void addTransaction(Ticket ticket) {
 		transactionhistory.add(ticket);

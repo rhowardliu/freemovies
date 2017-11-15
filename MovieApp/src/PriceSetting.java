@@ -1,4 +1,8 @@
 import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class PriceSetting {
 	
@@ -10,7 +14,7 @@ public class PriceSetting {
 	private static double ticketPremiumBB = 2.0;
 	private static double ticketPremiumHol = 4.0;
 	private static double ticketPlatinum = 2.0;
-	private static List<String> publicHol;
+	private static List<String> publicHol = new ArrayList<String>();
 	
 	public static double calPrice(MovieTypeEnum movietype, AgeCatEnum agecat,
 	DayTypeEnum daytype, CinemaTypeEnum cinematype) {
@@ -106,5 +110,6 @@ public class PriceSetting {
 	public static void setTPPlatinum(double ticketPlatinum) {
 		PriceSetting.ticketPlatinum = ticketPlatinum;
 	}
+	
 
 }

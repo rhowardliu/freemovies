@@ -46,6 +46,7 @@ public class Ticket implements Serializable {
 		this.agecat = null;
 		this.isBooked = false;
 		this.price = 0;
+		System.out.println("Ticket created!");
 	}
 	
 	public String getuserID() {

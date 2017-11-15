@@ -154,13 +154,13 @@ public class Movie implements Serializable {
 		//Ellen added some stuff here. kiv
 
 		System.out.println("===== Details of " + this.getTitle() + "=====");
-		System.out.println("Movie title: \n" + this.title);
-		System.out.println("Movie duration: \n" + this.duration);
-		System.out.println("Movie type: \n" + this.movietype);
-		System.out.println("Status: \n" + this.status);
-		System.out.println("Synopsis: \n" + this.synopsis);
+		System.out.println("Movie title: " + this.title);
+		System.out.println("Movie duration: " + this.duration + " hrs");
+		System.out.println("Movie type: " + this.movietype);
+		System.out.println("Status: " + this.status);
 		System.out.println("Directed by: " + director);
-		System.out.println("Cast(s): \n");
+		System.out.println("Synopsis: \n" + this.synopsis);
+		System.out.println("Cast(s): ");
 
 		for (int i = 0; i < cast.size(); i++){
 			System.out.println((i+1) + ". " + cast.get(i));
@@ -238,22 +238,24 @@ public class Movie implements Serializable {
  * Prints out the ShowTimes associated with the Movie 
  */
 	public ShowTime displayShowTimes(String cineplexcode){
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		List<ShowTime> temp_list=null;
+		List<ShowTime> temp_list = new ArrayList <ShowTime>();
+		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available
+		
+		if (movieShowTime.isEmpty()){
+			System.out.println("No Showtime available for all cineplexes.");
+			return null;
+		}
+		
 		for (ShowTime x : movieShowTime) {
 			if (x.getCineplexcode().equals(cineplexcode))
 				temp_list.add(x);
 		}
-		if(temp_list.isEmpty()) {
-			System.out.println("Cineplexcode not found.");
-			return null;
-		}
-		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available
 		
-		if (movieShowTime.isEmpty()){
-			System.out.println("No Showtime available");
+		if(temp_list.isEmpty()) {
+			System.out.println("Cineplex selected is not playing " + this.getTitle() + ".");
 			return null;
 		}
+
 		else {
 			Collections.sort(temp_list,ShowTime.getDateComparator());
 			System.out.println(" ===== ShowTime ===== ");

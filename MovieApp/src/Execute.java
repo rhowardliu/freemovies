@@ -78,12 +78,14 @@ public class Execute {
 			moviegoer.movieGoerMainControl();
 		}
 		
+		System.out.println("Saving changes...");
 		MovieGoer.updateDatabase();
 		MovieReviews.updateDatabase();
 		Movie.updateDatabase();
 		ShowTime.updateDatabase();
 		Ticket.updateDatabase();
 		Timetable.updateDatabase();
+		System.out.println("Changes saved!");
 		
 	}
 	public static Account login() throws InvalidLogin {

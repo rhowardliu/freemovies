@@ -30,7 +30,7 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
-	private Ticket [][] ticket;
+	private Ticket [][] tickets;
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
@@ -47,9 +47,9 @@ public class ShowTime implements Serializable {
 		this.starttime = starttime;
 		this.cinemarows = cinemarows;
 		this.cinemacols = cinemacols;
-		for (int i=1; i<cinemarows; i++) {
-			for (int j=1; j<cinemacols; j++) 
-				ticket [i][j] = new Ticket(movietitle,movieID,date,i,j);
+		for (int i=0; i<cinemarows; i++) {
+			for (int j=0; j<cinemacols; j++) 
+				tickets [i][j] = new Ticket(movietitle,movieID,date,i,j); 
 		}
 		
 		showtimelist.add(this);
@@ -102,7 +102,7 @@ public class ShowTime implements Serializable {
 			System.out.print((char)(al));
 			System.out.print("  ");
 			for (i = 1; i <= cinemacols/2 ;i++) {
-				if (ticket[i][j].isBooked() == false)//not booked
+				if (tickets[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
 					System.out.print(" X ");
@@ -110,7 +110,7 @@ public class ShowTime implements Serializable {
 			System.out.print("  ");
 			
 			while (i<=cinemacols) {
-				if (ticket[i][j].isBooked() == false)//not booked
+				if (tickets[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
 					System.out.print(" X ");
@@ -148,7 +148,7 @@ public class ShowTime implements Serializable {
 		System.out.print("Column: "); int col = sc.nextInt();
 		//check if the requested seat is already taken
 		
-		if (ticket[row][col].isBooked()==true){
+		if (tickets[row][col].isBooked()==true){
 			System.out.println("Seat is already taken.");
 			return null;
 		}
@@ -179,21 +179,21 @@ public class ShowTime implements Serializable {
 				System.out.println("Timetable not found");
 				return null;
 			}
-			ticket[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
+			tickets[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
 			//write buy more tickets?
 			//display info first then
 			//write confirm payment?
 			//if cancel, go back to main list
 			//if confirm then book, else, return back to screen where it shows buy more tickets?
-			ticket[row][col].setBooked(true);
+			tickets[row][col].setBooked(true);
 			System.out.println("Ticket booked successfully!");
 			Calendar now = Calendar.getInstance();
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddhhmm");
 			String timestamp = dateFormatter.format(now.getTime());
 			printTicketShowTimeDetails(row, col);
-			ticket[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
-			System.out.println("Transaction ID is " +ticket[row][col].getTransactionID());
-			return ticket[row][col];
+			tickets[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
+			System.out.println("Transaction ID is " +tickets[row][col].getTransactionID());
+			return tickets[row][col];
 			//need a method to add the transaction to the user's transactionhistory
 		}
 	}
@@ -207,10 +207,10 @@ public class ShowTime implements Serializable {
 		System.out.println("==========");
 		System.out.println("Booking details:");
 		System.out.println("Movie: " + this.movietitle);
-		System.out.println("Date: " + this.getShowTimeDate() + "(" + ticket[row][col].getDayType() + ")");
-		System.out.println("Seat Row: " + ticket[row][col].getSeatRow() + "\tSeat Column: " + ticket[row][col].getSeatCol());
+		System.out.println("Date: " + this.getShowTimeDate() + "(" + tickets[row][col].getDayType() + ")");
+		System.out.println("Seat Row: " + tickets[row][col].getSeatRow() + "\tSeat Column: " + tickets[row][col].getSeatCol());
 		System.out.println("Location: " + this.cineplexname);
-		System.out.println("Price: " + ticket[row][col].getPrice());
+		System.out.println("Price: " + tickets[row][col].getPrice());
 		System.out.println("==========");
 	}
 
