@@ -11,14 +11,10 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
-
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
-
-
 public class MovieGoer extends Account {
-
 	private static final long serialVersionUID = 254911253486503839L;
 	private String name;
 	private String mobilenumber;
@@ -33,21 +29,22 @@ public class MovieGoer extends Account {
 		this.name = name;
 		this.mobilenumber = mobilenumber;
 		this.email = email;
-		moviegoerlist.add(this);
-
+		//when a new MovieGoer object is created, it is added to MOBLIMA's database of moviegoers. 
+		moviegoerlist.add(this); 
 	}
 	
 	public void movieGoerMainControl() {
-		System.out.println("===== Welcome " + name + "! =====");
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("========== Welcome " + name + "! ==========\n");
 		do {
-			System.out.println("Select option:");
-			System.out.println("(1) Search movie");
-			System.out.println("(2) View Booking History");
-			System.out.println("(3) Add Review");
+			System.out.println(" ===== Moviegoer Main Menu =====");
+			System.out.println("(1) Search for a movie");
+			System.out.println("(2) View your booking history");
+			System.out.println("(3) Add review");
 			System.out.println("(4) Log out");
-			Scanner sc = new Scanner(System.in);
-			int mgmainmenuchoice = sc.nextInt();
-			switch (mgmainmenuchoice){
+			System.out.println("Select option: ");
+			switch (sc.nextInt()){
 				case 1: this.searchMovie(); break;
 				case 2: this.printTransactionHistory(); break;
 				case 3: this.addingMovieReview(); break;
@@ -58,163 +55,136 @@ public class MovieGoer extends Account {
 	}
 	
 	public void searchMovie() {
-		System.out.println("===== Search Movie By =====");
-		System.out.println("(1) Movie Title");
-		System.out.println("(2) Overall Reviewers' Rating");
-		System.out.println("(3) Ticket Sales");
 		Scanner sc = new Scanner(System.in);
-		int movieListChoice = sc.nextInt();
-		System.out.println(" ===== Status of Movie =====");
-		System.out.println("(1) Coming Soon");
-		System.out.println("(2) Preview");
-		System.out.println("(3) Now Showing");
-		StatusEnum status = null;
-		switch (sc.nextInt()) {
-			case 1:
-				status = StatusEnum.ComingSoon;
-				break;
-			case 2:
-				status = StatusEnum.Preview;
-				break;
-			case 3:
-				status = StatusEnum.NowShowing;
-				break;
-		}
+		StatusEnum selectedshowstatus = null;
+		//Moviegoer selects which show status to view
+		do {
+			System.out.println("Show status: ");
+			System.out.println("(1) Coming Soon");
+			System.out.println("(2) Preview");
+			System.out.println("(3) Now Showing");
+			System.out.print("Select option: ");
+			int showstatuschoice = sc.nextInt();
+			switch (showstatuschoice) {
+				case 1: selectedshowstatus = StatusEnum.ComingSoon; break;
+				case 2: selectedshowstatus = StatusEnum.Preview; break;
+				case 3: selectedshowstatus = StatusEnum.NowShowing; break;
+				default: System.out.println("Invalid choice! Choose show status again!\n"); break; 
+			}
+		} while (selectedshowstatus == null);
+		
+		//Moviegoer selects how the movie list should be arranged
+		int movielistchoice = 0;
+		List <Movie> sortedmoviearray = new ArrayList<Movie>();
+		do {
+			System.out.println("Search movie by: ");
+			System.out.println("(1) Movie Title");
+			System.out.println("(2) Overall Reviewers' Rating");
+			System.out.println("(3) Ticket Sales");
+			System.out.print("Select option: ");
+			movielistchoice = sc.nextInt();
+			switch(movielistchoice){
+				case 1: sortedmoviearray = MovieListing.getMovieListByTitle(selectedshowstatus); break;
+				case 2: sortedmoviearray = MovieListing.getMovieListByRating(selectedshowstatus); break;
+				case 3: sortedmoviearray = MovieListing.getMovieListBySales(selectedshowstatus); break;
+				default: System.out.println("Invalid choice! Choose again!"); break;
+			}
+		} while (movielistchoice == 0);
+		
+		//Moviegoer chooses whether to view all movies or just the top 5 movies
 		System.out.println("================");
 		System.out.println("(1) List everything");
 		System.out.println("(2) List Top 5");
-		int listChoice = sc.nextInt();
+		System.out.println("Select option: ");
+		int listchoice = sc.nextInt();
+		System.out.println("\n");
 		System.out.println("==== Movies ====");
-		switch (movieListChoice) {
-		case 1:
-			if(listChoice == 1) {
-				int i=1;
-				for (Movie movie : MovieListing.getMovieListByTitle(status)) { //getMovieListByTitle will return a array of movies that has same status as user input and sorted by title
-					System.out.println(i +") " +movie.getTitle() );
-					i++;
-				}
+		switch (listchoice){ 
+			default: System.out.println("Invalid choice! Listing all relevant movies by default!");
+			case 1: { //if moviegoer chose to view all movies
+				System.out.println("Listing all relevant movies...\n");
+				int i = 1;
+				for (Movie movie : sortedmoviearray)
+					System.out.println("(" + (i++) + ") " + movie.getTitle());
+				break;
 			}
-			if (listChoice == 2) {
-					for (int j=0;j<5;j++) {
-						System.out.println((j+1) +") " +MovieListing.getMovieListByTitle(status).get(j).getTitle());	
-					}
-				}
-			getMovieChoice(MovieListing.getMovieListByTitle(status));
-			break;
-		case 2:
-			if(listChoice == 1) {
-				int i=1;
-				for (Movie movie : MovieListing.getMovieListByRating(status)) {
-					System.out.println(i +") " +movie.getTitle() );
-					i++;
-				}
+			case 2: { //if moviegoer chose to view only top 5 movies
+				System.out.println("Listing top 5 movies...\n");
+				int printcount = 5;
+				if (sortedmoviearray.size() < printcount)
+					printcount = sortedmoviearray.size();
+				for (int j = 0; j < printcount; j++)
+					System.out.println("(" + (j+1) + ") " + sortedmoviearray.get(j).getTitle());
+				break;
 			}
-			if (listChoice == 2) {
-					for (int j=0;j<5;j++) {
-						System.out.println((j+1) +") " +MovieListing.getMovieListByRating(status).get(j).getTitle());	
-					}
-				}
-			getMovieChoice(MovieListing.getMovieListByRating(status));
-			break;
-		case 3:
-			if(listChoice == 1) {
-				int i=1;
-				for (Movie movie : MovieListing.getMovieListBySales(status)) {
-					System.out.println(i +") " +movie.getTitle() );
-					i++;
-				}
-			}
-			if (listChoice == 2) {
-					for (int j=0;j<5;j++) {
-						System.out.println(j +") " +MovieListing.getMovieListBySales(status).get(j).getTitle());	
-					}
-				}
-			getMovieChoice(MovieListing.getMovieListBySales(status));
-			break;
 		}
-
-	}
+		//by now, the user should have been able to view the movies according to his preference
+		getMovieChoice(sortedmoviearray);
+		return;
+	} //end of searchMovie() method
 	
-	public void getMovieChoice(List<Movie> movieList) {
+	public void getMovieChoice(List<Movie> movielist) {
 		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("Enter Movie Choice: ");
+		System.out.print("Enter Movie Choice: ");
 		int i = sc.nextInt();
-		movieList.get(i-1).getMovieInfo();
+		Movie selectedmovie = movielist.get(i - 1);
+		selectedmovie.getMovieInfo();
 		System.out.print("\n");
-		System.out.println("Rating : " +movieList.get(i-1).getAverageRating() +" /5");
+		System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5");
 		System.out.print("\n");
 		System.out.println("================");
 		System.out.println("(1) View Individual Reviews and Ratings");
 		System.out.println("(2) Select Cineplex to watch movie");
 		System.out.println("(3) Return to Search Movie");
-		int choice = sc.nextInt();
+		System.out.print("Select option: "); int choice = sc.nextInt();
 		switch (choice) {
-		case 1:
-			System.out.println("==== Reviews ====");
-			if (movieList.get(i-1).getMovieReview().size() <10) {
-				for (int k = 0; k<movieList.get(i-1).getMovieReview().size(); k++) {
-					System.out.println((k+1) + ") " );
-					System.out.println("Review : " +movieList.get(i-1).getMovieReview().get(k).getReview());
-					System.out.println("Rating : " +movieList.get(i-1).getMovieReview().get(k).getRating()+" /5");
-				}
-			}
-			else
-				{
-				for (int j = 0; j<10; j++) {
-				System.out.println((j+1) + ") " +movieList.get(i-1).getMovieReview().get(j).getReview());
-				System.out.println("Rating : " +movieList.get(i-1).getMovieReview().get(j).getRating()+" /5");
-				}
-			}
-			System.out.println("");
-			System.out.println("Proceed to Select Cineplex? (Y/N) ");
-			//if (sc.next().equalsIgnoreCase("n"));
-			//break;
-			
-				char ans;
-		
-				do{
-					ans = sc.next().charAt(0);
-				
-				if (ans == 'y' || ans == 'Y') {
-					displayCineplexes(movieList.get(i-1));;
-				}
-				else if (ans == 'n' || ans == 'N') {
-					System.out.println("");
-					return;	
-				}
-				else
-					System.out.println("Invalid Choice! Please enter again.");
-				} while (ans != 'y' || ans != 'Y' || ans != 'N' || ans != 'n');
-			
-			break;
-		case 2:
-			displayCineplexes(movieList.get(i-1));
-				return;
-		case 3:
-			searchMovie();
-			break;
+			case 1: this.viewIndividualRatingsOfMovie(selectedmovie); break;
+			case 2: this.displayCineplexes(selectedmovie); break;
+			case 3: this.searchMovie(); break;
+			default: { System.out.println("Invalid choice!"); return; }
 		}	
+		return;
+	}
+	
+	public void viewIndividualRatingsOfMovie(Movie selectedmovie){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("==== Reviews ====");
+		int counter = 10;
+		if (selectedmovie.getMovieReview().size() < 10)
+			counter = selectedmovie.getMovieReview().size();
+		for (int k = 0; k < counter; k++) {
+			System.out.println("(" + (k+1) + ") " );
+			System.out.println("Review : " + selectedmovie.getMovieReview().get(k).getReview());
+			System.out.println("Rating : " + selectedmovie.getMovieReview().get(k).getRating()+ "/5");
+		}
+		
+		System.out.println("\nProceed to Select Cineplex? (Y/N) ");
+		char ans = sc.next().charAt(0);
+		switch (ans){
+			case 'y':
+			case 'Y': displayCineplexes(selectedmovie); break;
+			case 'n':
+			case 'N': { System.out.println(""); break; }
+			default: { System.out.println("Invalid choice! Exitting programme"); break; }	
+		}
+		return;
 	}
 	
 	public void displayCineplexes(Movie movie) {
 		Scanner sc = new Scanner(System.in);
 		int i=1;
 		System.out.println("==== Cineplexes ====");
-		for(Cineplex cine : GoldenVillage.getCineplexes()) {
-			System.out.println(i + ") " +cine.getCineplexName());
-			i++;
-		}
-		System.out.println("Enter Cineplex: ");
-		int cineplexInt = sc.nextInt();
+		for(Cineplex cineplex : GoldenVillage.getCineplexes())
+			System.out.println("(" + (i++) + ") " + cineplex.getCineplexName());
+		System.out.print("Enter Cineplex: "); int cineplexchoice = sc.nextInt();
 		Cineplex tempcinemplexarray [] = GoldenVillage.getCineplexes();
 		//user has selected the cinema. now code supposed to display the movie's showtimes that
-		//are screen at the cineplex selected
-		displayShowTimes(movie, tempcinemplexarray[cineplexInt-1].getCineplexCode());
+		//are screened at the cineplex selected
+		displayShowTimes(movie, tempcinemplexarray[cineplexchoice - 1].getCineplexCode());
 	}
 	
-	public void displayShowTimes(Movie movie, String cineplexCode) {
-		ShowTime showTime = movie.displayShowTimes(cineplexCode);
+	public void displayShowTimes(Movie movie, String cineplexcode) {
+		ShowTime showTime = movie.displayShowTimes(cineplexcode);
 		if (showTime !=null) {
 			char tixChoice = 0;
 			do{
@@ -229,37 +199,26 @@ public class MovieGoer extends Account {
 				else 
 					System.out.println("Please re-enter desired seat");
 			
-			}while (tixChoice != 'n' || tixChoice != 'N');
+			} while (tixChoice != 'n' || tixChoice != 'N');
 		}
 
 	
-		else 
+		else {
 			System.out.println("================");
 			System.out.println("(1) Back to View ShowTimes");
 			System.out.println("(2) Back to Search Movie");
+			System.out.println("(3) Return to MovieGoer Main Menu");
 			Scanner sc =  new Scanner(System.in);
 			int selection = sc.nextInt();
 			switch (selection) {
-				case 1: movie.displayShowTimes(cineplexCode);break;
-				case 2: searchMovie(); break;
-				}
-	}
-	
-	
-	public String getName(){
-		return this.name;
-	}
-	
-	public String getMobileNumber(){
-		return this.mobilenumber;
-	}
-	
-	public String getEmail(){
-		return this.email;
-	}
-	
-	public List<Ticket> getTransactionHistory(){
-		return transactionhistory;
+				case 1: this.displayShowTimes(movie, cineplexcode);break;
+				case 2: this.searchMovie(); break;
+				default: System.out.println("Invalid choice! ");
+				case 3: System.out.println("Returning to main menu...\n"); this.movieGoerMainControl(); return;
+			}
+		}
+		
+		return;
 	}
 	
 	public void printTransactionHistory(){
@@ -353,19 +312,19 @@ public class MovieGoer extends Account {
 			System.out.println("Review added!");
 		}
 	}	
-	  		
-	public void addTransaction(Ticket ticket) {
-		transactionhistory.add(ticket);
-	}
 	
 	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectReader or = new ObjectReader(moviegoerDatabase);
 		moviegoerlist = or.initialiseDataList(moviegoerlist);
 	}
-	
 	public static void updateDatabase() throws FileNotFoundException, IOException {
 		ObjectWriter ow = new ObjectWriter(moviegoerDatabase);
 		ow.updateDataList(moviegoerlist);
 	}
+	public String getName() { return this.name; }
+	public String getMobileNumber() { return this.mobilenumber; }
+	public String getEmail() { return this.email; }
+	public List<Ticket> getTransactionHistory() { return transactionhistory; }
+	public void addTransaction(Ticket ticket) { transactionhistory.add(ticket); }
 	
 }

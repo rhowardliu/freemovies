@@ -238,8 +238,8 @@ public class Movie implements Serializable {
  * Prints out the ShowTimes associated with the Movie 
  */
 	public ShowTime displayShowTimes(String cineplexcode){
-		List<ShowTime> temp_list = new ArrayList <ShowTime>();
-		List<String> temp_date = new ArrayList<String>(); //this is a list of all the dates available
+		List<ShowTime> showtimesincineplexchoice = new ArrayList <ShowTime>();
+		List<String> sortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
 		
 		if (movieShowTime.isEmpty()){
 			System.out.println("No Showtime available for all cineplexes.");
@@ -248,30 +248,28 @@ public class Movie implements Serializable {
 		
 		for (ShowTime x : movieShowTime) {
 			if (x.getCineplexcode().equals(cineplexcode))
-				temp_list.add(x);
-		}
+				showtimesincineplexchoice.add(x); 
+		} //this loop creates an array of showtimes that are located at the moviegoer's choice of cineplex
 		
-		if(temp_list.isEmpty()) {
+		if(showtimesincineplexchoice.isEmpty()) {
 			System.out.println("Cineplex selected is not playing " + this.getTitle() + ".");
 			return null;
 		}
 
 		else {
-			Collections.sort(temp_list,ShowTime.getDateComparator());
+			//Sorting the showtimes in chronologically order
+			Collections.sort(showtimesincineplexchoice,ShowTime.getDateComparator());
 			System.out.println(" ===== ShowTime ===== ");
-			for (ShowTime x: temp_list) {
-				temp_date.add(x.getShowTimeDate()); 
-			}
+			for (ShowTime x: showtimesincineplexchoice) 
+				sortedshowtimes.add(x.getShowTimeDate()); 
 			//the next 3 steps remove the duplicates within temp_date
-			Set<String> s = new LinkedHashSet<String>(temp_date);
-			temp_date.clear();
-			temp_date.addAll(s);
+			Set<String> s = new LinkedHashSet<String>(sortedshowtimes);
+			sortedshowtimes.clear();
+			sortedshowtimes.addAll(s);
 
-//			List<String> temp_date = temp.stream().distinct().collect(Collectors.toList());
-
-	  		for(String theDate : temp_date) {
-	  			displayDailyShowTime(theDate,temp_list);
-	  		}
+	  		for(String theDate : sortedshowtimes) 
+	  			displayDailyShowTime(theDate, showtimesincineplexchoice);
+	  		
 	  		Scanner sc = new Scanner (System.in);
 	  		System.out.print("Proceed to book ticket? (Y/N)");
 	  		char bookChoice;
@@ -282,13 +280,13 @@ public class Movie implements Serializable {
 	  			  		System.out.println("================");
 	  			  		System.out.println("Select Show date");
 	  			  		int i=1;
-	  			  		for (String theDate: temp_date) {
+	  			  		for (String theDate: sortedshowtimes) {
 	  			  			System.out.println(i + theDate);
 	  			  			i++;
 	  			  		}
 	  			  		
 	  			  		int dateChoice = sc.nextInt();
-	  			  		List<ShowTime> dailyshowlist = displayDailyShowTime(temp_date.get(dateChoice-1),temp_list);
+	  			  		List<ShowTime> dailyshowlist = displayDailyShowTime(sortedshowtimes.get(dateChoice-1),showtimesincineplexchoice);
 	  			  		System.out.println("Select Show:");
 	  			  		int showChoice = sc.nextInt();
 	  			  		return dailyshowlist.get(showChoice-1);
