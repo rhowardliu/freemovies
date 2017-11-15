@@ -198,10 +198,11 @@ public class Admin extends Account {
 			System.out.println("(9) Quit ");
 			System.out.println("Enter Selection: ");
 			int detailChoice = sc.nextInt();
+			sc.nextLine();
 			switch(detailChoice) {
 			case 1:
 				System.out.println("Enter New Movie Title:");
-				String newMovieTitle = sc.next();
+				String newMovieTitle = sc.nextLine();
 				selectedmovie.setMovieTitle(newMovieTitle);
 				System.out.println("Movie Title has been updated");
 				break;
@@ -215,7 +216,7 @@ public class Admin extends Account {
 				break;
 			case 4:
 				System.out.println("Enter New Movie Director:");
-				String newMovieDirector = sc.next();
+				String newMovieDirector = sc.nextLine();
 				selectedmovie.setMovieDirector(newMovieDirector);
 				System.out.println("Movie Director has been updated");
 				break;
@@ -235,10 +236,19 @@ public class Admin extends Account {
 					
 				case 2:
 					System.out.println("Enter Cast Names:");
+					sc.nextLine();
 					ArrayList<String> moviecastlist = new ArrayList<String>();
-					while(sc.hasNextLine()){
-						moviecastlist.add(sc.next());
-				      }
+					try {
+						while(true){
+							String s = sc.nextLine();
+							if (s.equalsIgnoreCase("done"))
+								break;
+							else
+								moviecastlist.add(s);
+					      }
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
 					selectedmovie.setMovieCast(moviecastlist);
 					break;
 				}
@@ -246,7 +256,7 @@ public class Admin extends Account {
 				break;
 			case 6:
 				System.out.println("Enter New Movie Synopsis:");
-				String newMovieSynopsis = sc.next();
+				String newMovieSynopsis = sc.nextLine();
 				selectedmovie.setMovieSynopsis(newMovieSynopsis);
 				System.out.println("Movie Synopsis has been updated");
 				break;
@@ -280,6 +290,7 @@ public class Admin extends Account {
 			System.out.println("(1) Delete Cast");
 			System.out.println("(2) Re-enter Cast Name");
 			int choice = sc.nextInt();
+			sc.nextLine();
 			switch (choice) {
 			case 1:
 				selectedmovie.getCast().remove(index-1);
@@ -287,7 +298,7 @@ public class Admin extends Account {
 				break;
 			case 2:
 				System.out.println("Enter Updated Cast Name: ");
-				String castName = sc.next();
+				String castName = sc.nextLine();
 				selectedmovie.getCast().set(index-1, castName);
 				System.out.println("Cast Name has been updated ");
 				break;
@@ -599,8 +610,10 @@ public class Admin extends Account {
 				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
 				break;
 			case 9:
-				quit = true;
-				break;
+				{quit = true;
+				System.out.println("Returning to system settings menu...");
+				break;}
+			default: { System.out.println("Invalid choice! Going to system settings menu..."); break; }
 			}
 		}
 	}
