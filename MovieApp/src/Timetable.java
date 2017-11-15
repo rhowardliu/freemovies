@@ -74,14 +74,15 @@ public class Timetable implements Serializable{
 		
 		//Checking if the requested time slot is taken by other movies	
 		for (int i=starttime;i<starttime+movie.getDuration();i++) { 
-			if (schedule[i].equals(showEmpty)) {
+			if (schedule[i] != showEmpty) {
 				System.out.println("Timing clash, please enter a different timing");
 				return false;
 			}
 		}
 		
-			for (int i = starttime; i < starttime+movie.getDuration(); i++) 
-				schedule[i] = movie.getTitle();
+		schedule[starttime] = movie.getTitle();
+		for (int i = starttime+1; i < starttime+movie.getDuration(); i++) 
+			schedule[i] = "Movie in progress";
 		System.out.println("Show time has been successfully added");
 		return true;
 	}
@@ -90,14 +91,22 @@ public class Timetable implements Serializable{
 	public boolean removeShowTimeFromSchedule (Movie movie, int starttime) {
 		if (schedule[starttime].equals(showEmpty)) {
 			System.out.println("Slot is already empty!");
-			return false;
+		
 		}
-		else {
+
+		else if (schedule[starttime].equals(movie.getTitle())) {
 			for (int i = starttime; i < starttime+ movie.getDuration(); i++)
 				schedule[i] = showEmpty;
+			System.out.println("Show time has been successfully removed");
+			return true;
 		}
-		System.out.println("Show time has been successfully removed");
-		return true;
+		else if (schedule[starttime].equals("Movie in progress")){
+			System.out.println("Please choose the movie start time");
+		
+		}
+		else
+			System.out.println("Please choose the correct movie");
+		return false;
 	}
 
 	public void displaySchedule() {

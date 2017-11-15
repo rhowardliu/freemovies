@@ -43,7 +43,7 @@ public class Admin extends Account {
 		System.out.println("===== Logged in as admin =====");
 		do {
 		System.out.println("Select option:");
-		System.out.println("(1) Add/Update/Remove movies from movie listing");
+		System.out.println("(1) Add/Update movies from movie listing");
 		System.out.println("(2) Add/Remove cinema showtimes");
 		System.out.println("(3) Configure system settings");
 		System.out.println("(4) Log out");
@@ -384,7 +384,6 @@ public class Admin extends Account {
 		
 		if (cinemachoice == 1)
 			cinematype=CinemaTypeEnum._platinum;
-		
 		Timetable tt = null;
 		String date;
 		do {
@@ -416,25 +415,29 @@ public class Admin extends Account {
 				System.out.println("Movie not found");
 			}
 		} while(moviechoice == null);
-	
-		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
-		System.out.println("Select timeslot:");
-		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
-				tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
-		boolean available;
-		if (i == 1){ //if admin wanted to add showtime		
-	
-			available = tt.addShowTimeToSchedule(moviechoice, starttime);
-			if (available == true)
-				moviechoice.addShowTimeToMovie(st_to_add);
-		}
-		else if (i == 2) { //if admin wanted to remove showtime
-
-			available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
-			if (available==true)
-			moviechoice.removeShowTimeFromMovie(st_to_add);
-		}
+		
+		boolean available = false;
+		do {
+			System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
+			
+			System.out.println("Select timeslot:");
+			int starttime = sc.nextInt();
+			ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
+					tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+			
+			if (i == 1){ //if admin wanted to add showtime		
+		
+				available = tt.addShowTimeToSchedule(moviechoice, starttime);
+				if (available == true)
+					moviechoice.addShowTimeToMovie(st_to_add);
+			}
+			else if (i == 2) { //if admin wanted to remove showtime
+				
+				available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
+				if (available==true)
+					moviechoice.removeShowTimeFromMovie(st_to_add);
+			} 
+		}while (available == false);
 	}
 	
 	public void adminSystemControl() throws Exception{
