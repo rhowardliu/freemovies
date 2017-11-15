@@ -24,6 +24,7 @@ public class MovieGoer extends Account {
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
 	public static final File moviegoerDatabase = new File ("MovieGoer.tmp");
 	
+	//check if it is pushed out 
 	public MovieGoer(String userID,String password, String name, String mobilenumber, String email){
 		super(userID,password);
 		this.name = name;
