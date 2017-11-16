@@ -86,7 +86,7 @@ public class Admin extends Account {
 					System.out.println("===== All movies (show status) =====");
 					int i = 1;
 					for (Movie movietoshow : Movie.movielist)
-						System.out.println("(" + (i++) + ") " + movietoshow.getTitle() + " (" + movietoshow.getStatus() + ")");
+						System.out.println("(" + (i++) + ") " + movietoshow.getMovieID() + "\t" + movietoshow.getTitle() + " (" + movietoshow.getStatus() + ")");
 				}
 				case 4: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu..."); return; }
@@ -397,7 +397,7 @@ public class Admin extends Account {
 		System.out.print("Enter day (XX) :"); int day = sc.nextInt();
 		System.out.print("Enter month (XX) :"); int month = sc.nextInt();
 		System.out.print("Enter year (XXXX) :"); int year = sc.nextInt();
-		String date = String.format("%02d-%02d-%04d",day,month,year);
+		String date = String.format("%02d-%02d-%d",day,month,year);
 		for (Timetable x : chosencalendar){
 			if (x.getDateString() .equals(date))
 				chosentimetable = x;
@@ -413,16 +413,18 @@ public class Admin extends Account {
 		chosentimetable.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null; String movieid = null;
 		
-		do {
-			System.out.println("Enter movieID: ");
-			movieid = sc.next();
-			try {
-				moviechoice = Movie.searchMovie(movieid);
-				System.out.println(moviechoice.getTitle() + " has been selected. \n");
-			}catch(Exception e) {
-				System.out.println("Movie not found");
-			}
-		} while(moviechoice == null);
+		
+		System.out.println("Enter movieID: "); movieid = sc.next();
+		try {
+			moviechoice = Movie.searchMovie(movieid);
+			System.out.println(moviechoice.getTitle() + " has been selected. \n");
+		} 
+		catch(Exception e) {
+			System.out.println("Movie not found");
+			System.out.println("Returning to main menu...");
+			return;
+		}
+
 		
 		boolean available = false;
 		do {
