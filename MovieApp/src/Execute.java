@@ -16,8 +16,8 @@ public class Execute {
 		StaticBoundary.initialisePrices();
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
-		Movie.initialiseDatabase();
 		ShowTime.initialiseDatabase();
+		Movie.initialiseDatabase();
 		Ticket.initialiseDatabase();
 		GoldenVillage.getInstance();
 		System.out.println("MOBLIMA initialised!\n\n");

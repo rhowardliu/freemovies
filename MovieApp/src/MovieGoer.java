@@ -19,8 +19,7 @@ public class MovieGoer extends Account {
 	private String name;
 	private String mobilenumber;
 	private String email;
-	private List <Ticket> transactionhistory;
-	private static List <String> moviehistory;
+	private List <Ticket> transactionhistory= new ArrayList<Ticket>();
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
 	public static final File moviegoerDatabase = new File ("MovieGoer.tmp");
 	
@@ -228,7 +227,7 @@ public class MovieGoer extends Account {
 		List<Ticket> temp_list = transactionhistory;
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all dates
 		
-		if (transactionhistory.isEmpty()){
+		if (transactionhistory==null){
 			System.out.println("No Transaction");
 			return;
 		}
@@ -271,7 +270,7 @@ public class MovieGoer extends Account {
 		List<Ticket> temp_list = transactionhistory;
 		
 		
-		if (transactionhistory.isEmpty()){
+		if (transactionhistory==null){
 			System.out.println("No History");
 			return;
 		}

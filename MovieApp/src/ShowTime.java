@@ -61,7 +61,7 @@ public class ShowTime implements Serializable {
 	}
 
 	public String getMovieID() {
-		return this.getMovieID();
+		return this.movieID;
 	}
 	public Integer getShowTimeStartTime() {
 		return this.starttime;
