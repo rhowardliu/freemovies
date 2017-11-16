@@ -38,7 +38,7 @@ public class Movie implements Serializable {
 	private String synopsis;
 	private List<MovieReviews> reviews=new ArrayList<MovieReviews>();
 	private double averageRating;
-	private double totalSales;
+	private double totalSales=0;
 	private List<ShowTime> movieShowTime = new ArrayList<ShowTime>();
 	private MovieTypeEnum movietype;
 	public static List<Movie> movielist = new ArrayList<Movie>();
@@ -111,6 +111,11 @@ public class Movie implements Serializable {
 	
 	public List<String> getCast(){
 		return cast;
+	}
+	
+	public double addSales(double price) {
+		totalSales += price;
+		return totalSales;
 	}
 	
 	/**
@@ -304,7 +309,7 @@ public class Movie implements Serializable {
 	  		do{
 	  			bookChoice = sc.next().charAt(0);
 	  				if (bookChoice == 'y' || bookChoice == 'Y') {
-	  			
+	  					System.out.print("\n");
 	  			  		System.out.println("================");
 	  			  		System.out.println("List of Show Dates");
 	  			  		int i=1;
@@ -314,7 +319,9 @@ public class Movie implements Serializable {
 	  			  		}
 	  			  		System.out.println("Enter desired Show date: ");
 	  			  		int dateChoice = sc.nextInt();
-	  			  		System.out.print("Selected Show Date is ");
+	  			  		System.out.println("Selected Show Date is "+sortedshowtimes.get(dateChoice-1));
+	  			  		System.out.println("\n================");
+	  			  		System.out.println("List of Show Dates");
 	  			  		List<ShowTime> dailyshowlist = displayDailyShowTime(sortedshowtimes.get(dateChoice-1),showtimesincineplexchoice);
 	  			  		System.out.println("Select Show:");
 	  			  		int showChoice = sc.nextInt();
@@ -403,9 +410,6 @@ public class Movie implements Serializable {
 	  			displayDailyShowTime(theDate, bugisshowtimes);
 		}
 }
-		
-	
-
 	
 	public List<ShowTime> displayDailyShowTime(String date,List<ShowTime> showtimelist){
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -424,7 +428,7 @@ public class Movie implements Serializable {
 	  				int end_time = start_time + this.getDuration();
 	  				System.out.printf("%d. %02d:00 - %02d:00\n",i, start_time, end_time);
 	  				i++;
-	  				System.out.print("\n");
+	  				
 	  			}
 	  			return dailyshowtime;
 	  			

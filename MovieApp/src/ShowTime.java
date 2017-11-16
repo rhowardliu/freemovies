@@ -215,6 +215,7 @@ public class ShowTime implements Serializable {
 			printTicketShowTimeDetails(row, col);
 			tickets[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
 			System.out.println("Transaction ID is " +tickets[row][col].getTransactionID());
+			movie.addSales(tickets[row][col].getPrice());
 			
 			//need a method to add the transaction to the user's transactionhistory
 		}return tickets[row][col];

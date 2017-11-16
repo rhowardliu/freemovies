@@ -90,9 +90,40 @@ public class MovieGoer extends Account {
 			System.out.print("Select option: ");
 			movielistchoice = sc.nextInt();
 			switch(movielistchoice){
-				case 1: sortedmoviearray = MovieListing.getMovieListByTitle(selectedshowstatus); break;
-				case 2: sortedmoviearray = MovieListing.getMovieListByRating(selectedshowstatus); break;
-				case 3: sortedmoviearray = MovieListing.getMovieListBySales(selectedshowstatus); break;
+				case 1: 
+					sortedmoviearray = MovieListing.getMovieListByTitle(selectedshowstatus); 
+					break;
+				case 2: 
+					int count=0;
+					for (Movie movie : Movie.movielist) {
+						if(Double.isNaN(movie.getAverageRating())==false) {
+							count ++;
+							break;
+						}
+					}
+					if (count>0) {
+						sortedmoviearray = MovieListing.getMovieListByRating(selectedshowstatus);
+					}
+					else
+						System.out.print("\n");
+						System.out.println("Sorry, No Rating has been added yet");
+					
+					break;
+				case 3: 
+					int count2=0;
+					for (Movie movie : Movie.movielist) {
+						if(movie.getSales()!=0) {
+							count2 ++;
+							break;
+							}
+						}
+					if (count2>0) {
+						sortedmoviearray = MovieListing.getMovieListBySales(selectedshowstatus); 
+					}
+					else
+						System.out.print("\n");
+						System.out.println("Sorry, No Sales yet");
+					break;
 				default: System.out.println("Invalid choice! Choose again!"); break;
 			}
 		} while (movielistchoice == 0);
@@ -168,21 +199,26 @@ public class MovieGoer extends Account {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\n");
 		System.out.println("==== Reviews ====");
-		int counter = 10;
-		if (selectedmovie.getMovieReview().size() < 10)
-			counter = selectedmovie.getMovieReview().size();
-		for (int k = 0; k < counter; k++) {
-			double rating = selectedmovie.getMovieReview().get(k).getRating();			
-			System.out.println("(" + (k+1) + ") " );
-			System.out.print("Review : " + selectedmovie.getMovieReview().get(k).getReview());
-			if (Double.isNaN(rating)) {
-				System.out.println("Rating : - /5.0");
-			}
-			else {
-				System.out.println("Rating : " + rating + "/5.0");
-			}
+		int counter=0;
+		if (selectedmovie.getMovieReview().isEmpty()==true) {
+			System.out.println("No Reviews Added Yet");
 			System.out.print("\n");
+		}
+		else if (selectedmovie.getMovieReview().size() < 10) {
+				counter = selectedmovie.getMovieReview().size();
+			for (int k = 0; k < counter; k++) {
+				double rating = selectedmovie.getMovieReview().get(k).getRating();			
+				System.out.println("(" + (k+1) + ") " );
+				System.out.print("Review : " + selectedmovie.getMovieReview().get(k).getReview());
+				if (Double.isNaN(rating)) {
+					System.out.println("Rating : - /5.0");
+				}
+				else {
+					System.out.println("Rating : " + rating + "/5.0");
+				}
+				System.out.print("\n");
 
+			}
 		}
 		
 		System.out.println("Proceed to Select Cineplex? (Y/N) ");
@@ -249,15 +285,17 @@ public class MovieGoer extends Account {
 	public void printTransactionHistory(){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("===== Transaction History of " + this.name + " =====\n");
-		System.out.println("***");
+		
 		List<Ticket> temp_list = transactionhistory;
 		List<String> temp_date = new ArrayList<String>(); //this is a list of all dates
 		
-		if (transactionhistory==null){
+		if (transactionhistory.isEmpty()==true){
 			System.out.println("No Transaction");
+			System.out.print("\n");
 			return;
 		}
 		else {
+			System.out.println("***");
 			for (Ticket x: temp_list) {
 				temp_date.add(x.getDate());
 			}
@@ -275,6 +313,7 @@ public class MovieGoer extends Account {
 	  			}
 			  	System.out.println();
 		  		System.out.println(theDate);
+		  		System.out.println("----------");
 		  		int i = 1;
 		  		for (Ticket printx: daytransaction) {
 		  			System.out.println(i+") " +" " +printx.getMovietitle());
@@ -295,22 +334,24 @@ public class MovieGoer extends Account {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("===== Movie History of " + this.name + " =====\n");
-		System.out.println("***");
+		
 		List<Ticket> temp_list = transactionhistory;
 		
 		
-		if (transactionhistory==null){
-			System.out.println("No History");
+		if (transactionhistory.isEmpty()==true){
+			System.out.println("No History. Unable to add review.");
+			System.out.print("\n");
 			return;
 		}
 		
 		
 		else {
+			System.out.println("***");
 			Collections.reverse(temp_list);
 			int i=1;
 			Ticket.removeDuplicates(temp_list);
 			for(Ticket x : temp_list) {
-				System.out.println(i + x.getMovietitle());
+				System.out.println(i + ") " + x.getMovietitle());
 				i++;			
 			}
 			System.out.println("***");
@@ -336,6 +377,7 @@ public class MovieGoer extends Account {
 			String review = scan.next();
 			movieSelected.addMovieReview(rating, review);
 			System.out.println("Review added!");
+			System.out.print("\n");
 		}
 	}	
 	

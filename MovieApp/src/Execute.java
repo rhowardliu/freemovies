@@ -49,7 +49,7 @@ public class Execute {
 //		Movie Annabelle = new Movie("A1240", "Annabelle", 2,StatusEnum.Preview, MovieTypeEnum._3D, "Justin", new ArrayList(Arrays.asList("what", "up")), "Chucky revived");
 //		Movie Mylittlepony = new Movie("A1246", "My Little Pony", 2,StatusEnum.Preview, MovieTypeEnum.BB, "Glitter", new ArrayList(Arrays.asList("Ruby", "Sapphire", "DIamond", "Torpez")), "Rainbows");
 //		Movie Junkenstein = new Movie("A1241", "Junkenstein", 3,StatusEnum.Preview, MovieTypeEnum.BB, "Peh", new ArrayList(Arrays.asList("justin", "is", "a", "legend")), "My servants never die");
-//		
+////		
 
 		
 		
