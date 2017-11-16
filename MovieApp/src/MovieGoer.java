@@ -143,7 +143,13 @@ public class MovieGoer extends Account {
 		System.out.print("\n");
 		selectedmovie.getMovieInfo();
 		System.out.print("\n");
-		System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5.0");
+		double avgRating = selectedmovie.getAverageRating();
+		if (Double.isNaN(avgRating)) {
+			System.out.println("Rating : - /5.0");
+		}
+		else 
+			System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5.0");
+		
 		System.out.print("\n");
 		System.out.println("================");
 		System.out.println("(1) View individual reviews and ratings");
@@ -166,13 +172,22 @@ public class MovieGoer extends Account {
 		int counter = 10;
 		if (selectedmovie.getMovieReview().size() < 10)
 			counter = selectedmovie.getMovieReview().size();
+		
 		for (int k = 0; k < counter; k++) {
+			double rating = selectedmovie.getMovieReview().get(k).getRating();
 			System.out.println("(" + (k+1) + ") " );
-			System.out.println("Review : " + selectedmovie.getMovieReview().get(k).getReview());
-			System.out.println("Rating : " + selectedmovie.getMovieReview().get(k).getRating()+ "/5.0");
+			System.out.print("Review : " + selectedmovie.getMovieReview().get(k).getReview());
+			if (Double.isNaN(rating)) {
+				System.out.println("Rating : - /5.0");
+			}
+			else {
+				System.out.println("Rating : " + rating + "/5.0");
+			}
+			System.out.print("\n");
+			
 		}
 		
-		System.out.println("\nProceed to Select Cineplex? (Y/N) ");
+		System.out.println("Proceed to Select Cineplex? (Y/N) ");
 		char ans = sc.next().charAt(0);
 		switch (ans){
 			case 'y':
@@ -264,9 +279,10 @@ public class MovieGoer extends Account {
 		  		System.out.println(theDate);
 		  		int i = 1;
 		  		for (Ticket printx: daytransaction) {
-		  			System.out.print(i+") " +" " +printx.getPrice());
-		  			System.out.print("Price : " +printx.getMovietitle());
-		  			System.out.print("Transaction ID: " +printx.getTransactionID());
+		  			System.out.println(i+") " +" " +printx.getMovietitle());
+		  			System.out.println("Price : " +printx.getPrice());
+		  			System.out.println("Transaction ID: " +printx.getTransactionID());
+		  			System.out.print("\n");
 		  			i++;
 		  		}
 		  		
@@ -319,7 +335,8 @@ public class MovieGoer extends Account {
 			} while (rating<0 || rating>5);
 			
 			System.out.println("Enter Review:");
-			String review = sc.next();
+			Scanner scan = new Scanner(System.in).useDelimiter("\\n");
+			String review = scan.next();
 			movieSelected.addMovieReview(rating, review);
 			System.out.println("Review added!");
 		}
