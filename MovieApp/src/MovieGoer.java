@@ -13,6 +13,9 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
+import java.lang.Integer;
+import java.lang.Long;
+
 
 public class MovieGoer extends Account {
 	private static final long serialVersionUID = 254911253486503839L;
@@ -60,6 +63,7 @@ public class MovieGoer extends Account {
 		StatusEnum selectedshowstatus = null;
 		//Moviegoer selects which show status to view
 		do {
+			System.out.print("\n");
 			System.out.println("Show status: ");
 			System.out.println("(1) Coming Soon");
 			System.out.println("(2) Preview");
@@ -78,6 +82,7 @@ public class MovieGoer extends Account {
 		int movielistchoice = 0;
 		List <Movie> sortedmoviearray = new ArrayList<Movie>();
 		do {
+			System.out.print("\n");
 			System.out.println("Search movie by: ");
 			System.out.println("(1) Movie Title");
 			System.out.println("(2) Overall Reviewers' Rating");
@@ -137,9 +142,10 @@ public class MovieGoer extends Account {
 		System.out.print("Enter Movie Choice: ");
 		int i = sc.nextInt();
 		Movie selectedmovie = movielist.get(i - 1);
+		System.out.print("\n");
 		selectedmovie.getMovieInfo();
 		System.out.print("\n");
-		System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5");
+		System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5.0");
 		System.out.print("\n");
 		System.out.println("================");
 		System.out.println("(1) View individual reviews and ratings");
@@ -157,6 +163,7 @@ public class MovieGoer extends Account {
 	
 	public void viewIndividualRatingsOfMovie(Movie selectedmovie){
 		Scanner sc = new Scanner(System.in);
+		System.out.print("\n");
 		System.out.println("==== Reviews ====");
 		int counter = 10;
 		if (selectedmovie.getMovieReview().size() < 10)
@@ -164,7 +171,7 @@ public class MovieGoer extends Account {
 		for (int k = 0; k < counter; k++) {
 			System.out.println("(" + (k+1) + ") " );
 			System.out.println("Review : " + selectedmovie.getMovieReview().get(k).getReview());
-			System.out.println("Rating : " + selectedmovie.getMovieReview().get(k).getRating()+ "/5");
+			System.out.println("Rating : " + selectedmovie.getMovieReview().get(k).getRating()+ "/5.0");
 		}
 		
 		System.out.println("\nProceed to Select Cineplex? (Y/N) ");
@@ -182,6 +189,7 @@ public class MovieGoer extends Account {
 	public void displayCineplexes(Movie movie) {
 		Scanner sc = new Scanner(System.in);
 		int i=1;
+		System.out.print("\n");
 		System.out.println("==== Cineplexes ====");
 		for(Cineplex cineplex : GoldenVillage.getCineplexes())
 			System.out.println("(" + (i++) + ") " + cineplex.getCineplexName());
@@ -193,6 +201,7 @@ public class MovieGoer extends Account {
 	}
 	
 	public void displayShowTimes(Movie movie, String cineplexcode) {
+		System.out.print("\n");
 		ShowTime showTime = movie.displayShowTimes(cineplexcode);
 		if (showTime !=null) {
 			char tixChoice = 0;
@@ -206,7 +215,7 @@ public class MovieGoer extends Account {
 					tixChoice = sc.nextLine().charAt(0);
 				}
 				else 
-					System.out.println("Please re-enter desired seat");
+					System.out.println("Please re-enter desired seat: ");
 			
 			} while (tixChoice != 'n' || tixChoice != 'N');
 		}

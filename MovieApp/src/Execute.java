@@ -77,6 +77,12 @@ public class Execute {
 //		Account user = login();	
 //		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
 		
+		
+//		ShowTime annabelleST = new ShowTime("Annabelle", "A1240", "GV-Jurong", "J", "01", "05-12-2017", 5,7,8, CinemaTypeEnum._standard);
+//		Annabelle.addShowTimeToMovie(annabelleST);
+	
+		
+		
 		Account user = null; //initialising user as null to allow user to log in again if he keys in the wrong username or password
 		do {
 			try { user = login(); }
