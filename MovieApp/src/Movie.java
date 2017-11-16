@@ -164,7 +164,9 @@ public class Movie implements Serializable {
 		System.out.println("Movie type: " + this.movietype);
 		System.out.println("Status: " + this.status);
 		System.out.println("Directed by: " + director);
+		System.out.print("\n");
 		System.out.println("Synopsis: \n" + this.synopsis);
+		System.out.print("\n");
 		System.out.println("Cast(s): ");
 
 		for (int i = 0; i < cast.size(); i++){
@@ -291,25 +293,28 @@ public class Movie implements Serializable {
 			sortedshowtimes.clear();
 			sortedshowtimes.addAll(s);
 
-	  		for(String theDate : sortedshowtimes) 
+	  		for(String theDate : sortedshowtimes) {
 	  			displayDailyShowTime(theDate, showtimesincineplexchoice);
+	  			System.out.print("\n");
+	  			}
 	  		
 	  		Scanner sc = new Scanner (System.in);
-	  		System.out.print("Proceed to book ticket? (Y/N)");
+	  		System.out.print("Proceed to book ticket? (Y/N) ");
 	  		char bookChoice;
 	  		do{
 	  			bookChoice = sc.next().charAt(0);
 	  				if (bookChoice == 'y' || bookChoice == 'Y') {
 	  			
 	  			  		System.out.println("================");
-	  			  		System.out.println("Select Show date");
+	  			  		System.out.println("List of Show Dates");
 	  			  		int i=1;
 	  			  		for (String theDate: sortedshowtimes) {
-	  			  			System.out.println(i + theDate);
+	  			  			System.out.println(i +") "+ theDate);
 	  			  			i++;
 	  			  		}
-	  			  		
+	  			  		System.out.println("Enter desired Show date: ");
 	  			  		int dateChoice = sc.nextInt();
+	  			  		System.out.print("Selected Show Date is ");
 	  			  		List<ShowTime> dailyshowlist = displayDailyShowTime(sortedshowtimes.get(dateChoice-1),showtimesincineplexchoice);
 	  			  		System.out.println("Select Show:");
 	  			  		int showChoice = sc.nextInt();
@@ -347,6 +352,7 @@ public class Movie implements Serializable {
 	  				int end_time = start_time + this.getDuration();
 	  				System.out.printf("%d. %02d:00 - %02d:00\n",i, start_time, end_time);
 	  				i++;
+	  				System.out.print("\n");
 	  			}
 	  			return dailyshowtime;
 	  			

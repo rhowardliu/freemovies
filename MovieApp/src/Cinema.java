@@ -24,6 +24,7 @@ public class Cinema implements Serializable {
 	private int numberofcols;
 	public static List<Cinema> cinemalist = new ArrayList<Cinema>();
 	public static final File cinemaDatabase = new File ("Cinema.tmp");
+
 	
 	/**
 	 * Constructor for Cinema class
@@ -55,6 +56,7 @@ public class Cinema implements Serializable {
 		}
 	}
 
+	
 	public CinemaTypeEnum getCinemaType(){
 		return this.cinematype;
 	}
