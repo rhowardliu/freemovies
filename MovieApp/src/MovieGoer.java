@@ -128,10 +128,8 @@ public class MovieGoer extends Account {
 		if (selectedshowstatus == StatusEnum.ComingSoon){
 			System.out.println("\nMovies that are coming soon are not available in cinemas. Sorry for the inconvenience caused.");
 			System.out.println("Press any key to return to main menu.");
-			char cont = sc.next().charAt(0);
-			switch (cont){ //this is to allow user to press any key to continue
-				default: System.out.println("Returning to main menu... "); return;
-			}
+			try{System.in.read();}catch(Exception e){	e.printStackTrace();}
+			System.out.println("Returning to main menu... "); return;
 		}
 		getMovieChoice(sortedmoviearray);
 		return;
@@ -191,10 +189,10 @@ public class MovieGoer extends Account {
 		int i=1;
 		System.out.print("\n");
 		System.out.println("==== Cineplexes ====");
-		for(Cineplex cineplex : GoldenVillage.getCineplexes())
+		for(Cineplex cineplex : GoldenVillage.getInstance().getCineplexes())
 			System.out.println("(" + (i++) + ") " + cineplex.getCineplexName());
 		System.out.print("Enter Cineplex: "); int cineplexchoice = sc.nextInt();
-		Cineplex tempcinemplexarray [] = GoldenVillage.getCineplexes();
+		Cineplex tempcinemplexarray [] = GoldenVillage.getInstance().getCineplexes();
 		//user has selected the cinema. now code supposed to display the movie's showtimes that
 		//are screened at the cineplex selected
 		displayShowTimes(movie, tempcinemplexarray[cineplexchoice - 1].getCineplexCode());

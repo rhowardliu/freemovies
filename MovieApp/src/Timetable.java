@@ -24,7 +24,7 @@ public class Timetable implements Serializable{
 	private String [] schedule = new String [24];
 	public static List<Timetable> timetablelist = new ArrayList<Timetable>();
 	public static final File timetableDatabase = new File ("Timetable.tmp");
-
+	
 
 	public Timetable (Calendar date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -76,7 +76,7 @@ public class Timetable implements Serializable{
 		
 		//Checking if the requested time slot is taken by other movies	
 		for (int i=starttime;i<starttime+movie.getDuration();i++) { 
-			if (schedule[i] != showEmpty) {
+			if (!schedule[i].equals( showEmpty) ) {
 				System.out.println("Timing clash, please enter a different timing");
 				return false;
 			}
