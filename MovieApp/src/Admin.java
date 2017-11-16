@@ -400,9 +400,9 @@ public class Admin extends Account {
 		System.out.print("Enter day (XX) :"); int day = sc.nextInt();
 		System.out.print("Enter month (XX) :"); int month = sc.nextInt();
 		System.out.print("Enter year (XXXX) :"); int year = sc.nextInt();
-		String date = String.format("%02d-%02d-%d",day,month,year);
+		String date = String.format("%02d-%02d-%04d",day,month,year);
 		for (Timetable x : chosencalendar){
-			if (x.getDateString() == date)
+			if (x.getDateString() .equals(date))
 				chosentimetable = x;
 		}
 
