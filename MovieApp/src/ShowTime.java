@@ -102,7 +102,7 @@ public class ShowTime implements Serializable {
 		for (int j = 0; j<cinemarows ; j++) {
 			System.out.print((char)(al));
 			System.out.print("  ");
-			for (i = 1; i <= cinemacols/2 ;i++) {
+			for (i = 0; i < cinemacols/2 ;i++) {
 				if (tickets[i][j].isBooked() == false)//not booked
 					System.out.print(" O ");
 				else 
