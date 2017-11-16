@@ -30,7 +30,7 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
-	private Ticket [][] tickets = new Ticket[99][99];
+	private Ticket [][] tickets = new Ticket[40][40];
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
@@ -60,6 +60,9 @@ public class ShowTime implements Serializable {
 		this.daytype = Timetable.getTimetableByDate(date).getDayType();
 	}
 
+	public String getMovieID() {
+		return this.getMovieID();
+	}
 	public Integer getShowTimeStartTime() {
 		return this.starttime;
 	}
