@@ -228,7 +228,6 @@ public class Movie implements Serializable {
 	 * @param st
 	 */
 	public void removeShowTimeFromMovie(ShowTime st){
-//		int showtime_index = movieShowTime.lastIndexOf(st);
 		movieShowTime.remove(st);
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
