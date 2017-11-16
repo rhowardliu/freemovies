@@ -122,10 +122,8 @@ public class MovieGoer extends Account {
 		if (selectedshowstatus == StatusEnum.ComingSoon){
 			System.out.println("\nMovies that are coming soon are not available in cinemas. Sorry for the inconvenience caused.");
 			System.out.println("Press any key to return to main menu.");
-			char cont = sc.next().charAt(0);
-			switch (cont){ //this is to allow user to press any key to continue
-				default: System.out.println("Returning to main menu... "); return;
-			}
+			try{System.in.read();}catch(Exception e){	e.printStackTrace();}
+			System.out.println("Returning to main menu... "); return;
 		}
 		getMovieChoice(sortedmoviearray);
 		return;
