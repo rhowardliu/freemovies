@@ -279,10 +279,12 @@ public class MovieGoer extends Account {
 		  		System.out.println(theDate);
 		  		int i = 1;
 		  		for (Ticket printx: daytransaction) {
+
 		  			System.out.println(i+") " +" " +printx.getMovietitle());
 		  			System.out.println("Price : " +printx.getPrice());
 		  			System.out.println("Transaction ID: " +printx.getTransactionID());
 		  			System.out.print("\n");
+
 		  			i++;
 		  		}
 		  		
@@ -312,11 +314,13 @@ public class MovieGoer extends Account {
 			int i=1;
 			Ticket.removeDuplicates(temp_list);
 			for(Ticket x : temp_list) {
-				System.out.println(i +") " + x.getMovietitle());
+				System.out.println(i + x.getMovietitle());
 				i++;			
 			}
 			System.out.println("***");
-			
+			System.out.println("Do you want to enter a review? (Y/N)");
+			if(!(sc.next().equals("Y")||(sc.next().equals("y"))))
+					return;
 			System.out.println("Select index of movie:");
 			int selection = sc.nextInt();
 			Movie movieSelected;
@@ -335,8 +339,12 @@ public class MovieGoer extends Account {
 			} while (rating<0 || rating>5);
 			
 			System.out.println("Enter Review:");
+<<<<<<< HEAD
 			Scanner scan = new Scanner(System.in).useDelimiter("\\n");
 			String review = scan.next();
+=======
+			String review = sc.nextLine();
+>>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
 			movieSelected.addMovieReview(rating, review);
 			System.out.println("Review added!");
 		}

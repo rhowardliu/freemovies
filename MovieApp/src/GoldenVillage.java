@@ -56,6 +56,7 @@ public class GoldenVillage implements Serializable{
 				e.printStackTrace();
 			}
 		}
+		System.out.println("justgetting");
 		return INSTANCE;
 	}
 	
