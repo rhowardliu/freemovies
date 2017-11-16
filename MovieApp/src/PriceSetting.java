@@ -97,6 +97,9 @@ public class PriceSetting {
 	public static void addPublicHol(String date) {
 		publicHol.add(date);
 	}
+	public static void removePublicHol(String date) {
+		publicHol.remove(date);
+	}
 	public static void clearPublicHol() {
 		publicHol.clear();
 	}

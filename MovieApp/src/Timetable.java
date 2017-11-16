@@ -22,8 +22,6 @@ public class Timetable implements Serializable{
 	private String date_string;
 	//schedule is an array of movie titles i.e. array of strings
 	private String [] schedule = new String [24];
-	public static List<Timetable> timetablelist = new ArrayList<Timetable>();
-	public static final File timetableDatabase = new File ("Timetable.tmp");
 	
 
 	public Timetable (Calendar date) {
@@ -36,20 +34,25 @@ public class Timetable implements Serializable{
 			this.daytype = DayTypeEnum.Weekday;
 		for (int i = 0; i < schedule.length; i++)
 			schedule[i] = showEmpty;
-		timetablelist.add(this);
 		
 		date_string = dateFormat.format(date.getTime());
 		
 		
 	}
 	
-	public static Timetable getTimetableByDate(String date) throws Exception {
+	public static List<Timetable> getTimetableByDate(String date) throws Exception {
+		List<Timetable> tt = new ArrayList<Timetable>();
 		
-		for (Timetable x: timetablelist){
-			if (x.getDateString().equals(date))
-				return x;
+		for (Cineplex x : GoldenVillage.getInstance().getCineplexes()) {
+			for (Cinema y : x.getCinemas()) {
+				for (Timetable z : y.getCalendar()) {
+					if (z.getDateString().equals(date))
+							tt.add(z);
+				}
+			}
 		}
-		throw new Exception ("timetable not found");
+		
+		return tt;
 	}
 
 	
@@ -66,8 +69,11 @@ public class Timetable implements Serializable{
 		return this.date;
 	}
 	
-	public void setPublicHoliday (DayTypeEnum type) {
-		daytype = type;
+	public void setPublicHoliday (boolean isHoliday) {
+		if (isHoliday==true)
+			daytype = DayTypeEnum.PH;
+		else
+			daytype = DayTypeEnum.Weekday;
 				
 		}
 	
@@ -120,16 +126,6 @@ public class Timetable implements Serializable{
 	
 	public String[] getTimetable(){
 		return schedule;
-	}
-
-	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectReader or = new ObjectReader(timetableDatabase);
-		timetablelist = or.initialiseDataList(timetablelist);
-	}
-	
-	public static void updateDatabase() throws FileNotFoundException, IOException {
-		ObjectWriter ow = new ObjectWriter(timetableDatabase);
-		ow.updateDataList(timetablelist);
 	}
 	
 	static Comparator<String> getDateComparator(){
