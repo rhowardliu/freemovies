@@ -11,7 +11,8 @@ import java.text.SimpleDateFormat;
  *
  */
 public class Admin extends Account {
-
+	private static final String isEmpty = "-";
+	private static final String isInProgress = "Movie In Progress";
 	private static final long serialVersionUID = 6340675425878862000L;
 	private static final Admin INSTANCE = new Admin(); 
 	
@@ -351,11 +352,7 @@ public class Admin extends Account {
 			switch(choice){
 				case 1: this.updateShowTime(1); break;
 				case 2: this.updateShowTime(2); break;
-				case 3: {
-					for (Movie x : Movie.movielist)
-						x.displayShowTimesForAdmin();
-					break;
-				}
+				case 3: this.adminDisplayAllShowtimes(); break;
 				case 4: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Going to admin main menu..."); return; }
 			}
@@ -633,6 +630,33 @@ public class Admin extends Account {
 			default: { System.out.println("Invalid choice! Going to system settings menu..."); break; }
 			}
 		}
+	}
+	
+	public void adminDisplayAllShowtimes(){
+		for (Cineplex cineplex : GoldenVillage.getInstance().getCineplexes()){ //for each cineplex
+			System.out.println("=====" + cineplex.getCineplexName() + "=====");
+			boolean noshows = true;
+			for (Cinema cinema : cineplex.getCinemas()){ //for each cinema in each cineplex
+				for (Timetable timetable : cinema.getCalendar()) { //for each day in each cinema in each cineplex
+					int i = 0;
+					for (String hasmovie : timetable.getTimetable()){
+						i++;
+						if (!hasmovie.equals(isEmpty)){
+							if (!hasmovie.equals(isInProgress)){
+								System.out.printf("%s %02d:00 : %s\n",timetable.getDateString(), i, hasmovie);
+								noshows = false;
+							}
+						}
+					} //end of scanning timetable
+				} //end of scanning calendar
+
+			} //end of scanning cinemas
+			if (noshows == true)
+				System.out.println("No showtimes for this cineplex\n");
+			else
+				System.out.println("");
+		} //end of scanning all cineplexes
+			
 	}
 	
 	static class InvalidChoice extends Exception{

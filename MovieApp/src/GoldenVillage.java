@@ -20,8 +20,6 @@ public class GoldenVillage implements Serializable{
 	private Cineplex[] cineplexes;
 	public static final File gvDatabase = new File ("GV.tmp");
 	
-	
-	
 	private GoldenVillage(){
 		cineplexes = new Cineplex[3];
 		//soft-code this portion 
@@ -56,13 +54,14 @@ public class GoldenVillage implements Serializable{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("justgetting");
 		return INSTANCE;
 	}
 	
 	public Cineplex[] getCineplexes(){
 		return cineplexes;
 	}
+	
+
 	
 	
 	public static void updateDatabase() throws FileNotFoundException, IOException {

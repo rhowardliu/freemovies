@@ -22,7 +22,8 @@ public class Cinema implements Serializable {
 	private String cinemacode;
 	private int numberofrows;
 	private int numberofcols;
-
+	public static List<Cinema> cinemalist = new ArrayList<Cinema>();
+	public static final File cinemaDatabase = new File ("Cinema.tmp");
 
 	
 	/**
@@ -77,4 +78,14 @@ public class Cinema implements Serializable {
 		return this.calendar;
 	}
 	
+	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectReader or = new ObjectReader(cinemaDatabase);
+		cinemalist = or.initialiseDataList(cinemalist);
+	}
+	
+	public static void updateDatabase() throws FileNotFoundException, IOException {
+		ObjectWriter ow = new ObjectWriter(cinemaDatabase);
+		ow.updateDataList(cinemalist);
+	}
+
 }

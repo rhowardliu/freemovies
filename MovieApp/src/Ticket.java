@@ -94,10 +94,8 @@ public class Ticket implements Serializable {
 	}
 	
 	public DayTypeEnum getDayType() throws Exception {
-		if(PriceSetting.getPublicHol().contains(date))
-			return DayTypeEnum.PH;
-		else
-			return DayTypeEnum.Weekday;
+		dayType = Timetable.getTimetableByDate(date).getDayType();
+		return dayType;
 	}
 	
 
