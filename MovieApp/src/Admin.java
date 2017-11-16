@@ -86,7 +86,7 @@ public class Admin extends Account {
 					System.out.println("===== All movies (show status) =====");
 					int i = 1;
 					for (Movie movietoshow : Movie.movielist)
-						System.out.println("(" + (i++) + ") " + movietoshow.getMovieID() + "\t" + movietoshow.getTitle() + " (" + movietoshow.getStatus() + ")");
+						System.out.println("(" + (i++) + ") " + movietoshow.getTitle() + " (" + movietoshow.getStatus() + ")");
 				}
 				case 4: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu..."); return; }
@@ -397,9 +397,9 @@ public class Admin extends Account {
 		System.out.print("Enter day (XX) :"); int day = sc.nextInt();
 		System.out.print("Enter month (XX) :"); int month = sc.nextInt();
 		System.out.print("Enter year (XXXX) :"); int year = sc.nextInt();
-		String date = String.format("%02d-%02d-%d",day,month,year);
+		String date = String.format("%02d-%02d-%04d",day,month,year);
 		for (Timetable x : chosencalendar){
-			if (x.getDateString().equals(date))
+			if (x.getDateString() .equals(date))
 				chosentimetable = x;
 		}
 
@@ -413,16 +413,16 @@ public class Admin extends Account {
 		chosentimetable.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null; String movieid = null;
 		
-		System.out.println("Enter movieID: "); movieid = sc.next();
-		try {
-			moviechoice = Movie.searchMovie(movieid);
-			System.out.println(moviechoice.getTitle() + " has been selected. \n");
-		} 
-		catch(Exception e) {
-			System.out.println("Movie not found");
-			System.out.println("Returning to main menu...");
-			return;
-		}
+		do {
+			System.out.println("Enter movieID: ");
+			movieid = sc.next();
+			try {
+				moviechoice = Movie.searchMovie(movieid);
+				System.out.println(moviechoice.getTitle() + " has been selected. \n");
+			}catch(Exception e) {
+				System.out.println("Movie not found");
+			}
+		} while(moviechoice == null);
 		
 		boolean available = false;
 		do {
@@ -494,10 +494,12 @@ public class Admin extends Account {
 		System.out.println("Enter Year (XXXX) : ");
 		int year = sc.nextInt();
 		String date = String.format("%02d-%02d-%04d",day,month,year);
-		if (Timetable.getTimetableByDate(date).getDayType() != DayTypeEnum.PH) {
-			PriceSetting.addPublicHol(date);
+		if (!PriceSetting.getPublicHol().contains(date)) {
+			PriceSetting.addPublicHol(date);	
+			List<Timetable> tt =Timetable.getTimetableByDate(date);
+			for (Timetable x: tt)
+				x.setPublicHoliday(true);
 			System.out.println(date +" set as Public Holiday");
-			Timetable.getTimetableByDate(date).setPublicHoliday(DayTypeEnum.PH);
 			return;
 		}
 		else {
@@ -526,8 +528,11 @@ public class Admin extends Account {
 		System.out.println("Enter Year (XXXX) : ");
 		int year = sc.nextInt();
 		String date = String.format("%02d-%02d-%04d",day,month,year);
-		if (PriceSetting.getPublicHol().contains(date) == true) {
-			Timetable.getTimetableByDate(date).setPublicHoliday(DayTypeEnum.Weekday);
+		if (PriceSetting.getPublicHol().contains(date)) {
+			PriceSetting.removePublicHol(date);
+			List<Timetable> tt =Timetable.getTimetableByDate(date);
+			for (Timetable x: tt)
+				x.setPublicHoliday(false);
 			System.out.println(date + " has been removed as a holiday.");
 		}
 		else 
@@ -540,8 +545,10 @@ public class Admin extends Account {
 	 */
 	public void clearHolidays() throws Exception{
 		System.out.println(" ===== Clear Holiday ===== ");
-		for (int i=0; i<PriceSetting.getPublicHol().size();i++) {
-			Timetable.getTimetableByDate(PriceSetting.getPublicHol().get(i)).setPublicHoliday(DayTypeEnum.Weekday);
+		for (String date : PriceSetting.getPublicHol()) {
+			List<Timetable> tt = Timetable.getTimetableByDate(date);
+			for(Timetable x : tt)
+				x.setPublicHoliday(false);
 		}
 			PriceSetting.clearPublicHol();
 		System.out.println("Public Holidays all rest back to their respective day type.");

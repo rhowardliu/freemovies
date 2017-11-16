@@ -60,7 +60,10 @@ public class ShowTime implements Serializable {
 	
 	
 	public void updateShowTime() throws Exception {
-		this.daytype = Timetable.getTimetableByDate(date).getDayType();
+		if(PriceSetting.getPublicHol().contains(date))
+			daytype=DayTypeEnum.PH;
+		else
+			daytype = DayTypeEnum.Weekday;
 	}
 
 	public String getMovieID() {
