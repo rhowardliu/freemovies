@@ -376,8 +376,7 @@ public class Admin extends Account {
 			System.out.println(" ===== Add Showtime =====");
 		else if (i == 2)
 			System.out.println(" ===== Remove Showtime =====");
-		
-		Cineplex [] cineplexes = GoldenVillage.getCineplexes();
+		Cineplex [] cineplexes = GoldenVillage.getInstance().getCineplexes();
 		System.out.println("Cineplexes: ");
 		for (int j = 0; j < cineplexes.length; j++) //lists out all the cineplexes
 			System.out.println("(" + (j+1) + ") " + cineplexes[j].getCineplexName());
@@ -406,22 +405,17 @@ public class Admin extends Account {
 			if (x.getDateString() == date)
 				chosentimetable = x;
 		}
+
 		if (chosentimetable == null) {
 			System.out.println("Timetable not found");
 			System.out.println("Returning to main menu...");
 			return;
 		}
 		
-//		try {
-//			tt = Timetable.getTimetableByDate(date);
-//		}catch(Exception e) {
-//			System.out.println("Timetable not found");
-//		}
-//		}while(tt==null);
-		
-		System.out.println("Schedule on " + date + ":");
+		System.out.println("Schedule for " + chosencineplex.getCineplexName() + " Cinema " + chosencinema.getCinemaCode() + " on "+ date + ":");
 		chosentimetable.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null; String movieid = null;
+		
 		do {
 			System.out.println("Enter movieID: ");
 			movieid = sc.next();

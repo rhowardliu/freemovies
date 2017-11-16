@@ -13,18 +13,20 @@ public class Execute {
 	public static void main(String[] args) throws Exception {
 		//Initialising MOBLIMA's database
 		System.out.println("MOBLIMA is fetching its databases...");
+		Timetable.initialiseDatabase();
+		GoldenVillage.getInstance();
 		StaticBoundary.initialisePrices();
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
 		ShowTime.initialiseDatabase();
 		Movie.initialiseDatabase();
 		Ticket.initialiseDatabase();
-		GoldenVillage.getInstance();
 		System.out.println("MOBLIMA initialised!\n\n");
 		//MOBLIMA's database initialise
 		
 		System.out.println("===== Welcome to MOBLIMA =====");
 		
+
 //		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
 //		Movie Avatar = new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
 //		MovieGoer chuaye = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
@@ -77,6 +79,15 @@ public class Execute {
 //		new ShowTime("Avatar", "A1234", "GV-Jurong", "J", "01", "a", 2, 5, 6, CinemaTypeEnum._platinum);
 //		Account user = login();	
 //		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
+
+		
+		
+//		ShowTime annabelleST = new ShowTime("Annabelle", "A1240", "GV-Jurong", "J", "01", "05-12-2017", 5,7,8, CinemaTypeEnum._standard);
+//		Annabelle.addShowTimeToMovie(annabelleST);
+		Movie TimesNewRoman = new Movie("A1248", "TimesNewRoman", 3,StatusEnum.Preview, MovieTypeEnum.digital, "Donavan", new ArrayList(Arrays.asList("test", "test", "test", "test")), "Amazing History");
+		TimesNewRoman.addMovieReview(4.0, "not bad");
+		TimesNewRoman.addShowTimeToMovie("GV-Jurong", "J", "01", "06-12-2017", 3, 8, 9, CinemaTypeEnum._standard);
+		
 		
 		Account user = null; //initialising user as null to allow user to log in again if he keys in the wrong username or password
 		do {
@@ -103,8 +114,9 @@ public class Execute {
 		Movie.updateDatabase();
 		ShowTime.updateDatabase();
 		Ticket.updateDatabase();
-		Timetable.updateDatabase();
+		GoldenVillage.updateDatabase();
 		StaticBoundary.updatePrices();
+		Timetable.updateDatabase();
 		System.out.println("Changes saved!");
 	}
 	

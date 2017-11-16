@@ -27,7 +27,8 @@ public class Ticket implements Serializable {
 	private String movietitle;
 	private String movieID;
 	private String date;
-	private int seatrow, seatcol;
+	private char seatrow;
+	private int seatcol;
 	private String transactionID;
 	private AgeCatEnum agecat;
 	private DayTypeEnum dayType;
@@ -36,7 +37,7 @@ public class Ticket implements Serializable {
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
 	public static final File ticketsDatabase = new File ("Ticket.tmp");
 	
-	public Ticket(String movietitle, String movieID, String date,int seatrow, int seatcol) {
+	public Ticket(String movietitle, String movieID, String date,char seatrow, int seatcol, boolean booked) {
 		this.movietitle=movietitle;
 		this.movieID = movieID;
 		this.date=date;
@@ -44,7 +45,7 @@ public class Ticket implements Serializable {
 		this.seatcol = seatcol;
 		this.transactionID = null;
 		this.agecat = null;
-		this.isBooked = false;
+		this.isBooked = booked;
 		this.price = 0;
 	}
 	
@@ -61,14 +62,14 @@ public class Ticket implements Serializable {
 	}
 			
 	public boolean isBooked() {
-		return isBooked;
+		return this.isBooked;
 	}
 
 	public void setBooked(boolean isBooked) {
 		this.isBooked = isBooked;
 	}
 	
-	public int getSeatRow(){
+	public char getSeatRow(){
 		return this.seatrow;
 	}
 	
@@ -92,7 +93,8 @@ public class Ticket implements Serializable {
 		this.price = price;
 	}
 	
-	public DayTypeEnum getDayType() {
+	public DayTypeEnum getDayType() throws Exception {
+		dayType = Timetable.getTimetableByDate(date).getDayType();
 		return dayType;
 	}
 	

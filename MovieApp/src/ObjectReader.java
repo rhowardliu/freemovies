@@ -19,9 +19,7 @@ public class ObjectReader {
 		}catch(EOFException e) {
 		}
 	}
-		
-		
-		
+				
 	public <T> List<T> initialiseDataList(List<T> list) throws EOFException, ClassNotFoundException, IOException{
 		
 		
@@ -44,5 +42,27 @@ public class ObjectReader {
 		}
 		
 		return list;
+	}
+	
+	public Object initialiseObject () throws IOException {
+		Object o = new Object();
+		try{
+			while (true) {
+				try {
+			o=ois.readObject();
+				}catch(EOFException e) {
+					break;
+				}
+			}
+		}catch(NullPointerException e) {
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			if (ois!=null)
+				ois.close();
+		}
+		return o;
 	}
 }
