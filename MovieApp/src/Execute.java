@@ -107,9 +107,9 @@ public class Execute {
 	public static Account login() throws InvalidLogin {
 		Account user = null;
 		Scanner sc = new Scanner (System.in);
-		System.out.println("Enter username:");
+		System.out.print("Enter username:");
 		String inputUser = sc.nextLine();
-		System.out.println("Enter password:");
+		System.out.print("Enter password:");
 		String inputPw = sc.nextLine();
 		return user = searchUser(inputUser, inputPw);		
 	}
