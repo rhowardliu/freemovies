@@ -5,15 +5,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PriceSetting {
+	public static final int priceTypes = 8;
 	
-	private static double ticketPriceAdult = 8.5;
-	private static double ticketPriceChild = 6.0;
-	private static double ticketPriceStudent = 7.0;
-	private static double ticketPriceSenior = 4.0;
-	private static double ticketPremium3D = 3.0;
-	private static double ticketPremiumBB = 2.0;
-	private static double ticketPremiumHol = 4.0;
-	private static double ticketPlatinum = 2.0;
+	private static double ticketPriceAdult;
+	private static double ticketPriceChild;
+	private static double ticketPriceStudent;
+	private static double ticketPriceSenior;
+	private static double ticketPremium3D;
+	private static double ticketPremiumBB;
+	private static double ticketPremiumHol;
+	private static double ticketPlatinum;
 	private static List<String> publicHol = new ArrayList<String>();
 	
 	public static double calPrice(MovieTypeEnum movietype, AgeCatEnum agecat,
@@ -88,7 +89,7 @@ public class PriceSetting {
 		return ticketPremium3D;
 	}
 	public static double getTPBB() {
-		return ticketPremium3D;
+		return ticketPremiumBB;
 	}
 	public static double getTPHoliday() {
 		return ticketPremiumHol;

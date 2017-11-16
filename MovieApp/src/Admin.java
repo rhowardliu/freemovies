@@ -571,49 +571,49 @@ public class Admin extends Account {
 			switch (catChoice) {
 			case 1:
 				System.out.println("Enter new price for Adult Category");
-				double adultPrice = sc.nextInt();
+				double adultPrice = sc.nextDouble();
 				PriceSetting.setTPAdult(adultPrice);
 				System.out.println("Adult Category price has been updated to " +PriceSetting.getTPAdult());
 				break;
 			case 2:
 				System.out.println("Enter new price for Child Category");
-				double childPrice = sc.nextInt();
+				double childPrice = sc.nextDouble();
 				PriceSetting.setTPChild(childPrice);
 				System.out.println("Child Category price has been updated to " +PriceSetting.getTPChild());
 				break;
 			case 3:
 				System.out.println("Enter new price for Student Category");
-				double studentPrice = sc.nextInt();
+				double studentPrice = sc.nextDouble();
 				PriceSetting.setTPStudent(studentPrice);
 				System.out.println("Student Category price has been updated to " +PriceSetting.getTPStudent());
 				break;
 			case 4:
 				System.out.println("Enter new price for Senior Category");
-				double seniorPrice = sc.nextInt();
+				double seniorPrice = sc.nextDouble();
 				PriceSetting.setTPSenior(seniorPrice);
 				System.out.println("Senior Category price has been updated to " +PriceSetting.getTPSenior());
 				break;
 			case 5:
 				System.out.println("Enter new price for Premium 3D Category");
-				double threeDPrice = sc.nextInt();
+				double threeDPrice = sc.nextDouble();
 				PriceSetting.setTP3D(threeDPrice);
 				System.out.println("Premium 3D Category price has been updated to " +PriceSetting.getTP3D());
 				break;
 			case 6:
 				System.out.println("Enter new price for Premium Blockbuster Category");
-				double BBPrice = sc.nextInt();
+				double BBPrice = sc.nextDouble();
 				PriceSetting.setTPBB(BBPrice);
 				System.out.println("Premium Blockbuster Category price has been updated to " +PriceSetting.getTPBB());
 				break;
 			case 7:
 				System.out.println("Enter new price for Premium Holiday Category");
-				double holidayPrice = sc.nextInt();
+				double holidayPrice = sc.nextDouble();
 				PriceSetting.setTPAdult(holidayPrice);
 				System.out.println("Premium Holiday Category price has been updated to " +PriceSetting.getTPHoliday());
 				break;
 			case 8:
 				System.out.println("Enter new price for Cinema Platinum Category");
-				double platinumPrice = sc.nextInt();
+				double platinumPrice = sc.nextDouble();
 				PriceSetting.setTPPlatinum(platinumPrice);
 				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
 				break;
