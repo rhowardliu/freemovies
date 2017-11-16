@@ -145,8 +145,8 @@ public class ShowTime implements Serializable {
 		//first algo ask the user which seat he wants
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter desired seat: ");
-		System.out.print("Row: "); int row = sc.nextInt();
-		System.out.print("Column: "); int col = sc.nextInt();
+		System.out.print("Row: "); int row = (sc.nextInt() - 1);
+		System.out.print("Column: "); int col = (sc.nextInt() - 1);
 		//check if the requested seat is already taken
 		
 		if (tickets[row][col].isBooked()==true){
