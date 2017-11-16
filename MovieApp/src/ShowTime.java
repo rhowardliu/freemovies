@@ -30,11 +30,8 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
-<<<<<<< HEAD
-	private Ticket [][] tickets;
-=======
-	private Ticket [][] tickets = new Ticket[40][40];
->>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
+	Ticket[][] tickets = new Ticket[40][40];
+
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
@@ -51,18 +48,16 @@ public class ShowTime implements Serializable {
 		this.starttime = starttime;
 		this.cinemarows = cinemarows;
 		this.cinemacols = cinemacols;
-
-		
+		for (int i=0; i<cinemarows; i++) {
+			for (int j=0; j<cinemacols; j++) {
+				char col = (char)(i+65);
+				tickets[i][j] = new Ticket(movietitle,movieID,date,col,(j+1), false);
+			}
+		}
 		
 		showtimelist.add(this);
 	}
-	public Ticket[][] initialiseTickets() {
-		for (int i=0; i<cinemarows; i++) {
-			for (int j=0; j<cinemacols; j++) 
-				tickets[i][j] = new Ticket(movietitle,movieID,date,(i+1),(j+1), false);
-		}
-		return tickets;
-	}
+	
 	
 	public void updateShowTime() throws Exception {
 		this.daytype = Timetable.getTimetableByDate(date).getDayType();
@@ -92,11 +87,8 @@ public class ShowTime implements Serializable {
 	}
 
 	public void showSeatLayout() {
-		initialiseTickets();
-		//****this one needd to change cos number of rows and cols are not assumed anymore
-		//****its based on the cinema selected instead
+	
 		
-		//assume 9 rows, 8x2 columns with an aisle in between 
 		int al = 65;
 		System.out.print("   ");
 		int i;
@@ -155,9 +147,10 @@ public class ShowTime implements Serializable {
 	 * Method request user to input which seat row and column he wants, along with the age category of the person he is booking for
 	 * Method will calculate the price of the ticket based on the cinema type, movie type, day type and the age of the person 
 	 * After which, after the movie goer confirms booking of Ticket, a transaction id will be generated and the ticket purchase will be recorded under the user's transaction history
+	 * @throws Exception 
 	 */
 	//need to change uml diagram. void, not Ticket.
-	public Ticket bookTicket() { 
+	public Ticket bookTicket() throws Exception { 
 		//first algo ask the user which seat he wants
 		System.out.print("\n");
 		Scanner sc = new Scanner(System.in);
@@ -166,11 +159,11 @@ public class ShowTime implements Serializable {
 		do{
 			System.out.print("Row (Enter Uppercase): "); 
 			row = ((int)sc.next().charAt(0)) -65;
-			if (row <0 || row >25) {
-				System.out.println("Enter Upper-case only! Please re-enter!");
+			if (row <0 || row >= cinemarows) {
+				System.out.println("Invalid Entry. Please re-enter!");
 			}
 			
-		}while (row <0 || row > 25);
+		}while (row <0 || row >= cinemarows);
 		System.out.print("Column: "); int col = (sc.nextInt() - 1);
 		
 		//check if the requested seat is already taken
@@ -199,12 +192,12 @@ public class ShowTime implements Serializable {
 				System.out.println("Movie ID not found");
 				return null;
 			}			
-			try {
-				this.daytype=Timetable.getTimetableByDate(date).getDayType();
-			} catch (Exception e) {
-				System.out.println("Timetable not found");
-				return null;
-			}
+//			try {
+//				this.daytype=Timetable.getTimetableByDate(date).getDayType();
+//			} catch (Exception e) {
+//				System.out.println("Timetable not found");
+//				return null;
+//			}
 			tickets[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
 			//write buy more tickets?
 			//display info first then
@@ -219,21 +212,22 @@ public class ShowTime implements Serializable {
 			printTicketShowTimeDetails(row, col);
 			tickets[row][col].setTransactionID(this.cineplexcode.concat(this.cinemacode.concat(timestamp)));
 			System.out.println("Transaction ID is " +tickets[row][col].getTransactionID());
-			return tickets[row][col];
+			
 			//need a method to add the transaction to the user's transactionhistory
-		}
+		}return tickets[row][col];
 	}
 	
 	/**
 	 * Prints out booking details, including price of ticket
 	 * @param row
 	 * @param col
+	 * @throws Exception 
 	 */
-	public void printTicketShowTimeDetails(int row, int col){
+	public void printTicketShowTimeDetails(int row, int col) throws Exception{
 		System.out.println("==========");
 		System.out.println("Booking details:");
 		System.out.println("Movie: " + this.movietitle);
-		System.out.println("Date: " + this.getShowTimeDate() + "(" + tickets[row][col].getDayType() + ")");
+		System.out.println("Date: " + this.getShowTimeDate() + " (" + tickets[row][col].getDayType() + ")");
 		System.out.println("Seat Row: " + tickets[row][col].getSeatRow() + "\tSeat Column: " + tickets[row][col].getSeatCol());
 		System.out.println("Location: " + this.cineplexname);
 		System.out.println("Price: " + tickets[row][col].getPrice());

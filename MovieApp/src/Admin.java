@@ -399,6 +399,7 @@ public class Admin extends Account {
 			System.out.println("Timetable not found");
 		}
 		}while(tt==null);
+		System.out.print("\n");
 		System.out.println("Schedule on " +date);
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;

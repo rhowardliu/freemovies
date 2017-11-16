@@ -22,7 +22,7 @@ public class MovieGoer extends Account {
 	private String name;
 	private String mobilenumber;
 	private String email;
-	private List <Ticket> transactionhistory= new ArrayList<Ticket>();
+	private List <Ticket> transactionhistory;
 	public static List<MovieGoer> moviegoerlist = new ArrayList<MovieGoer>();
 	public static final File moviegoerDatabase = new File ("MovieGoer.tmp");
 	
@@ -32,11 +32,12 @@ public class MovieGoer extends Account {
 		this.name = name;
 		this.mobilenumber = mobilenumber;
 		this.email = email;
+		transactionhistory = new ArrayList<Ticket>();
 		//when a new MovieGoer object is created, it is added to MOBLIMA's database of moviegoers. 
 		moviegoerlist.add(this); 
 	}
 	
-	public void movieGoerMainControl() {
+	public void movieGoerMainControl() throws Exception {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("========== Welcome " + name + "! ==========\n");
@@ -57,7 +58,7 @@ public class MovieGoer extends Account {
 		} while (true);
 	}
 	
-	public void searchMovie() {
+	public void searchMovie() throws Exception {
 		Scanner sc = new Scanner(System.in);
 		StatusEnum selectedshowstatus = null;
 		//Moviegoer selects which show status to view
@@ -136,7 +137,7 @@ public class MovieGoer extends Account {
 		return;
 	} //end of searchMovie() method
 	
-	public void getMovieChoice(List<Movie> movielist) {
+	public void getMovieChoice(List<Movie> movielist) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter Movie Choice: ");
 		int i = sc.nextInt();
@@ -160,7 +161,7 @@ public class MovieGoer extends Account {
 		return;
 	}
 	
-	public void viewIndividualRatingsOfMovie(Movie selectedmovie){
+	public void viewIndividualRatingsOfMovie(Movie selectedmovie) throws Exception{
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\n");
 		System.out.println("==== Reviews ====");
@@ -185,7 +186,7 @@ public class MovieGoer extends Account {
 		return;
 	}
 	
-	public void displayCineplexes(Movie movie) {
+	public void displayCineplexes(Movie movie) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		int i=1;
 		System.out.print("\n");
@@ -199,7 +200,8 @@ public class MovieGoer extends Account {
 		displayShowTimes(movie, tempcinemplexarray[cineplexchoice - 1].getCineplexCode());
 	}
 	
-	public void displayShowTimes(Movie movie, String cineplexcode) {
+	public void displayShowTimes(Movie movie, String cineplexcode) throws Exception {
+		Scanner sc = new Scanner (System.in);
 		System.out.print("\n");
 		ShowTime showTime = movie.displayShowTimes(cineplexcode);
 		if (showTime !=null) {
@@ -207,16 +209,20 @@ public class MovieGoer extends Account {
 			do{
 				showTime.showSeatLayout();
 				Ticket ticket = showTime.bookTicket();
+				if (ticket == null) {
+					System.out.println("null");
+				}
 				if (ticket != null) {
+					
 					addTransaction(ticket);
 					System.out.println("Buy more Tickets? (Y/N)");
-					Scanner sc = new Scanner (System.in);
-					tixChoice = sc.nextLine().charAt(0);
+					
+					tixChoice = sc.next().charAt(0);
 				}
 				else 
 					System.out.println("Please re-enter desired seat: ");
 			
-			} while (tixChoice != 'n' || tixChoice != 'N');
+			} while (tixChoice != 'n' && tixChoice != 'N');
 		}
 
 	
@@ -333,6 +339,10 @@ public class MovieGoer extends Account {
 	public String getMobileNumber() { return this.mobilenumber; }
 	public String getEmail() { return this.email; }
 	public List<Ticket> getTransactionHistory() { return transactionhistory; }
-	public void addTransaction(Ticket ticket) { transactionhistory.add(ticket); }
+	public void addTransaction(Ticket ticket) { 
+		if (transactionhistory==null){
+			transactionhistory=new ArrayList<Ticket>();
+		}
+		this.transactionhistory.add(ticket); }
 	
 }

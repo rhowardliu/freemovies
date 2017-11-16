@@ -15,6 +15,7 @@ public class Cinema {
 	private String cinemacode;
 	private int numberofrows;
 	private int numberofcols;
+
 	
 	/**
 	 * Constructor for Cinema class
@@ -46,6 +47,7 @@ public class Cinema {
 		}
 	}
 
+	
 	public CinemaTypeEnum getCinemaType(){
 		return this.cinematype;
 	}
