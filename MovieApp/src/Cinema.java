@@ -33,6 +33,7 @@ public class Cinema implements Serializable {
 	 * @param rows
 	 * @param cols
 	 */
+	
 	public Cinema(CinemaTypeEnum  cinematypeenum, String cinemacode, int rows, int cols){
 		this.cinematype = cinematypeenum;
 		this.cinemacode = cinemacode;
