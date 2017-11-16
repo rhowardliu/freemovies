@@ -120,6 +120,14 @@ public class MovieGoer extends Account {
 			}
 		}
 		//by now, the user should have been able to view the movies according to his preference
+		if (selectedshowstatus == StatusEnum.ComingSoon){
+			System.out.println("\nMovies that are coming soon are not available in cinemas. Sorry for the inconvenience caused.");
+			System.out.println("Press any key to return to main menu.");
+			char cont = sc.next().charAt(0);
+			switch (cont){ //this is to allow user to press any key to continue
+				default: System.out.println("Returning to main menu... "); return;
+			}
+		}
 		getMovieChoice(sortedmoviearray);
 		return;
 	} //end of searchMovie() method
@@ -134,15 +142,15 @@ public class MovieGoer extends Account {
 		System.out.println("Rating : " + selectedmovie.getAverageRating() +"/5");
 		System.out.print("\n");
 		System.out.println("================");
-		System.out.println("(1) View Individual Reviews and Ratings");
-		System.out.println("(2) Select Cineplex to watch movie");
-		System.out.println("(3) Return to Search Movie");
+		System.out.println("(1) View individual reviews and ratings");
+		System.out.println("(2) Select cineplex to watch movie");
+		System.out.println("(3) Return to MovieGoer Main Menu");
 		System.out.print("Select option: "); int choice = sc.nextInt();
 		switch (choice) {
 			case 1: this.viewIndividualRatingsOfMovie(selectedmovie); break;
 			case 2: this.displayCineplexes(selectedmovie); break;
-			case 3: this.searchMovie(); break;
-			default: { System.out.println("Invalid choice!"); return; }
+			case 3: System.out.println("Returning to main menu..."); return;
+			default: System.out.println("Invalid choice! Returning to main menu..."); return; 
 		}	
 		return;
 	}
@@ -165,8 +173,8 @@ public class MovieGoer extends Account {
 			case 'y':
 			case 'Y': displayCineplexes(selectedmovie); break;
 			case 'n':
-			case 'N': { System.out.println(""); break; }
-			default: { System.out.println("Invalid choice! Exitting programme"); break; }	
+			case 'N': { System.out.println("Returning to main menu..."); return; }
+			default: { System.out.println("Invalid choice! Returning to main menu"); return; }	
 		}
 		return;
 	}
@@ -206,17 +214,8 @@ public class MovieGoer extends Account {
 	
 		else {
 			System.out.println("================");
-			System.out.println("(1) Back to View ShowTimes");
-			System.out.println("(2) Back to Search Movie");
-			System.out.println("(3) Return to MovieGoer Main Menu");
-			Scanner sc =  new Scanner(System.in);
-			int selection = sc.nextInt();
-			switch (selection) {
-				case 1: this.displayShowTimes(movie, cineplexcode);break;
-				case 2: this.searchMovie(); break;
-				default: System.out.println("Invalid choice! ");
-				case 3: System.out.println("Returning to main menu...\n"); this.movieGoerMainControl(); return;
-			}
+			System.out.println("Returning to main menu...\n");
+			return;
 		}
 		
 		return;
@@ -301,7 +300,7 @@ public class MovieGoer extends Account {
 			}
 			int rating;
 			do {
-				System.out.println("Enter Rating(0-5)");
+				System.out.print("Enter Rating(0-5): ");
 				rating = sc.nextInt();
 				if (rating<0 || rating>5)
 					System.out.println("Invalid Rating. Only enter (0-5)");

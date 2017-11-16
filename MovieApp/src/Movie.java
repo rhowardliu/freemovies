@@ -61,6 +61,10 @@ public class Movie implements Serializable {
 			if (x.getmovieID().equals(movieID))
 				reviews.add(x);
 		}
+			for (ShowTime x : ShowTime.showtimelist) {
+				if (x.getMovieID().equals(movieID))
+					movieShowTime.add(x);
+		}
 		movielist.add(this);
 		
 	}
@@ -219,7 +223,16 @@ public class Movie implements Serializable {
 	 * adds a ShowTime object to the Movie object's array of ShowTimes
 	 * @param st
 	 */
-	public void addShowTimeToMovie(ShowTime st) {
+	public void addShowTimeToMovie( String cineplexname, String
+			cineplexcode, String cinemacode, String date, int starttime, 
+			int row, int col, CinemaTypeEnum cinematype) {
+		
+		ShowTime st=null;
+		try {
+			st = new ShowTime(this.title,this.movieID,cineplexname,cineplexcode,cinemacode,date,starttime,row,col,cinematype);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		movieShowTime.add(st);
 	}
 	
@@ -227,8 +240,18 @@ public class Movie implements Serializable {
 	 * Removes a ShowTime object from the Movie object's array of ShowTimes
 	 * @param st
 	 */
-	public void removeShowTimeFromMovie(ShowTime st){
+	public void removeShowTimeFromMovie(String cineplexname, String
+			cineplexcode, String cinemacode, String date, int starttime, 
+			int row, int col, CinemaTypeEnum cinematype){
 //		int showtime_index = movieShowTime.lastIndexOf(st);
+		
+		ShowTime st=null;
+		try {
+			st = new ShowTime(this.title,this.movieID,cineplexname,cineplexcode,cinemacode,date,starttime,row,col,cinematype);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
 		movieShowTime.remove(st);
 		ShowTime.showtimelist.remove(st);
 		ShowTime.showtimelist.remove(st);
@@ -238,7 +261,7 @@ public class Movie implements Serializable {
  * Prints out the ShowTimes associated with the Movie 
  */
 	public ShowTime displayShowTimes(String cineplexcode){
-		List<ShowTime> showtimesincineplexchoice = new ArrayList <ShowTime>();
+		List<ShowTime> showtimesincineplexchoice = new ArrayList <ShowTime>(); //this is a list of showtimes that are screened in the cineplex of the user's choice
 		List<String> sortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
 		
 		if (movieShowTime.isEmpty()){

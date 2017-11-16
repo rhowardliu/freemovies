@@ -60,6 +60,9 @@ public class ShowTime implements Serializable {
 		this.daytype = Timetable.getTimetableByDate(date).getDayType();
 	}
 
+	public String getMovieID() {
+		return this.getMovieID();
+	}
 	public Integer getShowTimeStartTime() {
 		return this.starttime;
 	}

@@ -415,7 +415,7 @@ public class Admin extends Account {
 			System.out.println("Timetable not found");
 		}
 		}while(tt==null);
-		
+		System.out.println("Schedule on " +date);
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;
 		String movieid=null;
@@ -442,13 +442,15 @@ public class Admin extends Account {
 		
 				available = tt.addShowTimeToSchedule(moviechoice, starttime);
 				if (available == true)
-					moviechoice.addShowTimeToMovie(st_to_add);
+					moviechoice.addShowTimeToMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
+							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 			}
 			else if (i == 2) { //if admin wanted to remove showtime
 				
 				available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
 				if (available==true)
-					moviechoice.removeShowTimeFromMovie(st_to_add);
+					moviechoice.removeShowTimeFromMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
+							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 			} 
 		}while (available == false);
 	}
