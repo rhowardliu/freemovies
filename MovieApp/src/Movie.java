@@ -238,7 +238,7 @@ public class Movie implements Serializable {
  * Prints out the ShowTimes associated with the Movie 
  */
 	public ShowTime displayShowTimes(String cineplexcode){
-		List<ShowTime> showtimesincineplexchoice = new ArrayList <ShowTime>();
+		List<ShowTime> showtimesincineplexchoice = new ArrayList <ShowTime>(); //this is a list of showtimes that are screened in the cineplex of the user's choice
 		List<String> sortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
 		
 		if (movieShowTime.isEmpty()){
