@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 
 public class StaticBoundary {
 	private static File priceFile = new File ("PriceSetting.csv");
+	private static File holidayDates = new File ("HolidayDates.csv");
 	
 	public static void initialisePrices() throws FileNotFoundException {	
 		try {
@@ -32,6 +34,45 @@ public class StaticBoundary {
 			System.err.println("Error: " + e.getMessage());
 		}
 	}
+	
+	public static void initialiseHoliday() throws IOException {
+		BufferedReader readPrice = new BufferedReader(new FileReader(holidayDates));
+		
+		try {
+	
+			String[] s = readPrice.readLine().split(",");
+			for (String x : s) {
+				 PriceSetting.addPublicHol(x);
+			}
+			} catch(NullPointerException e) {				
+			}catch (IOException e) {
+				System.err.println("Error: " + e.getMessage());
+			}finally {
+				if (readPrice!=null)
+					readPrice.close();
+			}
+	}
+	
+	public static void updateHoliday() throws IOException {
+		List<String> holidayList = PriceSetting.getPublicHol();
+		if (holidayList == null) {
+			System.out.println("No Holidays :(");
+			return;
+		}
+		BufferedWriter writePrice = new BufferedWriter(new FileWriter(holidayDates));
+		String saveString=new String();
+		try {
+			
+			for (String x : holidayList)
+				saveString=saveString.concat(x + ",");
+				writePrice.write(saveString.substring(0,saveString.length()-1));
+
+		}catch(IOException e) {
+			System.err.println("Error: " + e.getMessage());
+		}
+		writePrice.close();
+	}
+
 	
 	public static void updatePrices() throws IOException {
 		BufferedWriter writePrice = new BufferedWriter(new FileWriter(priceFile));

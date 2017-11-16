@@ -28,7 +28,6 @@ public class ShowTime implements Serializable {
 	private String movieID;
 	private CinemaTypeEnum cinematype;
 	private String date;
-	private DayTypeEnum daytype;
 	private int starttime;
 	Ticket[][] tickets = new Ticket[40][40];
 
@@ -44,7 +43,6 @@ public class ShowTime implements Serializable {
 		this.cinemacode = cinemacode;
 		this.cinematype = cinematype;
 		this.date = date;
-		this.daytype = null;
 		this.starttime = starttime;
 		this.cinemarows = cinemarows;
 		this.cinemacols = cinemacols;
@@ -59,11 +57,11 @@ public class ShowTime implements Serializable {
 	}
 	
 	
-	public void updateShowTime() throws Exception {
+	public DayTypeEnum getDayType() throws Exception {
 		if(PriceSetting.getPublicHol().contains(date))
-			daytype=DayTypeEnum.PH;
+			return DayTypeEnum.PH;
 		else
-			daytype = DayTypeEnum.Weekday;
+			return DayTypeEnum.Weekday;
 	}
 
 	public String getMovieID() {
@@ -195,13 +193,8 @@ public class ShowTime implements Serializable {
 				System.out.println("Movie ID not found");
 				return null;
 			}			
-//			try {
-//				this.daytype=Timetable.getTimetableByDate(date).getDayType();
-//			} catch (Exception e) {
-//				System.out.println("Timetable not found");
-//				return null;
-//			}
-			tickets[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, daytype,cinematype));
+
+			tickets[row][col].setPrice(PriceSetting.calPrice(movie.getMovieType(), ticketage, this.getDayType(),cinematype));
 			//write buy more tickets?
 			//display info first then
 			//write confirm payment?

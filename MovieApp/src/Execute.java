@@ -15,6 +15,7 @@ public class Execute {
 		System.out.println("MOBLIMA is fetching its databases...");
 		GoldenVillage.getInstance();
 		StaticBoundary.initialisePrices();
+		StaticBoundary.initialiseHoliday();
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
 		ShowTime.initialiseDatabase();
@@ -80,6 +81,7 @@ public class Execute {
 		Ticket.updateDatabase();
 		GoldenVillage.updateDatabase();
 		StaticBoundary.updatePrices();
+		StaticBoundary.updateHoliday();
 		System.out.println("Changes saved!");
 	}
 	

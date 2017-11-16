@@ -499,8 +499,9 @@ public class Admin extends Account {
 		if (!PriceSetting.getPublicHol().contains(date)) {
 			PriceSetting.addPublicHol(date);	
 			List<Timetable> tt =Timetable.getTimetableByDate(date);
-			for (Timetable x: tt)
+			for (Timetable x: tt) {
 				x.setPublicHoliday(true);
+			}
 			System.out.println(date +" set as Public Holiday");
 			return;
 		}
