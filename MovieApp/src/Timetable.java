@@ -98,6 +98,7 @@ public class Timetable implements Serializable{
 		
 		else if (schedule[starttime].equals(inProgress)){
 			System.out.println("Please choose the movie start time");
+			return false;
 		}
 
 		else if (schedule[starttime].equals(movie.getTitle())) {
@@ -107,9 +108,10 @@ public class Timetable implements Serializable{
 			return true;
 		}
 
-		else
+		else {
 			System.out.println("Please choose the correct movie");
-		return false;
+			return false;
+		}
 	}
 
 	public void displaySchedule() {
