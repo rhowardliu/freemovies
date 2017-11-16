@@ -363,7 +363,7 @@ public class Admin extends Account {
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		//need to double check this line below
-		Cineplex [] cineplexes = GoldenVillage.getCineplexes();
+		Cineplex [] cineplexes = GoldenVillage.getInstance().getCineplexes();
 		System.out.println("Cineplexes: ");
 		for (int j = 0; j < cineplexes.length; j++)
 			System.out.println("(" + (j+1) + ") " + cineplexes[j].getCineplexName());

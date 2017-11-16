@@ -13,13 +13,14 @@ public class Execute {
 	public static void main(String[] args) throws Exception {
 		//Initialising MOBLIMA's database
 		System.out.println("MOBLIMA is fetching its databases...");
+		Timetable.initialiseDatabase();
+		GoldenVillage.getInstance();
 		StaticBoundary.initialisePrices();
 		MovieGoer.initialiseDatabase();
 		MovieReviews.initialiseDatabase();
 		ShowTime.initialiseDatabase();
 		Movie.initialiseDatabase();
 		Ticket.initialiseDatabase();
-		GoldenVillage.getInstance();
 		System.out.println("MOBLIMA initialised!\n\n");
 		//MOBLIMA's database initialise
 		
@@ -77,6 +78,7 @@ public class Execute {
 //		new ShowTime("Avatar", "A1234", "GV-Jurong", "J", "01", "a", 2, 5, 6, CinemaTypeEnum._platinum);
 //		Account user = login();	
 //		new Movie("A1234", "Avatar", 2,StatusEnum.NowShowing, MovieTypeEnum._3D, "Stephen Spielburg", new ArrayList(Arrays.asList("Peter")), "Humans invade Aliens");
+
 		
 		Account user = null; //initialising user as null to allow user to log in again if he keys in the wrong username or password
 		do {
@@ -101,8 +103,9 @@ public class Execute {
 		Movie.updateDatabase();
 		ShowTime.updateDatabase();
 		Ticket.updateDatabase();
-		Timetable.updateDatabase();
+		GoldenVillage.updateDatabase();
 		StaticBoundary.updatePrices();
+		Timetable.updateDatabase();
 		System.out.println("Changes saved!");
 	}
 	

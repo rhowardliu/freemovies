@@ -61,7 +61,8 @@ public class Movie implements Serializable {
 			if (x.getmovieID().equals(movieID))
 				reviews.add(x);
 		}
-			for (ShowTime x : ShowTime.showtimelist) {
+		//adding all the relevant showtimes into showtime array
+		for (ShowTime x : ShowTime.showtimelist) {
 				if (x.getMovieID().equals(movieID))
 					movieShowTime.add(x);
 		}
@@ -233,6 +234,7 @@ public class Movie implements Serializable {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
+		
 		movieShowTime.add(st);
 	}
 	
@@ -336,13 +338,14 @@ public class Movie implements Serializable {
 		  					dailyshowtime.add(x);
 	  			}
 	  			Collections.sort(dailyshowtime,ShowTime.getTimeComparator());
+	  			System.out.println("");
 	  			System.out.println(date);
 	  			System.out.println("----------");
 	  			int i=1;
 	  			for(ShowTime x: dailyshowtime) {
 	  				int start_time = x.getShowTimeStartTime();
 	  				int end_time = start_time + this.getDuration();
-	  				System.out.printf("%d. %02d:00 - %02d:00",i, start_time, end_time);
+	  				System.out.printf("%d. %02d:00 - %02d:00\n",i, start_time, end_time);
 	  				i++;
 	  			}
 	  			return dailyshowtime;

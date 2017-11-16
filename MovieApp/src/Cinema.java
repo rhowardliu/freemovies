@@ -1,4 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 enum CinemaTypeEnum {
 	_standard, _platinum
@@ -9,12 +15,15 @@ enum CinemaTypeEnum {
  * @author user
  *
  */
-public class Cinema {
+public class Cinema implements Serializable {
+	private static final long serialVersionUID = -4163671305903195219L;
 	private Timetable [] calendar; // timetable is the schedule for the day
 	private CinemaTypeEnum cinematype;
 	private String cinemacode;
 	private int numberofrows;
 	private int numberofcols;
+	public static List<Cinema> cinemalist = new ArrayList<Cinema>();
+	public static final File cinemaDatabase = new File ("Cinema.tmp");
 	
 	/**
 	 * Constructor for Cinema class
@@ -64,6 +73,16 @@ public class Cinema {
 	
 	public Timetable[] getCalendar(){
 		return this.calendar;
+	}
+	
+	public static void initialiseDatabase() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectReader or = new ObjectReader(cinemaDatabase);
+		cinemalist = or.initialiseDataList(cinemalist);
+	}
+	
+	public static void updateDatabase() throws FileNotFoundException, IOException {
+		ObjectWriter ow = new ObjectWriter(cinemaDatabase);
+		ow.updateDataList(cinemalist);
 	}
 
 }
