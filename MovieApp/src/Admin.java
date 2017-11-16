@@ -43,7 +43,7 @@ public class Admin extends Account {
 		System.out.println("===== Logged in as admin =====");
 		do {
 		System.out.println("Select option:");
-		System.out.println("(1) Add/Update/Remove movies from movie listing");
+		System.out.println("(1) Add/Update movies from movie listing");
 		System.out.println("(2) Add/Remove cinema showtimes");
 		System.out.println("(3) Configure system settings");
 		System.out.println("(4) Log out");
@@ -198,10 +198,11 @@ public class Admin extends Account {
 			System.out.println("(9) Quit ");
 			System.out.println("Enter Selection: ");
 			int detailChoice = sc.nextInt();
+			sc.nextLine();
 			switch(detailChoice) {
 			case 1:
 				System.out.println("Enter New Movie Title:");
-				String newMovieTitle = sc.next();
+				String newMovieTitle = sc.nextLine();
 				selectedmovie.setMovieTitle(newMovieTitle);
 				System.out.println("Movie Title has been updated");
 				break;
@@ -215,7 +216,7 @@ public class Admin extends Account {
 				break;
 			case 4:
 				System.out.println("Enter New Movie Director:");
-				String newMovieDirector = sc.next();
+				String newMovieDirector = sc.nextLine();
 				selectedmovie.setMovieDirector(newMovieDirector);
 				System.out.println("Movie Director has been updated");
 				break;
@@ -235,10 +236,19 @@ public class Admin extends Account {
 					
 				case 2:
 					System.out.println("Enter Cast Names:");
+					sc.nextLine();
 					ArrayList<String> moviecastlist = new ArrayList<String>();
-					while(sc.hasNextLine()){
-						moviecastlist.add(sc.next());
-				      }
+					try {
+						while(true){
+							String s = sc.nextLine();
+							if (s.equalsIgnoreCase("done"))
+								break;
+							else
+								moviecastlist.add(s);
+					      }
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
 					selectedmovie.setMovieCast(moviecastlist);
 					break;
 				}
@@ -281,6 +291,7 @@ public class Admin extends Account {
 			System.out.println("(1) Delete Cast");
 			System.out.println("(2) Re-enter Cast Name");
 			int choice = sc.nextInt();
+			sc.nextLine();
 			switch (choice) {
 			case 1:
 				selectedmovie.getCast().remove(index-1);
@@ -386,7 +397,6 @@ public class Admin extends Account {
 		
 		if (cinemachoice == 1)
 			cinematype=CinemaTypeEnum._platinum;
-		
 		Timetable tt = null;
 		String date;
 		do {
@@ -418,25 +428,29 @@ public class Admin extends Account {
 				System.out.println("Movie not found");
 			}
 		} while(moviechoice == null);
-	
-		System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
-		System.out.println("Select timeslot:");
-		int starttime = sc.nextInt();
-		ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
-				tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
-		boolean available;
-		if (i == 1){ //if admin wanted to add showtime		
-	
-			available = tt.addShowTimeToSchedule(moviechoice, starttime);
-			if (available == true)
-				moviechoice.addShowTimeToMovie(st_to_add);
-		}
-		else if (i == 2) { //if admin wanted to remove showtime
-
-			available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
-			if (available==true)
-			moviechoice.removeShowTimeFromMovie(st_to_add);
-		}
+		
+		boolean available = false;
+		do {
+			System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
+			
+			System.out.println("Select timeslot:");
+			int starttime = sc.nextInt();
+			ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
+					tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+			
+			if (i == 1){ //if admin wanted to add showtime		
+		
+				available = tt.addShowTimeToSchedule(moviechoice, starttime);
+				if (available == true)
+					moviechoice.addShowTimeToMovie(st_to_add);
+			}
+			else if (i == 2) { //if admin wanted to remove showtime
+				
+				available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
+				if (available==true)
+					moviechoice.removeShowTimeFromMovie(st_to_add);
+			} 
+		}while (available == false);
 	}
 	
 	public void adminSystemControl() throws Exception{
@@ -604,8 +618,10 @@ public class Admin extends Account {
 				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
 				break;
 			case 9:
-				quit = true;
-				break;
+				{quit = true;
+				System.out.println("Returning to system settings menu...");
+				break;}
+			default: { System.out.println("Invalid choice! Going to system settings menu..."); break; }
 			}
 		}
 	}

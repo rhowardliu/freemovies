@@ -30,7 +30,7 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
-	private Ticket [][] tickets;
+	private Ticket [][] tickets = new Ticket[99][99];
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
@@ -47,9 +47,10 @@ public class ShowTime implements Serializable {
 		this.starttime = starttime;
 		this.cinemarows = cinemarows;
 		this.cinemacols = cinemacols;
+
 		for (int i=0; i<cinemarows; i++) {
 			for (int j=0; j<cinemacols; j++) 
-				tickets [i][j] = new Ticket(movietitle,movieID,date,i,j); 
+				tickets[i][j] = new Ticket(movietitle,movieID,date,(i+1),(j+1));
 		}
 		
 		showtimelist.add(this);
