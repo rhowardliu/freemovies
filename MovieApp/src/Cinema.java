@@ -22,12 +22,9 @@ public class Cinema implements Serializable {
 	private String cinemacode;
 	private int numberofrows;
 	private int numberofcols;
-<<<<<<< HEAD
-
-=======
 	public static List<Cinema> cinemalist = new ArrayList<Cinema>();
 	public static final File cinemaDatabase = new File ("Cinema.tmp");
->>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
+
 	
 	/**
 	 * Constructor for Cinema class
