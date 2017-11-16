@@ -72,15 +72,14 @@ public class Timetable implements Serializable{
 		}
 	
 
-	public boolean addShowTimeToSchedule (Movie movie, int starttime) {
-		
+	public boolean addShowTimeToSchedule (Movie movie, int starttime) {	
 		//Checking if the requested time slot is taken by other movies	
 		for (int i=starttime;i<starttime+movie.getDuration();i++) { 
 			if (!schedule[i].equals( showEmpty) ) {
 				System.out.println("Timing clash, please enter a different timing");
 				return false;
 			}
-		}
+		} //terminates here if there is a clash of timetable and returns false
 		
 		schedule[starttime] = movie.getTitle();
 		for (int i = starttime+1; i < starttime+movie.getDuration(); i++) 

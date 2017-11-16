@@ -26,7 +26,7 @@ public class Execute {
 		
 		System.out.println("===== Welcome to MOBLIMA =====");
 		
-//		//MOVIEGOERS AKA US
+		//MOVIEGOERS AKA US
 //		MovieGoer ellen = new MovieGoer("miintfrappe","miintfrappe","ellen","999","aa@aa.com");
 //		MovieGoer gerald = new MovieGoer("gerald", "gerald", "gerald", "998", "bb@bb.com");
 //		MovieGoer howard = new MovieGoer("howard", "howard", "howard", "997", "cc@bb.com");
@@ -50,8 +50,8 @@ public class Execute {
 //		Movie Annabelle = new Movie("A1240", "Annabelle", 2,StatusEnum.Preview, MovieTypeEnum._3D, "Justin", new ArrayList(Arrays.asList("what", "up")), "Chucky revived");
 //		Movie Mylittlepony = new Movie("A1246", "My Little Pony", 2,StatusEnum.Preview, MovieTypeEnum.BB, "Glitter", new ArrayList(Arrays.asList("Ruby", "Sapphire", "DIamond", "Torpez")), "Rainbows");
 //		Movie Junkenstein = new Movie("A1241", "Junkenstein", 3,StatusEnum.Preview, MovieTypeEnum.BB, "Peh", new ArrayList(Arrays.asList("justin", "is", "a", "legend")), "My servants never die");
-////		
-		
+//		
+//		
 		
 //		Now Showing
 //		Movie ahBoystoMen = new Movie("A1243", "Ah Boys to Men", 1,StatusEnum.NowShowing, MovieTypeEnum.BB, "Dong", new ArrayList(Arrays.asList("whew", "shag")), "BMT");
@@ -121,11 +121,13 @@ public class Execute {
 
 		if (user.getUserID().equals("admin")){ //if logged in as admin, control is passed to adminMainControl
 			Admin admin = (Admin) user;
+			System.out.println("Logging in...\n");
 			admin.adminMainControl();
 		}
 		
 		else { //if logged in as a moviegoer, control is passed to movieGoerMainControl
 			MovieGoer moviegoer = (MovieGoer) user;
+			System.out.println("Logging in...\n");
 			moviegoer.movieGoerMainControl();
 		}
 		
