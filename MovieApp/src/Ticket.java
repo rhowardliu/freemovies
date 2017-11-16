@@ -31,7 +31,6 @@ public class Ticket implements Serializable {
 	private int seatcol;
 	private String transactionID;
 	private AgeCatEnum agecat;
-	private DayTypeEnum dayType;
 	private boolean isBooked;
 	private double price;
 	public static List<Ticket> ticketlist = new ArrayList<Ticket>();
