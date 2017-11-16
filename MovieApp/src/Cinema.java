@@ -10,7 +10,8 @@ enum CinemaTypeEnum {
  *
  */
 public class Cinema {
-	private Timetable [] calendar; // timetable is the schedule for the day
+	private Timetable [] calendar; //every cinema has an array of Timetables
+	//every Timetable object has a Calendar date attribute
 	private CinemaTypeEnum cinematype;
 	private String cinemacode;
 	private int numberofrows;
@@ -23,6 +24,7 @@ public class Cinema {
 	 * @param rows
 	 * @param cols
 	 */
+	
 	public Cinema(CinemaTypeEnum  cinematypeenum, String cinemacode, int rows, int cols){
 		this.cinematype = cinematypeenum;
 		this.cinemacode = cinemacode;

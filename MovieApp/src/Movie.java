@@ -323,7 +323,79 @@ public class Movie implements Serializable {
 	}
 		return null;		
 }
+	
+	public void displayShowTimesForAdmin(){
+		List<ShowTime> jurongshowtimes = new ArrayList <ShowTime>(); //this is a list of showtimes that are screened in the cineplex of the user's choice
+		List<String> jurongsortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
+		List<ShowTime> orchardshowtimes = new ArrayList <ShowTime>(); //this is a list of showtimes that are screened in the cineplex of the user's choice
+		List<String> orchardsortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
+		List<ShowTime> bugisshowtimes = new ArrayList <ShowTime>(); //this is a list of showtimes that are screened in the cineplex of the user's choice
+		List<String> bugissortedshowtimes = new ArrayList<String>(); //this is a list of all the dates available
+		if (movieShowTime.isEmpty()){
+			System.out.println("No Showtime available for all cineplexes.\n");
+		}
 		
+		//sorting each movie's showtime into cineplexes
+		for (ShowTime x : movieShowTime) {
+			if (x.getCineplexcode().equals("J"))
+				jurongshowtimes.add(x); 
+			if (x.getCinemacode().equals("O"))
+				orchardshowtimes.add(x);
+			if (x.getCinemacode().equals("B"))
+				bugisshowtimes.add(x);
+		} 
+		
+		System.out.println(" ===== Showtimes at GV-Jurong =====");	
+		if(jurongshowtimes.isEmpty()) 
+			System.out.println("Cineplex selected is not playing " + this.getTitle() + ".\n");
+		else {
+			//Sorting the showtimes in chronologically order
+			Collections.sort(jurongshowtimes,ShowTime.getDateComparator());
+			for (ShowTime x: jurongshowtimes) 
+				jurongsortedshowtimes.add(x.getShowTimeDate()); 
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(jurongsortedshowtimes);
+			jurongsortedshowtimes.clear();
+			jurongsortedshowtimes.addAll(s);
+
+	  		for(String theDate : jurongsortedshowtimes) 
+	  			displayDailyShowTime(theDate, jurongshowtimes);
+		}
+		
+		System.out.println(" ===== Showtimes at GV-Orchard =====");	
+		if(orchardshowtimes.isEmpty()) 
+			System.out.println("Cineplex selected is not playing " + this.getTitle() + ".\n");
+		else {
+			//Sorting the showtimes in chronologically order
+			Collections.sort(orchardshowtimes,ShowTime.getDateComparator());
+			for (ShowTime x: orchardshowtimes) 
+				orchardsortedshowtimes.add(x.getShowTimeDate()); 
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(jurongsortedshowtimes);
+			orchardsortedshowtimes.clear();
+			orchardsortedshowtimes.addAll(s);
+
+	  		for(String theDate : orchardsortedshowtimes) 
+	  			displayDailyShowTime(theDate, orchardshowtimes);
+		}
+		
+		System.out.println(" ===== Showtimes at GV-Bugis =====");	
+		if(orchardshowtimes.isEmpty()) 
+			System.out.println("Cineplex selected is not playing " + this.getTitle() + ".\n");
+		else {
+			//Sorting the showtimes in chronologically order
+			Collections.sort(bugisshowtimes,ShowTime.getDateComparator());
+			for (ShowTime x: bugisshowtimes) 
+				bugissortedshowtimes.add(x.getShowTimeDate()); 
+			//the next 3 steps remove the duplicates within temp_date
+			Set<String> s = new LinkedHashSet<String>(jurongsortedshowtimes);
+			bugissortedshowtimes.clear();
+			bugissortedshowtimes.addAll(s);
+
+	  		for(String theDate : bugissortedshowtimes) 
+	  			displayDailyShowTime(theDate, bugisshowtimes);
+		}
+}
 		
 	
 

@@ -343,14 +343,20 @@ public class Admin extends Account {
 			System.out.println(" ===== Add/Update/Remove Showtimes =====");
 			System.out.println("(1) Add showtime");
 			System.out.println("(2) Remove showtime");
-			System.out.println("(3) Return to admin main menu");
+			System.out.println("(3) View all showtimes");
+			System.out.println("(4) Return to admin main menu");
 			System.out.print("Select option: ");
 			Scanner sc = new Scanner(System.in);
 			int choice = sc.nextInt();
 			switch(choice){
 				case 1: this.updateShowTime(1); break;
 				case 2: this.updateShowTime(2); break;
-				case 3: { System.out.println("Returning to admin main menu..."); return; }
+				case 3: {
+					for (Movie x : Movie.movielist)
+						x.displayShowTimesForAdmin();
+					break;
+				}
+				case 4: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Going to admin main menu..."); return; }
 			}
 		} while(true);
@@ -362,55 +368,60 @@ public class Admin extends Account {
 	 * @param i
 	 */
 	@SuppressWarnings("null")
-	public void updateShowTime(int i) throws Exception{
+	public void updateShowTime(int i) throws Exception{ //start of updateShowTime method
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		Scanner sc = new Scanner(System.in);
+		
 		if (i == 1)
 			System.out.println(" ===== Add Showtime =====");
 		else if (i == 2)
 			System.out.println(" ===== Remove Showtime =====");
-		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		//need to double check this line below
+		
 		Cineplex [] cineplexes = GoldenVillage.getCineplexes();
 		System.out.println("Cineplexes: ");
-		for (int j = 0; j < cineplexes.length; j++)
+		for (int j = 0; j < cineplexes.length; j++) //lists out all the cineplexes
 			System.out.println("(" + (j+1) + ") " + cineplexes[j].getCineplexName());
 		System.out.print("Select cineplex: "); int cineplexchoice = sc.nextInt();
-		String cineplexname = cineplexes[cineplexchoice - 1].getCineplexName();
-		String cineplexcode = cineplexes[cineplexchoice - 1].getCineplexCode();
-		Cinema [] tempcinemaarray = cineplexes[cineplexchoice - 1].getCinemas();
+		Cineplex chosencineplex = cineplexes[cineplexchoice - 1]; 
+		String cineplexname = chosencineplex.getCineplexName();
+		String cineplexcode = chosencineplex.getCineplexCode();
+		
+		Cinema [] tempcinemaarray = chosencineplex.getCinemas();
 		System.out.println("Cinemas: ");
 		for (int j = 0; j < tempcinemaarray.length ; j++)
 			System.out.println("(" + (j+1) + ")" + tempcinemaarray[j].getCinemaCode());
 		System.out.print("Select cinema: "); int cinemachoice = sc.nextInt();
-		CinemaTypeEnum cinematype = CinemaTypeEnum._standard;
-		String cinemacode = tempcinemaarray[cinemachoice - 1].getCinemaCode();
-		Timetable [] tempcalendararray = tempcinemaarray[cinemachoice - 1].getCalendar();
+		Cinema chosencinema = tempcinemaarray[cinemachoice - 1];
+		String cinemacode = chosencinema.getCinemaCode();
+		Timetable [] chosencalendar = chosencinema.getCalendar();
 		
-		if (cinemachoice == 1)
-			cinematype=CinemaTypeEnum._platinum;
-		
-		Timetable tt = null;
-		String date;
-		do {
+		Timetable chosentimetable = null;
+
 		System.out.println("Select date:");
-		System.out.print("Enter day (XX) :");
-		int day = sc.nextInt();
-		System.out.print("Enter month (XX) :");
-		int month = sc.nextInt();
-		System.out.print("Enter year (XXXX) :");
-		int year = sc.nextInt();
-		date = String.format("%02d-%02d-%d",day,month,year);
-		
-		try {
-			tt = Timetable.getTimetableByDate(date);
-		}catch(Exception e) {
-			System.out.println("Timetable not found");
+		System.out.print("Enter day (XX) :"); int day = sc.nextInt();
+		System.out.print("Enter month (XX) :"); int month = sc.nextInt();
+		System.out.print("Enter year (XXXX) :"); int year = sc.nextInt();
+		String date = String.format("%02d-%02d-%d",day,month,year);
+		for (Timetable x : chosencalendar){
+			if (x.getDateString() == date)
+				chosentimetable = x;
 		}
-		}while(tt==null);
-		System.out.println("Schedule on " +date);
-		tt.displaySchedule(); //displays schedule for a particular day
-		Movie moviechoice = null;
-		String movieid=null;
+		if (chosentimetable == null) {
+			System.out.println("Timetable not found");
+			System.out.println("Returning to main menu...");
+			return;
+		}
+		
+//		try {
+//			tt = Timetable.getTimetableByDate(date);
+//		}catch(Exception e) {
+//			System.out.println("Timetable not found");
+//		}
+//		}while(tt==null);
+		
+		System.out.println("Schedule on " + date + ":");
+		chosentimetable.displaySchedule(); //displays schedule for a particular day
+		Movie moviechoice = null; String movieid = null;
 		do {
 			System.out.println("Enter movieID: ");
 			movieid = sc.next();
@@ -425,24 +436,29 @@ public class Admin extends Account {
 		boolean available = false;
 		do {
 			System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
-			System.out.print("Select start hour (24-hour format): ");
-			int starttime = sc.nextInt();
-			ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
-					tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+			System.out.print("Select start hour (24-hour format): "); int starttime = sc.nextInt();
+			//create a ShowTime object so that it will be added to the database
+			ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, chosencinema.getNumberOfRows(), chosencinema.getNumberOfCols(),chosencinema.getCinemaType());
 			
 			if (i == 1){ //if admin wanted to add showtime		
-				available = tt.addShowTimeToSchedule(moviechoice, starttime);
-				if (available == true)
-					moviechoice.addShowTimeToMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
-							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
-			}
-			else if (i == 2) { //if admin wanted to remove showtime	
-				available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
-				if (available==true)
-					moviechoice.removeShowTimeFromMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
-							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+				available = chosentimetable.addShowTimeToSchedule(moviechoice, starttime);
+				if (available == true) //if there is no clash on the chosentimetable
+					moviechoice.addShowTimeToMovie(cineplexname, cineplexcode, cinemacode, date, starttime, chosencinema.getNumberOfRows(), chosencinema.getNumberOfCols(), chosencinema.getCinemaType());
 				else {
-					System.out.println("Returning to Add/Update/Remove Showtimes menu..."); return;
+					System.out.println("Showtime was not added due to clash in schedule!");
+					System.out.println("Returning back... to somewhere");
+					return;
+				}
+			}
+			
+			else if (i == 2) { //if admin wanted to remove showtime	
+				available = chosentimetable.removeShowTimeFromSchedule(moviechoice, starttime);
+				if (available==true) //if there is no clash on the chosentimetable
+					moviechoice.removeShowTimeFromMovie(cineplexname, cineplexcode, cinemacode, date, starttime, chosencinema.getNumberOfRows(), chosencinema.getNumberOfCols(),chosencinema.getCinemaType());
+				else {
+					System.out.println("Showtime was not added due to clash in schedule!");
+					System.out.println("Returning back... to somewhere");
+					return;
 				}
 			} 
 		} while (available == false);
