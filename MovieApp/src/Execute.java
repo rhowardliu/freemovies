@@ -13,7 +13,6 @@ public class Execute {
 	public static void main(String[] args) throws Exception {
 		//Initialising MOBLIMA's database
 		System.out.println("MOBLIMA is fetching its databases...");
-		Timetable.initialiseDatabase();
 		GoldenVillage.getInstance();
 		StaticBoundary.initialisePrices();
 		MovieGoer.initialiseDatabase();
@@ -116,7 +115,6 @@ public class Execute {
 		Ticket.updateDatabase();
 		GoldenVillage.updateDatabase();
 		StaticBoundary.updatePrices();
-		Timetable.updateDatabase();
 		System.out.println("Changes saved!");
 	}
 	
