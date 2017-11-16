@@ -16,6 +16,7 @@ public class Timetable implements Serializable{
 	
 	private static final long serialVersionUID = -31706793024846802L;
 	private static final String showEmpty = "-";
+	private static final String inProgress = "Movie In Progress";
 	private DayTypeEnum daytype;
 	private Calendar date;
 	private String date_string;
@@ -83,7 +84,7 @@ public class Timetable implements Serializable{
 		
 		schedule[starttime] = movie.getTitle();
 		for (int i = starttime+1; i < starttime+movie.getDuration(); i++) 
-			schedule[i] = "Movie in progress";
+			schedule[i] = inProgress;
 		System.out.println("Show time has been successfully added");
 		return true;
 	}
@@ -92,7 +93,12 @@ public class Timetable implements Serializable{
 	public boolean removeShowTimeFromSchedule (Movie movie, int starttime) {
 		if (schedule[starttime].equals(showEmpty)) {
 			System.out.println("Slot is already empty!");
+			return false;
+		}
 		
+		else if (schedule[starttime].equals(inProgress)){
+			System.out.println("Please choose the movie start time");
+			return false;
 		}
 
 		else if (schedule[starttime].equals(movie.getTitle())) {
@@ -101,13 +107,11 @@ public class Timetable implements Serializable{
 			System.out.println("Show time has been successfully removed");
 			return true;
 		}
-		else if (schedule[starttime].equals("Movie in progress")){
-			System.out.println("Please choose the movie start time");
-		
-		}
-		else
+
+		else {
 			System.out.println("Please choose the correct movie");
-		return false;
+			return false;
+		}
 	}
 
 	public void displaySchedule() {

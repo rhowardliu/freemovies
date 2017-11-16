@@ -30,7 +30,11 @@ public class ShowTime implements Serializable {
 	private String date;
 	private DayTypeEnum daytype;
 	private int starttime;
+<<<<<<< HEAD
 	private Ticket [][] tickets;
+=======
+	private Ticket [][] tickets = new Ticket[40][40];
+>>>>>>> branch 'master' of https://github.com/rhowardliu/freemovies.git
 	public static List<ShowTime> showtimelist = new ArrayList<ShowTime>();
 	public static final File showtimeDatabase = new File ("ShowTime.tmp");
 	
@@ -64,6 +68,9 @@ public class ShowTime implements Serializable {
 		this.daytype = Timetable.getTimetableByDate(date).getDayType();
 	}
 
+	public String getMovieID() {
+		return this.movieID;
+	}
 	public Integer getShowTimeStartTime() {
 		return this.starttime;
 	}

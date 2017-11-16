@@ -32,7 +32,7 @@ public class Admin extends Account {
 	
 	/**
 	 * Admin main control method that serves as the admin's main menu. It allows admin to select between
-	 * (1) Add/Update/Remove movies from movie listing
+	 * (1) Add/Update movies from movie listing
 	 * (2) Add/Remove cinema showtimes
 	 * (3) Configure system settings (add holiday dates, change pricing policy)
 	 * (4) Log out (i.e. returns control back to Execute class)
@@ -40,23 +40,23 @@ public class Admin extends Account {
 	 * @throws Exception
 	 */
 	public void adminMainControl() throws Exception{
-		System.out.println("===== Logged in as admin =====");
 		do {
-		System.out.println("Select option:");
-		System.out.println("(1) Add/Update movies from movie listing");
-		System.out.println("(2) Add/Remove cinema showtimes");
-		System.out.println("(3) Configure system settings");
-		System.out.println("(4) Log out");
-		//need ask howard help initialise and populate database of goldenvillage
-		Scanner sc = new Scanner(System.in);
-		int adminmainmenuchoice = sc.nextInt();
+			System.out.println("===== Admin Main Menu =====");
+			System.out.println("(1) Add/Update movies from movie listing");
+			System.out.println("(2) Add/Remove cinema showtimes");
+			System.out.println("(3) Configure system settings");
+			System.out.println("(4) Log out");
+			System.out.print("Select option:");
+			//need ask howard help initialise and populate database of goldenvillage
+			Scanner sc = new Scanner(System.in);
+			int adminmainmenuchoice = sc.nextInt();
 		
 			switch (adminmainmenuchoice){
-			case 1: this.adminMovieControl(); break;
-			case 2: this.adminShowTimeControl(); break;
-			case 3: this.adminSystemControl(); break;
-			case 4: System.out.println("Logging out..."); return;
-			default: System.out.println("Invalid choice! Logging out..."); return; 
+				case 1: this.adminMovieControl(); break;
+				case 2: this.adminShowTimeControl(); break;
+				case 3: this.adminSystemControl(); break;
+				case 4: System.out.println("Logging out..."); return;
+				default: System.out.println("Invalid choice! Logging out..."); return; 
 			}
 		} while (true);
 	}
@@ -78,7 +78,7 @@ public class Admin extends Account {
 			Scanner sc = new Scanner (System.in);
 			int choice = sc.nextInt();
 			switch (choice){
-				case 1: this.addMovie(); break;
+				case 1: this.addMovie(); return;
 				case 2: this.updateMovieDetails(); break; //ellen need fill up this method with the code
 				case 3: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu..."); return; }
@@ -93,32 +93,20 @@ public class Admin extends Account {
 	public void addMovie(){
 		System.out.println(" ===== Add movie =====");
 		Scanner sc = new Scanner (System.in);
-		//need auto generate ID
 		//need ask howard to check which class and which method to call to add new movie object to?
 		System.out.print("Movie ID: "); String movieid = sc.nextLine();
 		System.out.print("Movie title: "); String movietitle = sc.nextLine();
-		System.out.print("Movie type: "); MovieTypeEnum movietype = this.getInputMovieType();
-		System.out.print("Movie duration: "); int movieduration = sc.nextInt();sc.nextLine();
+		System.out.print("Movie type: \n"); MovieTypeEnum movietype = this.getInputMovieType();
+		System.out.print("Movie duration (in hours): "); int movieduration = sc.nextInt();sc.nextLine();
 		System.out.println("Movie status:");
 		StatusEnum moviestatus = this.getInputStatus();       
         System.out.print("Directed by: "); String moviedirector = sc.nextLine();
-		System.out.println("Enter Cast Names (done to end): ");
-		ArrayList<String> moviecastlist = new ArrayList<String>();
-		try {
-			while(true){
-				String s = sc.nextLine();
-				if (s.equalsIgnoreCase("done"))
-					break;
-				else
-					moviecastlist.add(s);
-		      }
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		ArrayList<String> moviecastlist = this.createMovieCastList();
         System.out.println("Synopsis: "); String moviesynopsis = sc.nextLine();
         Movie movietoadd = new Movie (movieid, movietitle, movieduration, moviestatus, movietype, moviedirector, moviecastlist, moviesynopsis); 
         System.out.println("Movie added!");
-	
+        System.out.println("Returning to main menu...\n");
+        return;
 	}
 	
 	/**
@@ -148,11 +136,10 @@ public class Admin extends Account {
 	 */
 	
 	public MovieTypeEnum getInputMovieType() {
-		System.out.println("\n");
 		System.out.println("(1) 3D");
 		System.out.println("(2) Blockbuster");
 		System.out.println("(3) Digital");
-		System.out.println("Enter movie type: ");
+		System.out.print("Enter movie type: ");
 		Scanner sc = new Scanner(System.in);
 		int i = sc.nextInt();
 		switch(i) {
@@ -161,6 +148,24 @@ public class Admin extends Account {
 			case 3: return MovieTypeEnum.digital;
 			default: { System.out.println("Invalid choice! Set to Digital by default."); return MovieTypeEnum.digital; }	
 		}
+	}
+	
+	public ArrayList<String> createMovieCastList(){
+		ArrayList<String> moviecastlist = new ArrayList<String>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Cast Names (done to end): ");
+		try {
+			while(true){
+				String s = sc.nextLine();
+				if (s.equalsIgnoreCase("done"))
+					break;
+				else
+					moviecastlist.add(s);
+		      }
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return moviecastlist;
 	}
 	
 	/**
@@ -174,9 +179,10 @@ public class Admin extends Account {
 		Movie selectedmovie=null;
 		do {
 			System.out.println("Enter MovieID to update: ");
-			String movieid = sc.next();
+			String movieid = sc.nextLine();
 			try {
 				selectedmovie = Movie.searchMovie(movieid);
+				System.out.println("Movie selected: " + selectedmovie.getTitle() + ".\n");
 			}catch(Exception e) {
 				System.out.println("Movie not found.");
 				return;
@@ -222,37 +228,17 @@ public class Admin extends Account {
 				break;
 			case 5:
 				System.out.println("Current Cast Input:");
-				for (int i = 0; i < selectedmovie.getCast().size(); i++){
+				for (int i = 0; i < selectedmovie.getCast().size(); i++) //prints out current cast list
 					System.out.println((i+1) + ". " + selectedmovie.getCast().get(i));
-				}
 				System.out.println("(1) Update Individual Cast Member:");
 				System.out.println("(2) Re-enter All Cast Members:");
 				System.out.println("Enter Choice:");
 				int castChoice = sc.nextInt();
 				switch (castChoice) {
-				case 1:
-					updateIndividualCast(selectedmovie);
-					break;
-					
-				case 2:
-					System.out.println("Enter Cast Names:");
-					sc.nextLine();
-					ArrayList<String> moviecastlist = new ArrayList<String>();
-					try {
-						while(true){
-							String s = sc.nextLine();
-							if (s.equalsIgnoreCase("done"))
-								break;
-							else
-								moviecastlist.add(s);
-					      }
-					}catch (Exception e) {
-						e.printStackTrace();
-					}
-					selectedmovie.setMovieCast(moviecastlist);
-					break;
+					case 1: updateIndividualCast(selectedmovie); System.out.println("Movie cast list has been updated."); break;
+					case 2: selectedmovie.setMovieCast(this.createMovieCastList()); System.out.println("Movie cast list has been updated."); break;
+					default: System.out.println("Invalid choice! Returning to main menu..."); break;
 				}
-				
 				break;
 			case 6:
 				System.out.println("Enter New Movie Synopsis:");
@@ -275,7 +261,7 @@ public class Admin extends Account {
 				break;
 			}
 		}
-	
+		return;
 	}
 	
 	/**
@@ -348,13 +334,12 @@ public class Admin extends Account {
 	public void adminShowTimeControl() throws Exception{
 		do {
 			System.out.println(" ===== Add/Update/Remove Showtimes =====");
-			System.out.println("Select option: ");
 			System.out.println("(1) Add showtime");
 			System.out.println("(2) Remove showtime");
 			System.out.println("(3) Return to admin main menu");
+			System.out.print("Select option: ");
 			Scanner sc = new Scanner(System.in);
 			int choice = sc.nextInt();
-		
 			switch(choice){
 				case 1: this.updateShowTime(1); break;
 				case 2: this.updateShowTime(2); break;
@@ -379,18 +364,17 @@ public class Admin extends Account {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		//need to double check this line below
 		Cineplex [] cineplexes = GoldenVillage.getCineplexes();
-		System.out.println("Select cineplex");
+		System.out.println("Cineplexes: ");
 		for (int j = 0; j < cineplexes.length; j++)
 			System.out.println("(" + (j+1) + ") " + cineplexes[j].getCineplexName());
-		int cineplexchoice = sc.nextInt();
+		System.out.print("Select cineplex: "); int cineplexchoice = sc.nextInt();
 		String cineplexname = cineplexes[cineplexchoice - 1].getCineplexName();
 		String cineplexcode = cineplexes[cineplexchoice - 1].getCineplexCode();
 		Cinema [] tempcinemaarray = cineplexes[cineplexchoice - 1].getCinemas();
-			
-		System.out.println("Select cinema");
+		System.out.println("Cinemas: ");
 		for (int j = 0; j < tempcinemaarray.length ; j++)
 			System.out.println("(" + (j+1) + ")" + tempcinemaarray[j].getCinemaCode());
-		int cinemachoice = sc.nextInt();
+		System.out.print("Select cinema: "); int cinemachoice = sc.nextInt();
 		CinemaTypeEnum cinematype = CinemaTypeEnum._standard;
 		String cinemacode = tempcinemaarray[cinemachoice - 1].getCinemaCode();
 		Timetable [] tempcalendararray = tempcinemaarray[cinemachoice - 1].getCalendar();
@@ -401,11 +385,11 @@ public class Admin extends Account {
 		String date;
 		do {
 		System.out.println("Select date:");
-		System.out.println("Enter day (XX) :");
+		System.out.print("Enter day (XX) :");
 		int day = sc.nextInt();
-		System.out.println("Enter month (XX) :");
+		System.out.print("Enter month (XX) :");
 		int month = sc.nextInt();
-		System.out.println("Enter year (XXXX) :");
+		System.out.print("Enter year (XXXX) :");
 		int year = sc.nextInt();
 		date = String.format("%02d-%02d-%d",day,month,year);
 		
@@ -415,7 +399,7 @@ public class Admin extends Account {
 			System.out.println("Timetable not found");
 		}
 		}while(tt==null);
-		
+		System.out.println("Schedule on " +date);
 		tt.displaySchedule(); //displays schedule for a particular day
 		Movie moviechoice = null;
 		String movieid=null;
@@ -424,6 +408,7 @@ public class Admin extends Account {
 			movieid = sc.next();
 			try {
 				moviechoice = Movie.searchMovie(movieid);
+				System.out.println(moviechoice.getTitle() + " has been selected. \n");
 			}catch(Exception e) {
 				System.out.println("Movie not found");
 			}
@@ -432,25 +417,27 @@ public class Admin extends Account {
 		boolean available = false;
 		do {
 			System.out.println(moviechoice.getTitle() + "'s schedule on " + date);
-			
-			System.out.println("Select timeslot:");
+			System.out.print("Select start hour (24-hour format): ");
 			int starttime = sc.nextInt();
 			ShowTime st_to_add = new ShowTime (moviechoice.getTitle(), movieid, cineplexname, cineplexcode, cinemacode, date, starttime, 
 					tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 			
 			if (i == 1){ //if admin wanted to add showtime		
-		
 				available = tt.addShowTimeToSchedule(moviechoice, starttime);
 				if (available == true)
-					moviechoice.addShowTimeToMovie(st_to_add);
+					moviechoice.addShowTimeToMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
+							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
 			}
-			else if (i == 2) { //if admin wanted to remove showtime
-				
+			else if (i == 2) { //if admin wanted to remove showtime	
 				available = tt.removeShowTimeFromSchedule(moviechoice, starttime);
 				if (available==true)
-					moviechoice.removeShowTimeFromMovie(st_to_add);
+					moviechoice.removeShowTimeFromMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
+							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+				else {
+					System.out.println("Returning to Add/Update/Remove Showtimes menu..."); return;
+				}
 			} 
-		}while (available == false);
+		} while (available == false);
 	}
 	
 	public void adminSystemControl() throws Exception{
@@ -467,9 +454,9 @@ public class Admin extends Account {
 			System.out.println("Select option: ");
 			int choice = sc.nextInt();
 			switch(choice){
-				case 1: addHoliday(); break; //ellen need create method for this
+				case 1: addHoliday(); break; 
 				case 2: removeHoliday();break;
-				case 3: clearHolidays(); break; //ellen need create method for this
+				case 3: clearHolidays(); break; 
 				case 4: updatePrices(); break; //ellen need create method for this
 				case 5: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu"); return; }
@@ -538,9 +525,6 @@ public class Admin extends Account {
 	 */
 	public void clearHolidays() throws Exception{
 		System.out.println(" ===== Clear Holiday ===== ");
-		//ellen help. this method supposed to reset all public holidays back to their normal days. if a public holiday is on a weekend already it needs to be reset to a weekend too.
-		//cannot change everyday into weekday by accident take note
-		
 		for (int i=0; i<PriceSetting.getPublicHol().size();i++) {
 			Timetable.getTimetableByDate(PriceSetting.getPublicHol().get(i)).setPublicHoliday(DayTypeEnum.Weekday);
 		}
@@ -571,49 +555,49 @@ public class Admin extends Account {
 			switch (catChoice) {
 			case 1:
 				System.out.println("Enter new price for Adult Category");
-				double adultPrice = sc.nextInt();
+				double adultPrice = sc.nextDouble();
 				PriceSetting.setTPAdult(adultPrice);
 				System.out.println("Adult Category price has been updated to " +PriceSetting.getTPAdult());
 				break;
 			case 2:
 				System.out.println("Enter new price for Child Category");
-				double childPrice = sc.nextInt();
+				double childPrice = sc.nextDouble();
 				PriceSetting.setTPChild(childPrice);
 				System.out.println("Child Category price has been updated to " +PriceSetting.getTPChild());
 				break;
 			case 3:
 				System.out.println("Enter new price for Student Category");
-				double studentPrice = sc.nextInt();
+				double studentPrice = sc.nextDouble();
 				PriceSetting.setTPStudent(studentPrice);
 				System.out.println("Student Category price has been updated to " +PriceSetting.getTPStudent());
 				break;
 			case 4:
 				System.out.println("Enter new price for Senior Category");
-				double seniorPrice = sc.nextInt();
+				double seniorPrice = sc.nextDouble();
 				PriceSetting.setTPSenior(seniorPrice);
 				System.out.println("Senior Category price has been updated to " +PriceSetting.getTPSenior());
 				break;
 			case 5:
 				System.out.println("Enter new price for Premium 3D Category");
-				double threeDPrice = sc.nextInt();
+				double threeDPrice = sc.nextDouble();
 				PriceSetting.setTP3D(threeDPrice);
 				System.out.println("Premium 3D Category price has been updated to " +PriceSetting.getTP3D());
 				break;
 			case 6:
 				System.out.println("Enter new price for Premium Blockbuster Category");
-				double BBPrice = sc.nextInt();
+				double BBPrice = sc.nextDouble();
 				PriceSetting.setTPBB(BBPrice);
 				System.out.println("Premium Blockbuster Category price has been updated to " +PriceSetting.getTPBB());
 				break;
 			case 7:
 				System.out.println("Enter new price for Premium Holiday Category");
-				double holidayPrice = sc.nextInt();
+				double holidayPrice = sc.nextDouble();
 				PriceSetting.setTPAdult(holidayPrice);
 				System.out.println("Premium Holiday Category price has been updated to " +PriceSetting.getTPHoliday());
 				break;
 			case 8:
 				System.out.println("Enter new price for Cinema Platinum Category");
-				double platinumPrice = sc.nextInt();
+				double platinumPrice = sc.nextDouble();
 				PriceSetting.setTPPlatinum(platinumPrice);
 				System.out.println("Cinema Platinum Category price has been updated to " +PriceSetting.getTPPlatinum());
 				break;
