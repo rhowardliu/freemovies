@@ -42,8 +42,8 @@ public class Admin extends Account {
 	public void adminMainControl() throws Exception{
 		do {
 			System.out.println("===== Admin Main Menu =====");
-			System.out.println("(1) Add/Update movies from movie listing");
-			System.out.println("(2) Add/Remove cinema showtimes");
+			System.out.println("(1) Add/Update/View movies from movie listing");
+			System.out.println("(2) Add/Remove/View cinema showtimes");
 			System.out.println("(3) Configure system settings");
 			System.out.println("(4) Log out");
 			System.out.print("Select option:");
@@ -73,14 +73,21 @@ public class Admin extends Account {
 			System.out.println(" ===== Add/Update/Remove movie from movie listing =====");
 			System.out.println("Select option: ");
 			System.out.println("(1) Add a movie");
-			System.out.println("(2) Update a movie's details"); //ellen this option needs to allow admin to update any kind of movie attributes like cast, movietype etc
-			System.out.println("(3) Return to admin main menu");
+			System.out.println("(2) Update a movie's details");
+			System.out.println("(3) View all movies in list");
+			System.out.println("(4) Return to admin main menu");
 			Scanner sc = new Scanner (System.in);
 			int choice = sc.nextInt();
 			switch (choice){
 				case 1: this.addMovie(); return;
-				case 2: this.updateMovieDetails(); break; //ellen need fill up this method with the code
-				case 3: { System.out.println("Returning to admin main menu..."); return; }
+				case 2: this.updateMovieDetails(); break; 
+				case 3: { //prints out all movies in the movelist and their show status
+					System.out.println("===== All movies (show status) =====");
+					int i = 1;
+					for (Movie movietoshow : Movie.movielist)
+						System.out.println("(" + (i++) + ") " + movietoshow.getTitle() + " (" + movietoshow.getStatus() + ")");
+				}
+				case 4: { System.out.println("Returning to admin main menu..."); return; }
 				default: { System.out.println("Invalid choice! Returning to admin main menu..."); return; }
 				} //end of switch bracket
 		} while(true); //end of do-while bracket
@@ -381,6 +388,7 @@ public class Admin extends Account {
 		
 		if (cinemachoice == 1)
 			cinematype=CinemaTypeEnum._platinum;
+		
 		Timetable tt = null;
 		String date;
 		do {

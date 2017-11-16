@@ -86,11 +86,13 @@ public class Execute {
 
 		if (user.getUserID().equals("admin")){ //if logged in as admin, control is passed to adminMainControl
 			Admin admin = (Admin) user;
+			System.out.println("Logging in...\n");
 			admin.adminMainControl();
 		}
 		
 		else { //if logged in as a moviegoer, control is passed to movieGoerMainControl
 			MovieGoer moviegoer = (MovieGoer) user;
+			System.out.println("Logging in...\n");
 			moviegoer.movieGoerMainControl();
 		}
 		
