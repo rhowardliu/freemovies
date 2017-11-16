@@ -385,11 +385,11 @@ public class Admin extends Account {
 		String date;
 		do {
 		System.out.println("Select date:");
-		System.out.println("Enter day (XX) :");
+		System.out.print("Enter day (XX) :");
 		int day = sc.nextInt();
-		System.out.println("Enter month (XX) :");
+		System.out.print("Enter month (XX) :");
 		int month = sc.nextInt();
-		System.out.println("Enter year (XXXX) :");
+		System.out.print("Enter year (XXXX) :");
 		int year = sc.nextInt();
 		date = String.format("%02d-%02d-%d",day,month,year);
 		
@@ -433,6 +433,9 @@ public class Admin extends Account {
 				if (available==true)
 					moviechoice.removeShowTimeFromMovie(cineplexname, cineplexcode, cinemacode, date, starttime, 
 							tempcinemaarray[cinemachoice - 1].getNumberOfRows(), tempcinemaarray[cinemachoice - 1].getNumberOfCols(),cinematype);
+				else {
+					System.out.println("Returning to Add/Update/Remove Showtimes menu..."); return;
+				}
 			} 
 		} while (available == false);
 	}
